@@ -22,10 +22,10 @@ public class InventoryOpen implements Listener {
             if (!block.getType().equals(Material.WALL_SIGN)) continue;
             Sign s = (Sign) block.getState();
             org.bukkit.material.Sign sd = (org.bukkit.material.Sign) s.getData();
-            if (chest.getBlock() == block.getRelative(sd.getAttachedFace())){
+            if (chest.getBlock().getLocation().equals(block.getRelative(sd.getAttachedFace()).getLocation())) {
                 if (s.getLine(0).contains(Util.color("&1[Protect]"))){
-                    if (!s.getLine(1).contains(e.getPlayer().getName())){
-                        e.getPlayer().sendMessage(Util.color("&7[&4✘&7] &cQuesta chest è protetta! Solo &e"+s.getLine(1)+" &cpuò aprirla!"));
+                    if (!s.getLine(1).equalsIgnoreCase(e.getPlayer().getName())){
+                        e.getPlayer().sendMessage(Util.color("&7[&4✘&7] &cQuesta chest è protetta! Solo &e%owner% &cpuò aprirla!".replace("%owner%",s.getLine(1))));
                         e.setCancelled(true);
                         return;
                     } else {
