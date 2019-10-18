@@ -1,0 +1,12 @@
+name: LocketteX
+author: Dracarys
+prefix: "${project.name}"
+description: "${project.description}"
+version: "${project.version}"
+main: pro.dracarys.LocketteX.LocketteX
+softdepend: [Vault,HolographicDisplays]
+commands:
+  lockettex:
+    description: Main Command for LocketteX
+    usage: "Usage: /<command>"
+    aliases: [protect]
