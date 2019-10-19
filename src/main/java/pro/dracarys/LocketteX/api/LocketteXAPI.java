@@ -52,7 +52,7 @@ public class LocketteXAPI {
                                 return null;
                             }
                             // Strip color so that you can add colors to the name
-                            return (ChatColor.stripColor(s.getLine(1)));
+                            return (ChatColor.stripColor(s.getLine(2)));
                         }
                     }
                 }

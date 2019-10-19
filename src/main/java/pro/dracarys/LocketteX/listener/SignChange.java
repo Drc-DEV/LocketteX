@@ -30,7 +30,7 @@ public class SignChange implements Listener {
         org.bukkit.material.Sign sd = (org.bukkit.material.Sign) s.getData();
         Block attachedBlock = e.getBlock().getRelative(sd.getAttachedFace());
         if ((attachedBlock.getState() instanceof DoubleChest) || attachedBlock.getState() instanceof Chest) {
-            Chest chest = (Chest) e.getBlock().getState();
+            Chest chest = (Chest) attachedBlock.getState();
             String owner = LocketteXAPI.getChestOwner(chest.getInventory().getHolder());
             if (owner != null) {
                 e.getPlayer().sendMessage(Message.CHEST_ALREADY_PROTECTED.getMessage().replace("%owner%", owner));
@@ -38,16 +38,13 @@ public class SignChange implements Listener {
                 return;
             }
         }
-        if (s.getLine(0).equalsIgnoreCase(Util.color(Config.SIGN_FORMATTED_LINES.getStrings()[0]))) {
-            //if (s.getLine(2).length() < 3) {
-            int num = 0;
-            for (String ln : Config.SIGN_FORMATTED_LINES.getStrings()) {
-                e.setLine(num, Util.color(ln.replace("%owner%", e.getPlayer().getName())));
-                num++;
-                if (num >= 5) // Sign has 4 lines
-                    e.getPlayer().sendMessage(Message.CHEST_PROTECT_SUCCESS.getMessage());
-                //}
-            }
+        int num = 0;
+        for (String ln : Config.SIGN_FORMATTED_LINES.getStrings()) {
+            e.setLine(num, Util.color(ln.replace("%owner%", e.getPlayer().getName())));
+            num++;
+            if (num >= 5) // Sign has 4 lines
+                e.getPlayer().sendMessage(Message.CHEST_PROTECT_SUCCESS.getMessage());
+            //}
         }
     }
 }

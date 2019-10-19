@@ -4,25 +4,26 @@ import java.util.List;
 
 public enum Config {
 
-    PERMISSION_ADMIN("permission-admin", "lockettex.admin"),
-    PERMISSION_CREATION("permission-creation", "lockettex.create"),
+    ENABLED_WORLDS("GeneralSettings.enabled-worlds",  new String[]{
+            "world1",
+            "world2"
+    }),
+    USE_ECONOMY("GeneralSettings.use-economy",true),
+    PRICE_CREATION("GeneralSettings.price-creation",500),
 
-    PRICE_CREATION("price-creation",500),
-    USE_ECONOMY("use-economy",true),
+    PERMISSION_ADMIN("Permissions.permission-admin", "lockettex.admin"),
+    PERMISSION_CREATION("Permissions.permission-creation", "lockettex.create"),
 
-    LEADER_CAN_BREAK("leader-bypasses-break-protection",false),
-    LEADER_CAN_OPEN("leader-bypasses-open-protection",false),
-    SIGN_ID_LINE("sign-id-line", "[Protect]"),
-    SIGN_FORMATTED_LINES("sign-formatted-lines",  new String[]{
+    LEADER_CAN_BREAK("Hooks.leader-bypasses-break-protection",false),
+    LEADER_CAN_OPEN("Hooks.leader-bypasses-open-protection",false),
+    SIGN_ID_LINE("SignSettings.sign-id-line", "[Protect]"),
+    SIGN_FORMATTED_LINES("SignSettings.sign-formatted-lines",  new String[]{
             "&1[Protect]",
             "",
             "%owner%",
             ""
-    }),
-    ENABLED_WORLDS("enabled-worlds",  new String[]{
-            "world1",
-            "world2"
     });
+
 
     String config, message;
     Boolean option;
