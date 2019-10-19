@@ -7,6 +7,7 @@ import org.bukkit.block.Sign;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
+import pro.dracarys.LocketteX.LocketteX;
 import pro.dracarys.LocketteX.api.LocketteXAPI;
 import pro.dracarys.LocketteX.utils.Config;
 import pro.dracarys.LocketteX.utils.Message;
@@ -22,9 +23,20 @@ public class SignChange implements Listener {
             return;
         }
         if (!e.getLine(0).equalsIgnoreCase(Config.SIGN_ID_LINE.getString())) return;
+        // From this point forward we're sure the player is trying to create a [Protect] sign
         if (!e.getPlayer().hasPermission(Config.PERMISSION_CREATION.getString())) {
             e.getPlayer().sendMessage(Message.CREATION_NOPERMISSION.getMessage());
+            e.getBlock().breakNaturally();
             return;
+        }
+        if (LocketteX.UseEconomy) {
+            if (LocketteX.econ.getBalance(e.getPlayer()) < Config.PRICE_CREATION.getInt()) {
+                e.getPlayer().sendMessage(Message.NOT_ENOUGH_MONEY.getMessage().replace("%price%", Config.PRICE_CREATION.getInt() + ""));
+                e.getBlock().breakNaturally();
+                return;
+            } else {
+                LocketteX.econ.withdrawPlayer(e.getPlayer(), Config.PRICE_CREATION.getInt());
+            }
         }
         Sign s = (Sign) e.getBlock().getState();
         org.bukkit.material.Sign sd = (org.bukkit.material.Sign) s.getData();
@@ -34,7 +46,7 @@ public class SignChange implements Listener {
             String owner = LocketteXAPI.getChestOwner(chest.getInventory().getHolder());
             if (owner != null) {
                 e.getPlayer().sendMessage(Message.CHEST_ALREADY_PROTECTED.getMessage().replace("%owner%", owner));
-                e.setCancelled(true);
+                e.getBlock().breakNaturally();
                 return;
             }
         }
@@ -43,8 +55,12 @@ public class SignChange implements Listener {
             e.setLine(num, Util.color(ln.replace("%owner%", e.getPlayer().getName())));
             num++;
             if (num >= 5) // Sign has 4 lines
-                e.getPlayer().sendMessage(Message.CHEST_PROTECT_SUCCESS.getMessage());
-            //}
+                break;
+        }
+        if (LocketteX.UseEconomy) {
+            e.getPlayer().sendMessage(Message.CHEST_PROTECT_SUCCESS_ECON.getMessage().replace("%price%",Config.PRICE_CREATION.getInt()+""));
+        } else {
+            e.getPlayer().sendMessage(Message.CHEST_PROTECT_SUCCESS.getMessage());
         }
     }
 }

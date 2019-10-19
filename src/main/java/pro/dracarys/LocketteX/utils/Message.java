@@ -13,6 +13,7 @@ public enum Message {
     CMD_RELOAD_SUCCESS("cmd-reload-success", "&7[&a✔&7] &aConfig Ricaricata!"),
     CMD_USAGE("cmd-usage","&7[&4✘&7] &cStai sbagliando qualcosa! Fai /protect per la lista dei comandi."),
 
+    NOT_ENOUGH_MONEY("not-enough-money","&7[&4✘&7] &cNon hai abbastanza soldi! Devi avere &e%price%&c per proteggere una chest."),
 
     CHEST_ALREADY_PROTECTED("chest-already-protected","&7[&4✘&7] &cQuesta chest è già stata protetta! &e%owner% &cdeve prima rompere il cartello per annullare la protezione!"),
     CHEST_BREAK_DENIED("chest-break-denied","&7[&4✘&7] &cQuesta chest è protetta! Solo &e%owner% &cpuò romperla!"),
@@ -20,6 +21,7 @@ public enum Message {
     CHEST_OPEN_DENIED("chest-open-denied","&7[&4✘&7] &cQuesta chest è protetta! Solo &e%owner% &cpuò aprirla!"),
     HOPPER_PLACE_DENIED("hopper-place-denied", "&7[&4✘&7] &cNon puoi piazzare Hopper sotto una chest protetta!"),
 
+    CHEST_PROTECT_SUCCESS_ECON("chest-protect-success-econ","&7[&a✔&7] &aChest protetta con successo! Hai pagato &e%price%$&a!"),
     CHEST_PROTECT_SUCCESS("chest-protect-success","&7[&a✔&7] &aChest protetta con successo!");
 
     String config, message;
