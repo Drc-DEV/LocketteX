@@ -20,7 +20,7 @@ public class LocketteX extends JavaPlugin {
     public void onEnable() {
         plugin = this;
         saveDefaultConfig();
-        registerListeners(new InventoryOpen(), new BlockBreak(), new BlockPlace(), new InventoryMoveItem(), new SignChange());
+        registerListeners(new InventoryOpen(), new BlockBreak(), new BlockPlace(), new SignChange());
         printPluginInfo();
     }
 

@@ -18,6 +18,8 @@ public class BlockBreak implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onBreak(BlockBreakEvent e) {
+        if (e.getPlayer().isOp())
+            return;
         if (e.getBlock().getType().equals(Material.WALL_SIGN)) {
             Sign s = (Sign) e.getBlock().getState();
             if (s.getLine(0).contains(Util.color("&1[Protect]"))) {

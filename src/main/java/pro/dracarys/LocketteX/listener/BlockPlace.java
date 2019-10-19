@@ -16,6 +16,8 @@ public class BlockPlace implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onPlace(BlockPlaceEvent e) {
         if (!e.getBlock().getType().equals(Material.HOPPER)) return;
+        if (e.getPlayer().isOp())
+            return;
         Block block = e.getBlock().getRelative(BlockFace.UP);
         if ((block.getState() instanceof DoubleChest) || block.getState() instanceof Chest) {
             Chest chest = (Chest) block.getState();

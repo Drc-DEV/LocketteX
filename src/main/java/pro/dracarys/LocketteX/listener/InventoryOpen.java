@@ -24,6 +24,8 @@ public class InventoryOpen implements Listener {
             return;
         }
         Player p = (Player) e.getPlayer();
+        if (p.isOp())
+            return;
         String owner = LocketteXAPI.getChestOwner(e.getInventory().getHolder());
         if (owner != null && !p.getName().equalsIgnoreCase(owner)) {
             p.sendMessage(Util.color("&7[&4✘&7] &cQuesta chest è protetta! Solo &e%owner% &cpuò aprirla!".replace("%owner%", owner)));
