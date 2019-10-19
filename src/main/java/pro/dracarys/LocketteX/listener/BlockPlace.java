@@ -19,7 +19,7 @@ public class BlockPlace implements Listener {
         Block block = e.getBlock().getRelative(BlockFace.UP);
         if ((block.getState() instanceof DoubleChest) || block.getState() instanceof Chest) {
             Chest chest = (Chest) block.getState();
-            String owner = LocketteXAPI.getChestOwner(chest);
+            String owner = LocketteXAPI.getChestOwner(chest.getInventory().getHolder());
             if (owner != null && !e.getPlayer().getName().equalsIgnoreCase(owner)) {
                 e.setCancelled(true);
                 e.getPlayer().sendMessage(Util.color("&7[&4✘&7] &cNon puoi piazzare Hopper sotto una chest protetta!"));
