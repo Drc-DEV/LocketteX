@@ -1,5 +1,6 @@
 package pro.dracarys.LocketteX.api;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
@@ -7,6 +8,8 @@ import org.bukkit.block.DoubleChest;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryHolder;
+import pro.dracarys.LocketteX.LocketteX;
+import pro.dracarys.LocketteX.utils.Config;
 import pro.dracarys.LocketteX.utils.Util;
 
 import java.util.ArrayList;
@@ -42,16 +45,15 @@ public class LocketteXAPI {
         for (Block chestBlock : chestBlocks) {
             for (Block block : Util.getBlocks(chestBlock, 1)) {
                 if (block.getType().equals(Material.WALL_SIGN)) {
-                    //Util.sendConsole("&a<DEBUG> &fDetected: SIGN");
                     Sign s = (Sign) block.getState();
                     org.bukkit.material.Sign sd = (org.bukkit.material.Sign) s.getData();
                     if (chestBlock.getLocation().equals(block.getRelative(sd.getAttachedFace()).getLocation())) {
-                        if (s.getLine(0).contains(Util.color("&1[Protect]"))) {
-                            //Util.sendConsole("&a<DEBUG> &fDetected: ProtectedSign"+s.getLine(1));
-                            if (s.getLine(1).length() < 3) { //Playernames can't be less than 3 digits
+                        if (s.getLine(0).equalsIgnoreCase(Util.color(Config.SIGN_FORMATTED_LINES.getStrings()[0]))) {
+                            if (s.getLine(2).length() < 3) { //Playernames can't be less than 3 digits
                                 return null;
                             }
-                            return (s.getLine(1));
+                            // Strip color so that you can add colors to the name
+                            return (ChatColor.stripColor(s.getLine(1)));
                         }
                     }
                 }

@@ -9,12 +9,18 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import pro.dracarys.LocketteX.api.LocketteXAPI;
-import pro.dracarys.LocketteX.utils.Util;
+import pro.dracarys.LocketteX.utils.Config;
+import pro.dracarys.LocketteX.utils.Message;
+
+import java.util.Arrays;
 
 public class BlockPlace implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onPlace(BlockPlaceEvent e) {
+        if (Arrays.stream(Config.ENABLED_WORLDS.getStrings()).noneMatch(e.getPlayer().getWorld().getName()::equalsIgnoreCase)){
+            return;
+        }
         if (!e.getBlock().getType().equals(Material.HOPPER)) return;
         if (e.getPlayer().isOp())
             return;
@@ -24,7 +30,7 @@ public class BlockPlace implements Listener {
             String owner = LocketteXAPI.getChestOwner(chest.getInventory().getHolder());
             if (owner != null && !e.getPlayer().getName().equalsIgnoreCase(owner)) {
                 e.setCancelled(true);
-                e.getPlayer().sendMessage(Util.color("&7[&4✘&7] &cNon puoi piazzare Hopper sotto una chest protetta!"));
+                e.getPlayer().sendMessage(Message.HOPPER_PLACE_DENIED.getMessage());
             }
         }
     }

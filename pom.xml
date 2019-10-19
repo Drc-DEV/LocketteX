@@ -85,5 +85,13 @@
             <version>1.8.8-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+        <!-- Factions (FactionsUUID) -->
+        <dependency>
+            <groupId>com.massivecraft</groupId>
+            <artifactId>factions</artifactId>
+            <version>1.6.9.5</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/FactionsUUID.jar</systemPath>
+        </dependency>
     </dependencies>
 </project>

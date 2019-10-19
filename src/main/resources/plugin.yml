@@ -4,7 +4,7 @@ prefix: "${project.name}"
 description: "${project.description}"
 version: "${project.version}"
 main: pro.dracarys.LocketteX.LocketteX
-softdepend: [Vault,HolographicDisplays]
+softdepend: [Vault,Factions,Towny,HolographicDisplays]
 commands:
   lockettex:
     description: Main Command for LocketteX

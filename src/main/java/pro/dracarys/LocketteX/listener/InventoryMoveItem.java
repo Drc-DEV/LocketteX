@@ -7,26 +7,20 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.event.inventory.InventoryType;
 import pro.dracarys.LocketteX.api.LocketteXAPI;
-import pro.dracarys.LocketteX.utils.Util;
 
 public class InventoryMoveItem implements Listener {
 
     @EventHandler
-    public void onHopper(InventoryMoveItemEvent e){
-        Util.sendConsole(""+e.getDestination().getType()+" "+e.getSource().getType());
+    public void onHopper(InventoryMoveItemEvent e) {
         if (!e.getDestination().getType().equals(InventoryType.HOPPER)) return;
-        Util.sendConsole("hopper check");
-        if (LocketteXAPI.getChestOwner(e.getSource().getHolder()) != null){
-            Util.sendConsole("lockette check");
+        if (LocketteXAPI.getChestOwner(e.getSource().getHolder()) != null) {
             e.setCancelled(true);
-            if (e.getDestination().getHolder() instanceof Hopper){
-                Util.sendConsole("destination hopper");
+            if (e.getDestination().getHolder() instanceof Hopper) {
                 Hopper hopper = (Hopper) e.getDestination().getHolder();
                 hopper.getBlock().setType(Material.AIR);
             }
         }
     }
-
 
 
 }
