@@ -47,7 +47,7 @@ public class Util {
     public static String getLeaderAt(Location location) {
         if (LocketteX.getInstance().getEnabledHooks().contains("Factions")) {
             return FactionsHook.getLeaderOfFactionAt(location);
-        } else if (LocketteX.getInstance().getEnabledHooks().contains("Factions")) {
+        } else if (LocketteX.getInstance().getEnabledHooks().contains("Towny")) {
             return TownyHook.getMayorOfTownAt(location);
         } else {
             return "";
