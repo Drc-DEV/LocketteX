@@ -8,6 +8,7 @@ public enum Config {
     PERMISSION_CREATION("permission-creation", "lockettex.create"),
 
     PRICE_CREATION("price-creation",500),
+    USE_ECONOMY("use-economy",true),
 
     LEADER_CAN_BREAK("leader-bypasses-break-protection",false),
     LEADER_CAN_OPEN("leader-bypasses-open-protection",false),
