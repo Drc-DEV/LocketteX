@@ -9,7 +9,8 @@ public enum Config {
 
     PRICE_CREATION("price-creation",500),
 
-    LEADER_BYPASS("leader-bypasses-protection",false),
+    LEADER_CAN_BREAK("leader-bypasses-break-protection",false),
+    LEADER_CAN_OPEN("leader-bypasses-open-protection",false),
     SIGN_ID_LINE("sign-id-line", "[Protect]"),
     SIGN_FORMATTED_LINES("sign-formatted-lines",  new String[]{
             "&1[Protect]",

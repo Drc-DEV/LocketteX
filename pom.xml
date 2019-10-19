@@ -69,6 +69,11 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
+        <!-- Towny repository -->
+        <repository>
+            <id>articdive-repo</id>
+            <url>https://nexus.articdive.de/repository/maven-releases</url>
+        </repository>
     </repositories>
     <dependencies>
         <!-- HolographicDisplays -->
@@ -92,6 +97,13 @@
             <version>1.6.9.5</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/FactionsUUID.jar</systemPath>
+        </dependency>
+        <!-- Towny -->
+        <dependency>
+            <groupId>com.palmergames</groupId>
+            <artifactId>Towny</artifactId>
+            <version>0.94.0.5</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

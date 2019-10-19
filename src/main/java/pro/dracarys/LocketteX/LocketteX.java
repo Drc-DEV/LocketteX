@@ -1,5 +1,6 @@
 package pro.dracarys.LocketteX;
 
+import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import pro.dracarys.LocketteX.file.MessageManager;
@@ -19,6 +20,10 @@ public class LocketteX extends JavaPlugin {
         return plugin;
     }
 
+    public List<String> getEnabledHooks() {
+        return enabledHooks;
+    }
+
     public MessageManager getMessageManager() {
         return messageManager;
     }
@@ -31,6 +36,12 @@ public class LocketteX extends JavaPlugin {
         registerListeners(new InventoryOpen(), new BlockBreak(), new BlockPlace(), new SignChange());
         printPluginInfo();
         initConfig();
+        if (Bukkit.getPluginManager().isPluginEnabled("Towny")) {
+            enabledHooks.add("Towny");
+        }
+        if (Bukkit.getPluginManager().isPluginEnabled("Factions")) {
+            enabledHooks.add("Factions");
+        }
     }
 
     public void onDisable() {

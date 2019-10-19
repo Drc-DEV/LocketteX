@@ -2,7 +2,11 @@ package pro.dracarys.LocketteX.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
+import pro.dracarys.LocketteX.LocketteX;
+import pro.dracarys.LocketteX.hooks.FactionsHook;
+import pro.dracarys.LocketteX.hooks.TownyHook;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +42,16 @@ public class Util {
             }
         }
         return blocks;
+    }
+
+    public static String getLeaderAt(Location location) {
+        if (LocketteX.getInstance().getEnabledHooks().contains("Factions")) {
+            return FactionsHook.getLeaderOfFactionAt(location);
+        } else if (LocketteX.getInstance().getEnabledHooks().contains("Factions")) {
+            return TownyHook.getMayorOfTownAt(location);
+        } else {
+            return "";
+        }
     }
 
 }

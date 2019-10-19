@@ -23,6 +23,7 @@ public class MainCommand implements TabExecutor {
         }
         return lista;
     }
+
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         if (!sender.hasPermission("lockettex.help")) {
             sender.sendMessage(Message.GENERAL_NOPERMISSION.getMessage());
@@ -37,7 +38,7 @@ public class MainCommand implements TabExecutor {
         }
         if (args.length == 1) {
             // Reload Command
-            if (args[0].equalsIgnoreCase("reload")){
+            if (args[0].equalsIgnoreCase("reload")) {
                 LocketteX.getInstance().loadConfig();
                 sender.sendMessage(Message.CMD_RELOAD_SUCCESS.getMessage());
                 return true;

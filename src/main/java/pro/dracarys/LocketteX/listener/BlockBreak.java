@@ -21,7 +21,7 @@ public class BlockBreak implements Listener {
         if (Arrays.stream(Config.ENABLED_WORLDS.getStrings()).noneMatch(e.getPlayer().getWorld().getName()::equalsIgnoreCase)) {
             return;
         }
-        if (e.getPlayer().isOp())
+        if (e.getPlayer().isOp() || (Config.LEADER_CAN_BREAK.getOption() && Util.getLeaderAt(e.getBlock().getLocation()).equalsIgnoreCase(e.getPlayer().getName())))
             return;
         if (e.getBlock().getType().equals(Material.WALL_SIGN)) {
             Sign s = (Sign) e.getBlock().getState();

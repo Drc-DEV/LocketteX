@@ -10,6 +10,7 @@ import org.bukkit.event.inventory.InventoryOpenEvent;
 import pro.dracarys.LocketteX.api.LocketteXAPI;
 import pro.dracarys.LocketteX.utils.Config;
 import pro.dracarys.LocketteX.utils.Message;
+import pro.dracarys.LocketteX.utils.Util;
 
 import java.util.Arrays;
 
@@ -24,7 +25,7 @@ public class InventoryOpen implements Listener {
             return;
         }
         Player p = (Player) e.getPlayer();
-        if (p.isOp())
+        if (p.isOp() || (Config.LEADER_CAN_BREAK.getOption() && Util.getLeaderAt(e.getPlayer().getLocation()).equalsIgnoreCase(p.getName())))
             return;
         String owner = LocketteXAPI.getChestOwner(e.getInventory().getHolder());
         if (owner != null && !p.getName().equalsIgnoreCase(owner)) {
