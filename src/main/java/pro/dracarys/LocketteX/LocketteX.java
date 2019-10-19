@@ -49,6 +49,7 @@ public class LocketteX extends JavaPlugin {
         plugin = this;
         registerListeners(new InventoryOpen(), new BlockBreak(), new BlockPlace(), new SignChange());
         initConfig();
+        loadConfig();
         if (Config.USE_ECONOMY.getOption()) {
             if (!setupEconomy()) {
                 Util.sendConsole("&c[" + getName() + "] &7v" + getDescription().getVersion()
