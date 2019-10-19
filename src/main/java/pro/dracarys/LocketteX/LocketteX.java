@@ -2,6 +2,9 @@ package pro.dracarys.LocketteX;
 
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+import pro.dracarys.LocketteX.listener.BlockBreak;
+import pro.dracarys.LocketteX.listener.BlockPlace;
+import pro.dracarys.LocketteX.listener.InventoryMoveItem;
 import pro.dracarys.LocketteX.listener.InventoryOpen;
 import pro.dracarys.LocketteX.utils.Util;
 
@@ -20,7 +23,7 @@ public class LocketteX extends JavaPlugin {
     public void onEnable() {
         plugin = this;
         saveDefaultConfig();
-        registerListeners(new InventoryOpen());
+        registerListeners(new InventoryOpen(), new BlockBreak(), new BlockPlace(), new InventoryMoveItem());
         printPluginInfo();
     }
 
@@ -30,7 +33,7 @@ public class LocketteX extends JavaPlugin {
         Util.sendConsole("&c[" + getName() + "] &7v" + getDescription().getVersion() + " &cDisabled - Plugin by Dracarys");
     }
 
-    public void registerListeners(Listener... listeners) {
+    private void registerListeners(Listener... listeners) {
         for (Listener listener : listeners) {
             getServer().getPluginManager().registerEvents(listener, plugin);
         }
