@@ -1,6 +1,7 @@
 package pro.dracarys.LocketteX.file;
 
 import pro.dracarys.LocketteX.LocketteX;
+import pro.dracarys.LocketteX.file.impl.ConfigFile;
 import pro.dracarys.LocketteX.file.impl.MessageFile;
 
 import java.util.HashMap;
@@ -15,6 +16,7 @@ public class MessageManager {
     public MessageManager(LocketteX plugin) {
         this.plugin = plugin;
         addFile(new MessageFile(plugin));
+        addFile(new ConfigFile(plugin));
     }
 
     private void addFile(CustomFile file) {
