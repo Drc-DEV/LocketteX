@@ -37,7 +37,11 @@ public class MainCommand implements TabExecutor {
             return true;
         }
         if (args.length == 1) {
-            // Reload Command
+            // Reload Command - Only OP and Console by default
+            if (!sender.hasPermission("*")) {
+                sender.sendMessage(Message.GENERAL_NOPERMISSION.getMessage());
+                return true;
+            }
             if (args[0].equalsIgnoreCase("reload")) {
                 LocketteX.getInstance().loadConfig();
                 sender.sendMessage(Message.CMD_RELOAD_SUCCESS.getMessage());
