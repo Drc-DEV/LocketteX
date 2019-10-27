@@ -28,6 +28,10 @@ public class Util {
         return (double) tmp / factor;
     }
 
+    public static int roundToInt(double doubleVar) {
+        return (int) Math.round(doubleVar);
+    }
+
     public static List<Block> getBlocks(Block start, int radius) {
         if (radius < 0) {
             return new ArrayList<Block>(0);
