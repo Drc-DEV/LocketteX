@@ -4,24 +4,38 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>pro.dracarys.LocketteX</groupId>
+    <groupId>pro.dracarys</groupId>
     <artifactId>LocketteX</artifactId>
+    <name>LocketteX</name>
     <version>1.2</version>
     <packaging>jar</packaging>
-
     <description>Protect your valuables!</description>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
     <build>
+        <finalName>${project.name}_v${project.version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>8</source>
-                    <target>8</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.1.2</version>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Built-By>Valentina_pro</Built-By>
+                            <url>${project.url}</url>
+                        </manifestEntries>
+                    </archive>
                 </configuration>
             </plugin>
             <plugin>
@@ -40,6 +54,7 @@
 
                                 </excludes>
                             </artifactSet>
+                            <minimizeJar>true</minimizeJar>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                         </configuration>
                     </execution>
@@ -53,6 +68,7 @@
             </resource>
         </resources>
     </build>
+
     <repositories>
         <!-- SpigotMC repository -->
         <repository>
@@ -69,12 +85,8 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
-        <!-- Towny repository -->
-        <repository>
-            <id>articdive-repo</id>
-            <url>https://nexus.articdive.de/repository/maven-releases</url>
-        </repository>
     </repositories>
+
     <dependencies>
         <!-- HolographicDisplays -->
         <dependency>
@@ -102,8 +114,9 @@
         <dependency>
             <groupId>com.palmergames</groupId>
             <artifactId>Towny</artifactId>
-            <version>0.94.0.5</version>
-            <scope>provided</scope>
+            <version>0.95.1.4</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/Towny-0.95.1.4.jar</systemPath>
         </dependency>
         <!-- Vault -->
         <dependency>
