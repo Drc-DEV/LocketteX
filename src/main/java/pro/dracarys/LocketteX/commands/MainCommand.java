@@ -4,6 +4,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import pro.dracarys.LocketteX.LocketteX;
+import pro.dracarys.LocketteX.utils.Config;
 import pro.dracarys.LocketteX.utils.Message;
 import pro.dracarys.LocketteX.utils.Util;
 
@@ -25,20 +26,20 @@ public class MainCommand implements TabExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-        if (!sender.hasPermission("lockettex.help")) {
+        if (!sender.hasPermission(Config.PERMISSION_CREATION.getString())) {
             sender.sendMessage(Message.GENERAL_NOPERMISSION.getMessage());
             return true;
         }
         // Help Command
         if (args.length == 0) {
             sender.sendMessage(Message.CMD_MAIN_HEADER.getMessage());
-            sender.sendMessage(Util.color(" &e/protect &6reload &7>> &fRicarica Config"));
+            sender.sendMessage(Util.color(" &e/protect &6reload &7» &f"+Message.CMD_RELOAD_DESC.getMessage()));
             sender.sendMessage(Message.CMD_MAIN_FOOTER.getMessage());
             return true;
         }
         if (args.length == 1) {
             // Reload Command - Only OP and Console by default
-            if (!sender.hasPermission("*")) {
+            if (!sender.hasPermission(Config.PERMISSION_ADMIN.getString())) {
                 sender.sendMessage(Message.GENERAL_NOPERMISSION.getMessage());
                 return true;
             }

@@ -13,6 +13,7 @@ import pro.dracarys.LocketteX.listener.BlockPlace;
 import pro.dracarys.LocketteX.listener.InventoryOpen;
 import pro.dracarys.LocketteX.listener.SignChange;
 import pro.dracarys.LocketteX.utils.Config;
+import pro.dracarys.LocketteX.utils.Message;
 import pro.dracarys.LocketteX.utils.Util;
 
 import java.util.ArrayList;
@@ -47,7 +48,6 @@ public class LocketteX extends JavaPlugin {
 
     public void onEnable() {
         plugin = this;
-        registerListeners(new InventoryOpen(), new BlockBreak(), new BlockPlace(), new SignChange());
         initConfig();
         loadConfig();
         if (Config.USE_ECONOMY.getOption()) {
@@ -69,6 +69,7 @@ public class LocketteX extends JavaPlugin {
         if (Bukkit.getPluginManager().isPluginEnabled("Factions")) {
             enabledHooks.add("Factions");
         }
+        registerListeners(new InventoryOpen(), new BlockBreak(), new BlockPlace(), new SignChange());
         PluginCommand cmd = this.getCommand("lockettex");
         MainCommand executor = new MainCommand();
         cmd.setExecutor(executor);
@@ -101,14 +102,17 @@ public class LocketteX extends JavaPlugin {
     }
 
     private void printPluginInfo() {
-        Util.sendConsole("&6================================================");
-        Util.sendConsole("  &a" + getDescription().getName() + " Enabled");
-        Util.sendConsole("  &f- &eVersion: &7" + getDescription().getVersion());
-        Util.sendConsole("  &f- &eAuthor(s): &7" + getDescription().getAuthors());
-        Util.sendConsole("  &f- &eDesc: &7" + getDescription().getDescription());
-        if (enabledHooks.size() > 0)
-            Util.sendConsole("  &f- &eEnabled Hooks: &f" + enabledHooks.toString().replaceAll("\\[\\]", ""));
-        Util.sendConsole("&6================================================");
+        Util.sendConsole("&f▆ &f▆ &f▆&f▆ &f▆&f▆&f▆&f▆ &f▆&f▆&f▆&f▆&f▆&f▆&f▆&f▆&f▆&f▆&f▆&f▆ &f▆&f▆&f▆&f▆ &f▆&f▆ &f▆ &f▆");
+        Util.sendConsole(" ");
+        Util.sendConsole("&f➤  &c" + getDescription().getName() + " &7v" + getDescription().getVersion() + "&a Enabled ✔");
+        Util.sendConsole("&f➤  &f&o" + getDescription().getDescription());
+        Util.sendConsole("&f➤ &eMade with &4❤ &eby &f" + getDescription().getAuthors().get(0));
+        if (getDescription().getVersion().contains("-DEV"))
+            Util.sendConsole("&f➤ &cThis is a BETA, report any unexpected behaviour to the Author!");
+        Util.sendConsole(" ");
+        Util.sendConsole("&f▆ &f▆ &f▆&f▆ &f▆&f▆&f▆&f▆ &f▆&f▆&f▆&f▆&f▆&f▆&f▆&f▆&f▆&f▆&f▆&f▆ &f▆&f▆&f▆&f▆ &f▆&f▆ &f▆ &f▆");
+        if (!enabledHooks.isEmpty())
+            Util.sendConsole(Message.PREFIX.getMessage() + "&e" + getName() + " Hooked to: &f" + enabledHooks.toString().replaceAll("\\[\\]", ""));
     }
 
     private void initConfig() {

@@ -1,9 +1,10 @@
-name: LocketteX
-author: Dracarys
-prefix: "${project.name}"
-description: "${project.description}"
-version: "${project.version}"
 main: pro.dracarys.LocketteX.LocketteX
+name: LocketteX
+authors: [Valentina_pro]
+prefix: "${project.name}"
+version: "${project.version}"
+description: "${project.description}"
+api-version: '1.13'
 softdepend: [Vault,Factions,Towny,HolographicDisplays]
 commands:
   lockettex:

@@ -10,6 +10,7 @@ public enum Message {
     PREFIX("prefix", "&a&lProtect &f➤"),
     CMD_MAIN_HEADER("cmd-main-header", "&f«&m---------------&f»  &6&lProtect&f  «&m---------------&f»"),
     CMD_MAIN_FOOTER("cmd-main-footer", " "),
+    CMD_RELOAD_DESC("cmd-reload-desc", "&7Reloads Config and Messages"),
     CMD_RELOAD_SUCCESS("cmd-reload-success", "&7[&a✔&7] &aConfig Reloaded!"),
     CMD_USAGE("cmd-usage","&7[&4✕&7] &cSomething's wrong! Do /protect for a command list."),
 
