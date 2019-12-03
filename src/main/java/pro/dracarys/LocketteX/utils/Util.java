@@ -34,10 +34,10 @@ public class Util {
 
     public static List<Block> getBlocks(Block start, int radius) {
         if (radius < 0) {
-            return new ArrayList<Block>(0);
+            return new ArrayList<>(0);
         }
         int iterations = (radius * 2) + 1;
-        List<Block> blocks = new ArrayList<Block>(iterations * iterations * iterations);
+        List<Block> blocks = new ArrayList<>(iterations * iterations * iterations);
         for (int x = -radius; x <= radius; x++) {
             for (int y = -radius; y <= radius; y++) {
                 for (int z = -radius; z <= radius; z++) {

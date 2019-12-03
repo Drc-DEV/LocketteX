@@ -14,7 +14,7 @@ import java.util.List;
 public class MainCommand implements TabExecutor {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-        List<String> lista = new ArrayList<String>();
+        List<String> lista = new ArrayList<>();
         if (args.length == 0) {
             lista.add("protect");
             lista.add("lockettex");
@@ -33,7 +33,7 @@ public class MainCommand implements TabExecutor {
         // Help Command
         if (args.length == 0) {
             sender.sendMessage(Message.CMD_MAIN_HEADER.getMessage());
-            sender.sendMessage(Util.color(" &e/protect &6reload &7» &f"+Message.CMD_RELOAD_DESC.getMessage()));
+            sender.sendMessage(Util.color(" &e/protect &6reload &7» &f" + Message.CMD_RELOAD_DESC.getMessage()));
             sender.sendMessage(Message.CMD_MAIN_FOOTER.getMessage());
             return true;
         }
