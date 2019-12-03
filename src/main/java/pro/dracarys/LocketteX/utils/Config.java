@@ -5,8 +5,9 @@ import java.util.List;
 public enum Config {
 
     ENABLED_WORLDS("GeneralSettings.enabled-worlds",  new String[]{
-            "world1",
-            "world2"
+            "world",
+            "world_nether",
+            "world_the_end"
     }),
     USE_ECONOMY("GeneralSettings.use-economy",true),
     PRICE_CREATION("GeneralSettings.price-creation",500),
