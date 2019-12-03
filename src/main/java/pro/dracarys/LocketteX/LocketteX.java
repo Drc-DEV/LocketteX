@@ -80,7 +80,6 @@ public class LocketteX extends JavaPlugin {
         getServer().getScheduler().cancelTasks(this);
         plugin = null;
         enabledHooks.clear();
-        Util.sendConsole("&c[" + getName() + "] &7v" + getDescription().getVersion() + " &cDisabled - Plugin by Dracarys");
     }
 
     private boolean setupEconomy() {
