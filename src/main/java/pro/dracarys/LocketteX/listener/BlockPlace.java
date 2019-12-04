@@ -18,7 +18,7 @@ public class BlockPlace implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onPlace(BlockPlaceEvent e) {
-        if (Arrays.stream(Config.ENABLED_WORLDS.getStrings()).noneMatch(e.getPlayer().getWorld().getName()::equalsIgnoreCase)){
+        if (Arrays.stream(Config.ENABLED_WORLDS.getStrings()).noneMatch(e.getPlayer().getWorld().getName()::equalsIgnoreCase)) {
             return;
         }
         if (!e.getBlock().getType().equals(Material.HOPPER)) return;
@@ -30,7 +30,7 @@ public class BlockPlace implements Listener {
             String owner = LocketteXAPI.getChestOwner(chest.getInventory().getHolder());
             if (owner != null && !e.getPlayer().getName().equalsIgnoreCase(owner)) {
                 e.setCancelled(true);
-                e.getPlayer().sendMessage(Message.HOPPER_PLACE_DENIED.getMessage());
+                e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.HOPPER_PLACE_DENIED.getMessage());
             }
         }
     }

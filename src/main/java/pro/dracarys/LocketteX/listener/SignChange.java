@@ -25,13 +25,13 @@ public class SignChange implements Listener {
         if (!e.getLine(0).equalsIgnoreCase(Config.SIGN_ID_LINE.getString())) return;
         // From this point forward we're sure the player is trying to create a [Protect] sign
         if (!e.getPlayer().hasPermission(Config.PERMISSION_CREATION.getString())) {
-            e.getPlayer().sendMessage(Message.CREATION_NOPERMISSION.getMessage());
+            e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.CREATION_NOPERMISSION.getMessage());
             e.getBlock().breakNaturally();
             return;
         }
         if (LocketteX.UseEconomy) {
             if (LocketteX.econ.getBalance(e.getPlayer()) < Config.PRICE_CREATION.getInt()) {
-                e.getPlayer().sendMessage(Message.NOT_ENOUGH_MONEY.getMessage().replace("%price%", Config.PRICE_CREATION.getInt() + ""));
+                e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.NOT_ENOUGH_MONEY.getMessage().replace("%price%", Config.PRICE_CREATION.getInt() + ""));
                 e.getBlock().breakNaturally();
                 return;
             }
@@ -48,7 +48,7 @@ public class SignChange implements Listener {
             Chest chest = (Chest) attachedBlock.getState();
             String owner = LocketteXAPI.getChestOwner(chest.getInventory().getHolder());
             if (owner != null) {
-                e.getPlayer().sendMessage(Message.CHEST_ALREADY_PROTECTED.getMessage().replace("%owner%", owner));
+                e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.CHEST_ALREADY_PROTECTED.getMessage().replace("%owner%", owner));
                 e.getBlock().breakNaturally();
                 return;
             }

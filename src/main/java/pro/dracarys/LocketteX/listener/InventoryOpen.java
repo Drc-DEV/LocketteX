@@ -29,7 +29,7 @@ public class InventoryOpen implements Listener {
             return;
         String owner = LocketteXAPI.getChestOwner(e.getInventory().getHolder());
         if (owner != null && !p.getName().equalsIgnoreCase(owner)) {
-            p.sendMessage(Message.CHEST_OPEN_DENIED.getMessage().replace("%owner%", owner));
+            p.sendMessage(Message.PREFIX.getMessage() + Message.CHEST_OPEN_DENIED.getMessage().replace("%owner%", owner));
             e.setCancelled(true);
         }
     }

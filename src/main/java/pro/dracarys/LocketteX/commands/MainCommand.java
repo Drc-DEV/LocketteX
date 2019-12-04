@@ -27,7 +27,7 @@ public class MainCommand implements TabExecutor {
 
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         if (!sender.hasPermission(Config.PERMISSION_CREATION.getString())) {
-            sender.sendMessage(Message.GENERAL_NOPERMISSION.getMessage());
+            sender.sendMessage(Message.PREFIX.getMessage() + Message.GENERAL_NOPERMISSION.getMessage());
             return true;
         }
         // Help Command
@@ -40,17 +40,17 @@ public class MainCommand implements TabExecutor {
         if (args.length == 1) {
             // Reload Command - Only OP and Console by default
             if (!sender.hasPermission(Config.PERMISSION_ADMIN.getString())) {
-                sender.sendMessage(Message.GENERAL_NOPERMISSION.getMessage());
+                sender.sendMessage(Message.PREFIX.getMessage() + Message.GENERAL_NOPERMISSION.getMessage());
                 return true;
             }
             if (args[0].equalsIgnoreCase("reload")) {
                 LocketteX.getInstance().loadConfig();
-                sender.sendMessage(Message.CMD_RELOAD_SUCCESS.getMessage());
+                sender.sendMessage(Message.PREFIX.getMessage() + Message.CMD_RELOAD_SUCCESS.getMessage());
                 return true;
             }
         }
         // Nothing matched, send command usage.
-        sender.sendMessage(Message.CMD_USAGE.getMessage());
+        sender.sendMessage(Message.PREFIX.getMessage() + Message.CMD_USAGE.getMessage());
         return true;
     }
 }

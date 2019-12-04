@@ -26,7 +26,7 @@ public class BlockBreak implements Listener {
             Sign s = (Sign) e.getBlock().getState();
             if (s.getLine(0).contains(Util.color(Config.SIGN_FORMATTED_LINES.getStrings()[0]))) {
                 if (!s.getLine(1).equalsIgnoreCase(e.getPlayer().getName())) {
-                    e.getPlayer().sendMessage(Message.SIGN_BREAK_DENIED.getMessage().replace("%owner%", s.getLine(1)));
+                    e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.SIGN_BREAK_DENIED.getMessage().replace("%owner%", s.getLine(1)));
                     e.setCancelled(true);
                     return;
                 } else {
@@ -37,7 +37,7 @@ public class BlockBreak implements Listener {
             Chest chest = (Chest) e.getBlock().getState();
             String owner = LocketteXAPI.getChestOwner(chest.getInventory().getHolder());
             if (owner != null && !owner.equalsIgnoreCase(e.getPlayer().getName())) {
-                e.getPlayer().sendMessage(Message.CHEST_BREAK_DENIED.getMessage().replace("%owner%", owner));
+                e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.CHEST_BREAK_DENIED.getMessage().replace("%owner%", owner));
                 e.setCancelled(true);
                 return;
             }

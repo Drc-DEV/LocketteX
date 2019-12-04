@@ -7,7 +7,7 @@ public enum Message {
     GENERAL_NOPERMISSION("no-permission", "&7[&4✕&7] &cYou don't have the required permission!"),
     CREATION_NOPERMISSION("no-permission-protection", "&7[&4✕&7] &cYou don't have the permission to protect chests!"),
     NONE("none", "N/A"),
-    PREFIX("prefix", "&a&lProtect &f➤"),
+    PREFIX("prefix", "&a&lProtect &f➤ "),
     CMD_MAIN_HEADER("cmd-main-header", "&f«&m---------------&f»  &6&lProtect&f  «&m---------------&f»"),
     CMD_MAIN_FOOTER("cmd-main-footer", " "),
     CMD_RELOAD_DESC("cmd-reload-desc", "&7Reloads Config and Messages"),
