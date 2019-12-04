@@ -34,13 +34,16 @@ public class SignChange implements Listener {
                 e.getPlayer().sendMessage(Message.NOT_ENOUGH_MONEY.getMessage().replace("%price%", Config.PRICE_CREATION.getInt() + ""));
                 e.getBlock().breakNaturally();
                 return;
-            } else {
-                LocketteX.econ.withdrawPlayer(e.getPlayer(), Config.PRICE_CREATION.getInt());
             }
         }
         Sign s = (Sign) e.getBlock().getState();
         org.bukkit.material.Sign sd = (org.bukkit.material.Sign) s.getData();
         Block attachedBlock = e.getBlock().getRelative(sd.getAttachedFace());
+        if (Config.PROTECT_CLAIMED_ONLY.getOption() && !Util.isClaimedAt(attachedBlock.getLocation())) {
+            e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.CANT_PROTECT_ON_UNCLAIMED.getMessage());
+            e.getBlock().breakNaturally();
+            return;
+        }
         if ((attachedBlock.getState() instanceof DoubleChest) || attachedBlock.getState() instanceof Chest) {
             Chest chest = (Chest) attachedBlock.getState();
             String owner = LocketteXAPI.getChestOwner(chest.getInventory().getHolder());
@@ -58,7 +61,8 @@ public class SignChange implements Listener {
                 break;
         }
         if (LocketteX.UseEconomy) {
-            e.getPlayer().sendMessage(Message.CHEST_PROTECT_SUCCESS_ECON.getMessage().replace("%price%",Config.PRICE_CREATION.getInt()+""));
+            LocketteX.econ.withdrawPlayer(e.getPlayer(), Config.PRICE_CREATION.getInt());
+            e.getPlayer().sendMessage(Message.CHEST_PROTECT_SUCCESS_ECON.getMessage().replace("%price%", Config.PRICE_CREATION.getInt() + ""));
         } else {
             e.getPlayer().sendMessage(Message.CHEST_PROTECT_SUCCESS.getMessage());
         }

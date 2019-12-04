@@ -16,6 +16,7 @@ public enum Message {
 
     NOT_ENOUGH_MONEY("not-enough-money","&7[&4✕&7] &cYou must have &e%price%$&c in order to protect a chest."),
 
+    CANT_PROTECT_ON_UNCLAIMED("cant-protect-in-unclaimed-land", "&7[&4✕&7] &cYou can't protect Chests in unclaimed land!"),
     CHEST_ALREADY_PROTECTED("chest-already-protected","&7[&4✕&7] &cThis chest was already protected by &e%owner% &che must break the sign first!"),
     CHEST_BREAK_DENIED("chest-break-denied","&7[&4✕&7] &cThis chest is protected! Only &e%owner% &ccan break it!"),
     SIGN_BREAK_DENIED("sign-break-denied","&7[&4✕&7] &cOnly &e%owner% &ccan break this sign!"),

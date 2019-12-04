@@ -1,7 +1,6 @@
 package pro.dracarys.LocketteX.api;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.block.DoubleChest;
@@ -43,7 +42,7 @@ public class LocketteXAPI {
         }
         for (Block chestBlock : chestBlocks) {
             for (Block block : Util.getBlocks(chestBlock, 1)) {
-                if (block.getType().equals(Material.WALL_SIGN)) {
+                if (block.getType().name().contains("WALL_SIGN")) {
                     Sign s = (Sign) block.getState();
                     org.bukkit.material.Sign sd = (org.bukkit.material.Sign) s.getData();
                     if (chestBlock.getLocation().equals(block.getRelative(sd.getAttachedFace()).getLocation())) {

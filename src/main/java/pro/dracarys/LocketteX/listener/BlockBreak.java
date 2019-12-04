@@ -1,6 +1,5 @@
 package pro.dracarys.LocketteX.listener;
 
-import org.bukkit.Material;
 import org.bukkit.block.Chest;
 import org.bukkit.block.DoubleChest;
 import org.bukkit.block.Sign;
@@ -23,7 +22,7 @@ public class BlockBreak implements Listener {
         }
         if (e.getPlayer().isOp() || (Config.LEADER_CAN_BREAK.getOption() && Util.getLeaderAt(e.getBlock().getLocation()).equalsIgnoreCase(e.getPlayer().getName())))
             return;
-        if (e.getBlock().getType().equals(Material.WALL_SIGN)) {
+        if (e.getBlock().getType().name().contains("WALL_SIGN")) {
             Sign s = (Sign) e.getBlock().getState();
             if (s.getLine(0).contains(Util.color(Config.SIGN_FORMATTED_LINES.getStrings()[0]))) {
                 if (!s.getLine(1).equalsIgnoreCase(e.getPlayer().getName())) {
