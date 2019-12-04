@@ -58,4 +58,14 @@ public class Util {
         }
     }
 
+    public static boolean isClaimedAt(Location location) {
+        if (LocketteX.getInstance().getEnabledHooks().contains("Factions")) {
+            return FactionsHook.isClaimed(location);
+        } else if (LocketteX.getInstance().getEnabledHooks().contains("Towny")) {
+            return TownyHook.isClaimed(location);
+        } else {
+            return false;
+        }
+    }
+
 }

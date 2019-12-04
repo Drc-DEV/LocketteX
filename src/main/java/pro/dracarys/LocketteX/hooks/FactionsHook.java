@@ -16,4 +16,17 @@ public class FactionsHook {
         return faction.getFPlayerAdmin().getName();
     }
 
+    public static String getFactionTagAt(Location location) {
+        FLocation fLoc = new FLocation(location);
+        Faction faction = Board.getInstance().getFactionAt(fLoc);
+        if (faction.isWilderness() || !faction.isNormal() || faction.isSafeZone() || faction.isWarZone()) {
+            return "";
+        }
+        return faction.getTag();
+    }
+
+    public static boolean isClaimed(Location location) {
+        return !getFactionTagAt(location).equalsIgnoreCase("");
+    }
+
 }

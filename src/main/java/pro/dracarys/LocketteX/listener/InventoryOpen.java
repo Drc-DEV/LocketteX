@@ -25,7 +25,7 @@ public class InventoryOpen implements Listener {
             return;
         }
         Player p = (Player) e.getPlayer();
-        if (p.isOp() || (Config.LEADER_CAN_OPEN.getOption() && Util.getLeaderAt(e.getPlayer().getLocation()).equalsIgnoreCase(p.getName())))
+        if (p.isOp() || (Config.PROTECT_CLAIMED_ONLY.getOption() && Util.isClaimedAt(p.getLocation())) || (Config.LEADER_CAN_OPEN.getOption() && Util.getLeaderAt(p.getLocation()).equalsIgnoreCase(p.getName())))
             return;
         String owner = LocketteXAPI.getChestOwner(e.getInventory().getHolder());
         if (owner != null && !p.getName().equalsIgnoreCase(owner)) {
