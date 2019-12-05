@@ -10,6 +10,7 @@ import pro.dracarys.LocketteX.hooks.TownyHook;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Util {
     public static void sendConsole(String str) {
@@ -66,6 +67,29 @@ public class Util {
         } else {
             return false;
         }
+    }
+
+    // Trim UUID utils for uuid support TODO
+
+    public UUID formatFromInput(String uuid) {
+        if(uuid == null) throw new IllegalArgumentException();
+        uuid = uuid.trim();
+        return uuid.length() == 32 ? fromTrimmed(uuid.replace("-", "")) : UUID.fromString(uuid);
+    }
+
+    public UUID fromTrimmed(String trimmedUUID) {
+        if(trimmedUUID == null) throw new IllegalArgumentException();
+        StringBuilder builder = new StringBuilder(trimmedUUID.trim());
+        /* Backwards adding to avoid index adjustments */
+        try {
+            builder.insert(20, "-");
+            builder.insert(16, "-");
+            builder.insert(12, "-");
+            builder.insert(8, "-");
+        } catch (StringIndexOutOfBoundsException e){
+            throw new IllegalArgumentException();
+        }
+        return UUID.fromString(builder.toString());
     }
 
 }
