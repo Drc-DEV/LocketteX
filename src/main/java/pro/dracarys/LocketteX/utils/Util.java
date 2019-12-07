@@ -72,13 +72,13 @@ public class Util {
     // Trim UUID utils for uuid support TODO
 
     public UUID formatFromInput(String uuid) {
-        if(uuid == null) throw new IllegalArgumentException();
+        if (uuid == null) throw new IllegalArgumentException();
         uuid = uuid.trim();
         return uuid.length() == 32 ? fromTrimmed(uuid.replace("-", "")) : UUID.fromString(uuid);
     }
 
     public UUID fromTrimmed(String trimmedUUID) {
-        if(trimmedUUID == null) throw new IllegalArgumentException();
+        if (trimmedUUID == null) throw new IllegalArgumentException();
         StringBuilder builder = new StringBuilder(trimmedUUID.trim());
         /* Backwards adding to avoid index adjustments */
         try {
@@ -86,7 +86,7 @@ public class Util {
             builder.insert(16, "-");
             builder.insert(12, "-");
             builder.insert(8, "-");
-        } catch (StringIndexOutOfBoundsException e){
+        } catch (StringIndexOutOfBoundsException e) {
             throw new IllegalArgumentException();
         }
         return UUID.fromString(builder.toString());
