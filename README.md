@@ -5,3 +5,6 @@
   - [x] FactionsUUID
   - [x] SavageFactions
 - [x] Towny
+
+**Maven - Build Command:**
+`mvn clean install`
