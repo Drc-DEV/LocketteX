@@ -1,5 +1,6 @@
 package pro.dracarys.LocketteX.api;
 
+import com.licel.stringer.annotations.secured;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
@@ -13,8 +14,8 @@ import pro.dracarys.LocketteX.utils.Util;
 import java.util.ArrayList;
 import java.util.List;
 
+@secured
 public class LocketteXAPI {
-
 
     public static boolean hasChestAccess(Player p, InventoryHolder holder) {
         String owner = getChestOwner(holder);
@@ -26,14 +27,12 @@ public class LocketteXAPI {
     public static String getChestOwner(InventoryHolder holder) {
         List<Block> chestBlocks = new ArrayList<>();
         if (holder instanceof DoubleChest) {
-            //Util.sendConsole("&a<DEBUG> &fDetected: DoubleChest");
             DoubleChest dchest = (DoubleChest) holder;
             Chest chest1 = (Chest) dchest.getRightSide();
             chestBlocks.add(chest1.getBlock());
             Chest chest2 = (Chest) dchest.getLeftSide();
             chestBlocks.add(chest2.getBlock());
         } else if (holder instanceof Chest) {
-            //Util.sendConsole("&a<DEBUG> &fDetected: Chest");
             Chest chest = (Chest) holder;
             chestBlocks.add(chest.getBlock());
         } else {

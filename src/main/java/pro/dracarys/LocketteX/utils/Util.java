@@ -1,5 +1,6 @@
 package pro.dracarys.LocketteX.utils;
 
+import com.licel.stringer.annotations.secured;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@secured
 public class Util {
     public static void sendConsole(String str) {
         Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', str));
