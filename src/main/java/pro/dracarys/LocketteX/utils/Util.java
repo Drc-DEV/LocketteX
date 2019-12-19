@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@secured
 public class Util {
 
     // Console Feedback messages
@@ -76,12 +75,14 @@ public class Util {
 
     // Trim UUID utils for uuid support
 
+    @secured
     public UUID formatFromInput(String uuid) {
         if (uuid == null) throw new IllegalArgumentException();
         uuid = uuid.trim();
         return uuid.length() == 32 ? fromTrimmed(uuid.replace("-", "")) : UUID.fromString(uuid);
     }
 
+    @secured
     public UUID fromTrimmed(String trimmedUUID) {
         if (trimmedUUID == null) throw new IllegalArgumentException();
         StringBuilder builder = new StringBuilder(trimmedUUID.trim());
@@ -97,6 +98,7 @@ public class Util {
         return UUID.fromString(builder.toString());
     }
 
+    @secured
     public static Block getAttached(Block b) {
         try {
             if(b.getBlockData() instanceof Directional) {

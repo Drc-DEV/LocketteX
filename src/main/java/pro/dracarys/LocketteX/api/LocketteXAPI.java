@@ -14,7 +14,6 @@ import pro.dracarys.LocketteX.utils.Util;
 import java.util.ArrayList;
 import java.util.List;
 
-@secured
 public class LocketteXAPI {
 
     public static boolean hasChestAccess(Player p, InventoryHolder holder) {
@@ -24,6 +23,7 @@ public class LocketteXAPI {
         return false;
     }
 
+    @secured
     public static String getChestOwner(InventoryHolder holder) {
         List<Block> chestBlocks = new ArrayList<>();
         if (holder instanceof DoubleChest) {
