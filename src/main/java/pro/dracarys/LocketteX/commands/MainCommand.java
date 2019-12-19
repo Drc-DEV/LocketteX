@@ -4,8 +4,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import pro.dracarys.LocketteX.LocketteX;
-import pro.dracarys.LocketteX.utils.Config;
-import pro.dracarys.LocketteX.utils.Message;
+import pro.dracarys.LocketteX.config.Config;
+import pro.dracarys.LocketteX.config.Message;
 import pro.dracarys.LocketteX.utils.Util;
 
 import java.util.ArrayList;

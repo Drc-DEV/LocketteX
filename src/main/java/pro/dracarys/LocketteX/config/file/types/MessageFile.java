@@ -1,10 +1,10 @@
-package pro.dracarys.LocketteX.file.impl;
+package pro.dracarys.LocketteX.config.file.types;
 
 import com.licel.stringer.annotations.secured;
 import net.md_5.bungee.api.ChatColor;
 import pro.dracarys.LocketteX.LocketteX;
-import pro.dracarys.LocketteX.file.CustomFile;
-import pro.dracarys.LocketteX.utils.Message;
+import pro.dracarys.LocketteX.config.Message;
+import pro.dracarys.LocketteX.config.file.CustomFile;
 import pro.dracarys.LocketteX.utils.Util;
 
 @secured

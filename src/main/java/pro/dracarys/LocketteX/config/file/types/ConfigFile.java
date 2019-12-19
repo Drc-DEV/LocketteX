@@ -1,9 +1,9 @@
-package pro.dracarys.LocketteX.file.impl;
+package pro.dracarys.LocketteX.config.file.types;
 
 import com.licel.stringer.annotations.secured;
 import pro.dracarys.LocketteX.LocketteX;
-import pro.dracarys.LocketteX.file.CustomFile;
-import pro.dracarys.LocketteX.utils.Config;
+import pro.dracarys.LocketteX.config.Config;
+import pro.dracarys.LocketteX.config.file.CustomFile;
 
 @secured
 public class ConfigFile extends CustomFile {

@@ -7,7 +7,7 @@
     <groupId>pro.dracarys</groupId>
     <artifactId>LocketteX</artifactId>
     <name>LocketteX</name>
-    <version>1.4</version>
+    <version>1.5</version>
     <packaging>jar</packaging>
     <description>Protect your valuables!</description>
     <properties>

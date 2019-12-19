@@ -7,8 +7,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import pro.dracarys.LocketteX.api.LocketteXAPI;
-import pro.dracarys.LocketteX.utils.Config;
-import pro.dracarys.LocketteX.utils.Message;
+import pro.dracarys.LocketteX.config.Config;
+import pro.dracarys.LocketteX.config.Message;
+import pro.dracarys.LocketteX.utils.ClaimUtil;
 import pro.dracarys.LocketteX.utils.Util;
 
 import java.util.Arrays;
@@ -20,7 +21,7 @@ public class BlockBreak implements Listener {
         if (Arrays.stream(Config.ENABLED_WORLDS.getStrings()).noneMatch(e.getPlayer().getWorld().getName()::equalsIgnoreCase)) {
             return;
         }
-        if (e.getPlayer().isOp() || (Config.LEADER_CAN_BREAK.getOption() && Util.getLeaderAt(e.getBlock().getLocation()).equalsIgnoreCase(e.getPlayer().getName())))
+        if (e.getPlayer().isOp() || (Config.LEADER_CAN_BREAK.getOption() && ClaimUtil.getLeaderAt(e.getBlock().getLocation()).equalsIgnoreCase(e.getPlayer().getName())))
             return;
         if (e.getBlock().getType().name().contains("WALL_SIGN")) {
             Sign s = (Sign) e.getBlock().getState();

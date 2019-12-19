@@ -1,27 +1,34 @@
-package pro.dracarys.LocketteX.file;
+package pro.dracarys.LocketteX.config.file;
 
 import pro.dracarys.LocketteX.LocketteX;
-import pro.dracarys.LocketteX.file.impl.ConfigFile;
-import pro.dracarys.LocketteX.file.impl.MessageFile;
+import pro.dracarys.LocketteX.config.file.types.ConfigFile;
+import pro.dracarys.LocketteX.config.file.types.MessageFile;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
 
-public class MessageManager {
+public class ConfigManager {
 
+    private static ConfigManager configManager;
     private LocketteX plugin;
+
     private static Map<String, CustomFile> fileMap = new HashMap<>();
 
-    public MessageManager(LocketteX plugin) {
+    public ConfigManager(LocketteX plugin) {
         this.plugin = plugin;
         addFile(new MessageFile(plugin));
         addFile(new ConfigFile(plugin));
     }
 
+    public static ConfigManager getInstance() {
+        if (configManager == null) {
+            configManager = new ConfigManager(LocketteX.getInstance());
+        }
+        return configManager;
+    }
+
     private void addFile(CustomFile file) {
         fileMap.put(file.getName(), file);
-        plugin.getLogger().log(Level.INFO, file.getName() + ".yml has initialized.");
         file.init();
     }
 

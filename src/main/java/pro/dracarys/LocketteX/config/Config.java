@@ -1,4 +1,4 @@
-package pro.dracarys.LocketteX.utils;
+package pro.dracarys.LocketteX.config;
 
 import com.licel.stringer.annotations.secured;
 
@@ -8,6 +8,8 @@ import java.util.List;
 @secured
 public enum Config {
 
+    DEBUG("Debug", false),
+
     ENABLED_WORLDS("GeneralSettings.enabled-worlds", new String[]{
             "world",
             "world_nether",
@@ -16,6 +18,7 @@ public enum Config {
     USE_ECONOMY("GeneralSettings.use-economy", true),
     PRICE_CREATION("GeneralSettings.price-creation", 500),
     SNEAKCLICK_TO_CREATE("GeneralSettings.shift-click-with-sign-to-protect", false),
+    USE_INV_MOVE("GeneralSettings.use-inventory-move-event", false),
 
     PERMISSION_ADMIN("Permissions.permission-admin", "lockettex.admin"),
     PERMISSION_CREATION("Permissions.permission-creation", "lockettex.create"),
@@ -58,6 +61,10 @@ public enum Config {
     }
 
     public boolean getOption() {
+        return option;
+    }
+
+    public boolean getBoolean() {
         return option;
     }
 

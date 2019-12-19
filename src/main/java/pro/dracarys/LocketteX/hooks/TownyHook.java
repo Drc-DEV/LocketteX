@@ -30,4 +30,8 @@ public class TownyHook {
         return false;
     }
 
+    public static boolean isSetup() {
+        return HookManager.getInstance().getEnabledHooks().contains("Towny");
+    }
+
 }

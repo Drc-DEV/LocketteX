@@ -1,4 +1,4 @@
-package pro.dracarys.LocketteX.file;
+package pro.dracarys.LocketteX.config.file;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import pro.dracarys.LocketteX.LocketteX;

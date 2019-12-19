@@ -8,7 +8,7 @@ import org.bukkit.block.DoubleChest;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryHolder;
-import pro.dracarys.LocketteX.utils.Config;
+import pro.dracarys.LocketteX.config.Config;
 import pro.dracarys.LocketteX.utils.Util;
 
 import java.util.ArrayList;

@@ -31,4 +31,8 @@ public class FactionsHook {
         return !getFactionTagAt(location).equalsIgnoreCase("");
     }
 
+    public static boolean isSetup() {
+        return HookManager.getInstance().getEnabledHooks().contains("Factions");
+    }
+
 }

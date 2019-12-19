@@ -3,11 +3,13 @@ package pro.dracarys.LocketteX.utils;
 import com.licel.stringer.annotations.secured;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.Directional;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import pro.dracarys.LocketteX.LocketteX;
-import pro.dracarys.LocketteX.hooks.FactionsHook;
-import pro.dracarys.LocketteX.hooks.TownyHook;
+import pro.dracarys.LocketteX.config.Config;
+import pro.dracarys.LocketteX.config.Message;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +17,33 @@ import java.util.UUID;
 
 @secured
 public class Util {
+
+    // Console Feedback messages
+
     public static void sendConsole(String str) {
-        Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', str));
+        Bukkit.getConsoleSender().sendMessage(color(str));
+    }
+
+    public static void debug(String str) {
+        if (Config.DEBUG.getBoolean())
+            sendConsole(Message.PREFIX_DEBUG.getMessage() + str);
+    }
+
+    public static void error(String str) {
+        sendConsole(Message.PREFIX_ERROR.getMessage() + str);
     }
 
     public static String color(String str) {
         return ChatColor.translateAlternateColorCodes('&', str);
+    }
+
+    @SuppressWarnings("deprecation")
+    public static ItemStack getTool(Player player) {
+        if (LocketteX.getServerVersion() <= 8) {
+            return player.getInventory().getItemInHand();
+        } else {
+            return player.getInventory().getItemInMainHand();
+        }
     }
 
     public static double round(double value, int places) {
@@ -51,27 +74,7 @@ public class Util {
         return blocks;
     }
 
-    public static String getLeaderAt(Location location) {
-        if (LocketteX.getInstance().getEnabledHooks().contains("Factions")) {
-            return FactionsHook.getLeaderOfFactionAt(location);
-        } else if (LocketteX.getInstance().getEnabledHooks().contains("Towny")) {
-            return TownyHook.getMayorOfTownAt(location);
-        } else {
-            return "";
-        }
-    }
-
-    public static boolean isClaimedAt(Location location) {
-        if (LocketteX.getInstance().getEnabledHooks().contains("Factions")) {
-            return FactionsHook.isClaimed(location);
-        } else if (LocketteX.getInstance().getEnabledHooks().contains("Towny")) {
-            return TownyHook.isClaimed(location);
-        } else {
-            return false;
-        }
-    }
-
-    // Trim UUID utils for uuid support TODO
+    // Trim UUID utils for uuid support
 
     public UUID formatFromInput(String uuid) {
         if (uuid == null) throw new IllegalArgumentException();
@@ -92,6 +95,20 @@ public class Util {
             throw new IllegalArgumentException();
         }
         return UUID.fromString(builder.toString());
+    }
+
+    public static Block getAttached(Block b) {
+        try {
+            if(b.getBlockData() instanceof Directional) {
+                Directional directional = (Directional) b.getBlockData();
+                return b.getRelative(directional.getFacing().getOppositeFace());
+            }else {
+                //No Directionalable
+                return null;
+            }
+        } catch (NullPointerException|ClassCastException e) {
+            return null;
+        }
     }
 
 }

@@ -1,4 +1,4 @@
-package pro.dracarys.LocketteX.file;
+package pro.dracarys.LocketteX.config.file;
 
 public interface ICustomFile<T> {
 
