@@ -6,6 +6,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.block.DoubleChest;
 import org.bukkit.block.Sign;
+import org.bukkit.block.data.type.WallSign;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryHolder;
 import pro.dracarys.LocketteX.config.Config;
@@ -43,8 +44,15 @@ public class LocketteXAPI {
             for (Block block : Util.getBlocks(chestBlock, 1)) {
                 if (block.getType().name().contains("WALL_SIGN")) {
                     Sign s = (Sign) block.getState();
-                    org.bukkit.material.Sign sd = (org.bukkit.material.Sign) s.getData();
-                    if (chestBlock.getLocation().equals(block.getRelative(sd.getAttachedFace()).getLocation())) {
+                    Block attachedBlock;
+                    try {
+                        org.bukkit.material.Sign sd = (org.bukkit.material.Sign) s.getData();
+                        attachedBlock = block.getRelative(sd.getAttachedFace());
+                    } catch (ClassCastException ex) { // Use new API (fixes 1.15 errors)
+                        WallSign ws = (WallSign) s.getBlockData();
+                        attachedBlock = block.getRelative(ws.getFacing().getOppositeFace());
+                    }
+                    if (chestBlock.getLocation().equals(attachedBlock.getLocation())) {
                         if (s.getLine(0).equalsIgnoreCase(Util.color(Config.SIGN_FORMATTED_LINES.getStrings()[0]))) {
                             if (s.getLine(2).length() < 3) { //Playernames can't be less than 3 digits
                                 return null;

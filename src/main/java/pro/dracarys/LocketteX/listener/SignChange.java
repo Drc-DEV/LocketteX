@@ -5,6 +5,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.block.DoubleChest;
 import org.bukkit.block.Sign;
+import org.bukkit.block.data.type.WallSign;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
@@ -38,9 +39,15 @@ public class SignChange implements Listener {
                 return;
             }
         }
+        Block attachedBlock;
         Sign s = (Sign) e.getBlock().getState();
-        org.bukkit.material.Sign sd = (org.bukkit.material.Sign) s.getData();
-        Block attachedBlock = e.getBlock().getRelative(sd.getAttachedFace());
+        try {
+            org.bukkit.material.Sign sd = (org.bukkit.material.Sign) s.getData();
+            attachedBlock = e.getBlock().getRelative(sd.getAttachedFace());
+        } catch (ClassCastException ex) {
+            WallSign signData  = (WallSign) s.getBlockData();
+            attachedBlock = e.getBlock().getRelative(signData.getFacing().getOppositeFace());
+        }
         if (Config.PROTECT_CLAIMED_ONLY.getOption() && !ClaimUtil.isClaimedAt(attachedBlock.getLocation())) {
             e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.CANT_PROTECT_ON_UNCLAIMED.getMessage());
             e.getBlock().breakNaturally();

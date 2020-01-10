@@ -61,18 +61,28 @@ public class LocketteX extends JavaPlugin {
         }
     }
 
+    // Tell IntelliJ to not format this, by enabling formatter markers in comments (Pref-> Editor-> Code Style)
+    // Made this way for easy editing/char replacing, using equal size chars for all consoles compatibility.
+    //@formatter:off
     @secured
     private void printPluginInfo() {
-        Util.sendConsole("&f▆ &f▆ &f▆&f▆ &f▆&f▆&f▆&f▆ &f▆&f▆&f▆&f▆&f▆&f▆&f▆&f▆&f▆&f▆&f▆&f▆ &f▆&f▆&f▆&f▆ &f▆&f▆ &f▆ &f▆");
-        Util.sendConsole(" ");
-        Util.sendConsole("&f➤  &c" + getDescription().getName() + " &7v" + getDescription().getVersion() + "&a Enabled ✔");
-        Util.sendConsole("&f➤  &f&o" + getDescription().getDescription());
-        Util.sendConsole("&f➤ &eMade with &4❤ &eby &f" + getDescription().getAuthors().get(0));
+        Util.sendConsole(("\n"+
+            " ⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬛⬛⬛⬜⬜⬜⬜⬜⬛⬛⬛\n" +
+            " ⬜⬛⬜⬜⬜⬜⬜⬛⬛⬛⬜⬛⬛⬛⬛⬜⬛⬜⬜⬛⬜⬛⬛⬛⬛⬛⬜⬛⬛⬛⬛⬛⬜⬛⬛⬛⬛⬛⬜⬛⬛⬛⬛⬛⬜⬜⬜⬛⬛⬜⬜⬜⬛⬛⬜⬜\n" +
+            " ⬜⬛⬜⬜⬜⬜⬛⬛⬜⬛⬜⬛⬜⬛⬛⬜⬛⬜⬛⬛⬜⬛⬜⬜⬜⬛⬜⬜⬜⬛⬜⬛⬜⬜⬜⬛⬜⬛⬜⬛⬜⬜⬜⬛⬜⬜⬜⬜⬛⬛⬜⬛⬛⬜⬜⬜\n" +
+            " ⬜⬛⬜⬜⬜⬜⬛⬜⬜⬛⬜⬛⬜⬜⬛⬜⬛⬛⬜⬛⬜⬛⬛⬛⬜⬜⬜⬜⬜⬛⬜⬜⬜⬜⬜⬛⬜⬜⬜⬛⬛⬛⬜⬜⬜⬜⬜⬜⬜⬛⬛⬛⬜⬜⬜⬜\n" +
+            " ⬜⬛⬜⬜⬜⬜⬛⬜⬜⬛⬜⬛⬜⬜⬜⬜⬛⬛⬜⬜⬜⬛⬜⬜⬜⬜⬜⬜⬜⬛⬜⬜⬜⬜⬜⬛⬜⬜⬜⬛⬜⬜⬜⬜⬜⬜⬜⬜⬜⬛⬛⬛⬜⬜⬜⬜\n" +
+            " ⬜⬛⬜⬜⬛⬜⬛⬜⬛⬛⬜⬛⬜⬜⬛⬜⬛⬜⬛⬛⬜⬛⬜⬜⬛⬛⬜⬜⬜⬛⬜⬜⬜⬜⬜⬛⬜⬜⬜⬛⬜⬜⬛⬛⬜⬜⬜⬜⬛⬛⬜⬛⬛⬜⬜⬜\n" +
+            " ⬜⬛⬛⬛⬛⬜⬛⬛⬛⬜⬜⬛⬛⬛⬛⬜⬛⬜⬜⬛⬜⬛⬛⬛⬛⬜⬜⬜⬜⬛⬜⬜⬜⬜⬜⬛⬜⬜⬜⬛⬛⬛⬛⬜⬜⬜⬜⬛⬛⬜⬜⬜⬛⬛⬜⬜\n" +
+            " ⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬛⬛⬛⬜⬜⬜⬜⬜⬛⬛⬛\n"
+        ).replace("⬜","&0█").replace("⬛","&f█") + "\n" +
+                " &f-->  &c" + getDescription().getName() + " &7v" + getDescription().getVersion() + "&a Enabled" + "\n" +
+                " &f-->  &f&o" + getDescription().getDescription() + "\n" +
+                " &f-->  &eMade with &4♥ &eby &f" + getDescription().getAuthors().get(0) + "\n");
         if (getDescription().getVersion().contains("-DEV"))
-            Util.sendConsole("&f➤ &cThis is a BETA, report any unexpected behaviour to the Author!");
-        Util.sendConsole(" ");
-        Util.sendConsole("&f▆ &f▆ &f▆&f▆ &f▆&f▆&f▆&f▆ &f▆&f▆&f▆&f▆&f▆&f▆&f▆&f▆&f▆&f▆&f▆&f▆ &f▆&f▆&f▆&f▆ &f▆&f▆ &f▆ &f▆");
+            Util.sendConsole("&f&l[!] &cThis is a BETA, report any unexpected behaviour to the Author!"+ "\n");
     }
+    //@formatter:on
 
     public void loadConfig() {
         configManager.getFileMap().get("config").init();
