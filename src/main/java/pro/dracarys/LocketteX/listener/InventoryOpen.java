@@ -11,14 +11,13 @@ import pro.dracarys.LocketteX.api.LocketteXAPI;
 import pro.dracarys.LocketteX.config.Config;
 import pro.dracarys.LocketteX.config.Message;
 import pro.dracarys.LocketteX.utils.ClaimUtil;
-
-import java.util.Arrays;
+import pro.dracarys.LocketteX.utils.Util;
 
 public class InventoryOpen implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onInvOpen(InventoryOpenEvent e) {
-        if (Arrays.stream(Config.ENABLED_WORLDS.getStrings()).noneMatch(e.getPlayer().getWorld().getName()::equalsIgnoreCase)) {
+        if (!Util.isEnabledWorld(e.getPlayer().getWorld().getName())) {
             return;
         }
         if (!(e.getPlayer() instanceof Player) || e.getInventory().getHolder() == null || !(e.getInventory().getHolder() instanceof Chest) && !(e.getInventory().getHolder() instanceof DoubleChest)) {

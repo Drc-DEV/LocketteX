@@ -1,6 +1,5 @@
 package pro.dracarys.LocketteX.utils;
 
-import com.licel.stringer.annotations.secured;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
@@ -12,6 +11,7 @@ import pro.dracarys.LocketteX.config.Config;
 import pro.dracarys.LocketteX.config.Message;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -75,14 +75,12 @@ public class Util {
 
     // Trim UUID utils for uuid support
 
-    @secured
     public UUID formatFromInput(String uuid) {
         if (uuid == null) throw new IllegalArgumentException();
         uuid = uuid.trim();
         return uuid.length() == 32 ? fromTrimmed(uuid.replace("-", "")) : UUID.fromString(uuid);
     }
 
-    @secured
     public UUID fromTrimmed(String trimmedUUID) {
         if (trimmedUUID == null) throw new IllegalArgumentException();
         StringBuilder builder = new StringBuilder(trimmedUUID.trim());
@@ -98,7 +96,6 @@ public class Util {
         return UUID.fromString(builder.toString());
     }
 
-    @secured
     public static Block getAttached(Block b) {
         try {
             if(b.getBlockData() instanceof Directional) {
@@ -111,6 +108,12 @@ public class Util {
         } catch (NullPointerException|ClassCastException e) {
             return null;
         }
+    }
+
+    public static boolean isEnabledWorld(String worldName) {
+        boolean output = Arrays.stream(Config.ENABLED_WORLDS.getStrings()).anyMatch(worldName::equalsIgnoreCase);
+        if (Config.ENABLED_WORLDS_ASBLACKLIST.getBoolean()) return !output;
+        return output;
     }
 
 }

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainCommand implements TabExecutor {
+    
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         List<String> lista = new ArrayList<>();

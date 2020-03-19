@@ -1,16 +1,14 @@
 package pro.dracarys.LocketteX.config.file.types;
 
-import com.licel.stringer.annotations.secured;
-import pro.dracarys.LocketteX.LocketteX;
+import org.bukkit.plugin.java.JavaPlugin;
 import pro.dracarys.LocketteX.config.Config;
 import pro.dracarys.LocketteX.config.file.CustomFile;
 
-@secured
 public class ConfigFile extends CustomFile {
 
-    private LocketteX instance;
+    private JavaPlugin instance;
 
-    public ConfigFile(LocketteX instance) {
+    public ConfigFile(JavaPlugin instance) {
         super(instance, "");
         this.instance = instance;
         for (Config message : Config.values()) {

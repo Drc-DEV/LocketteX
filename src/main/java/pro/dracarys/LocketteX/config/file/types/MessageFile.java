@@ -1,18 +1,16 @@
 package pro.dracarys.LocketteX.config.file.types;
 
-import com.licel.stringer.annotations.secured;
 import net.md_5.bungee.api.ChatColor;
-import pro.dracarys.LocketteX.LocketteX;
+import org.bukkit.plugin.java.JavaPlugin;
 import pro.dracarys.LocketteX.config.Message;
 import pro.dracarys.LocketteX.config.file.CustomFile;
 import pro.dracarys.LocketteX.utils.Util;
 
-@secured
 public class MessageFile extends CustomFile {
 
-    private LocketteX instance;
+    private JavaPlugin instance;
 
-    public MessageFile(LocketteX instance) {
+    public MessageFile(JavaPlugin instance) {
         super(instance, "");
         this.instance = instance;
         for (Message message : Message.values()) {

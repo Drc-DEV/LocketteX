@@ -1,6 +1,5 @@
 package pro.dracarys.LocketteX.api;
 
-import com.licel.stringer.annotations.secured;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
@@ -19,12 +18,9 @@ public class LocketteXAPI {
 
     public static boolean hasChestAccess(Player p, InventoryHolder holder) {
         String owner = getChestOwner(holder);
-        if (owner != null && owner.equalsIgnoreCase(p.getName()))
-            return true;
-        return false;
+        return owner != null && owner.equalsIgnoreCase(p.getName());
     }
 
-    @secured
     public static String getChestOwner(InventoryHolder holder) {
         List<Block> chestBlocks = new ArrayList<>();
         if (holder instanceof DoubleChest) {
@@ -57,8 +53,12 @@ public class LocketteXAPI {
                             if (s.getLine(2).length() < 3) { //Playernames can't be less than 3 digits
                                 return null;
                             }
-                            // Strip color so that you can add colors to the name
-                            return (ChatColor.stripColor(s.getLine(2)));
+                            try {
+                                // Strip color so that you can add colors to the name
+                                return (ChatColor.stripColor(s.getLine(2)));
+                            } catch (Exception ex) {
+                                //ignored
+                            }
                         }
                     }
                 }

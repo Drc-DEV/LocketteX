@@ -1,11 +1,8 @@
 package pro.dracarys.LocketteX.config;
 
-import com.licel.stringer.annotations.secured;
-
 import java.util.Arrays;
 import java.util.List;
 
-@secured
 public enum Config {
 
     DEBUG("Debug", false),
@@ -15,6 +12,7 @@ public enum Config {
             "world_nether",
             "world_the_end"
     }),
+    ENABLED_WORLDS_ASBLACKLIST("GeneralSettings.make-enabled-worlds-a-blacklist", false),
     USE_ECONOMY("GeneralSettings.use-economy", true),
     PRICE_CREATION("GeneralSettings.price-creation", 500),
     SNEAKCLICK_TO_CREATE("GeneralSettings.shift-click-with-sign-to-protect", false),

@@ -1,6 +1,5 @@
 package pro.dracarys.LocketteX.listener;
 
-import com.licel.stringer.annotations.secured;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.block.DoubleChest;
@@ -16,16 +15,15 @@ import pro.dracarys.LocketteX.config.Message;
 import pro.dracarys.LocketteX.utils.ClaimUtil;
 import pro.dracarys.LocketteX.utils.Util;
 
-import java.util.Arrays;
-@secured
 public class SignChange implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onSignChange(SignChangeEvent e) {
-        if (Arrays.stream(Config.ENABLED_WORLDS.getStrings()).noneMatch(e.getPlayer().getWorld().getName()::equalsIgnoreCase)) {
+        if (!Util.isEnabledWorld(e.getPlayer().getWorld().getName())) {
             return;
         }
-        if (!e.getLine(0).equalsIgnoreCase(Config.SIGN_ID_LINE.getString())) return;
+        String line0 = e.getLine(0);
+        if (line0 == null || !line0.equalsIgnoreCase(Config.SIGN_ID_LINE.getString())) return;
         // From this point forward we're sure the player is trying to create a [Protect] sign
         if (!e.getPlayer().hasPermission(Config.PERMISSION_CREATION.getString())) {
             e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.CREATION_NOPERMISSION.getMessage());
@@ -45,7 +43,7 @@ public class SignChange implements Listener {
             org.bukkit.material.Sign sd = (org.bukkit.material.Sign) s.getData();
             attachedBlock = e.getBlock().getRelative(sd.getAttachedFace());
         } catch (ClassCastException ex) {
-            WallSign signData  = (WallSign) s.getBlockData();
+            WallSign signData = (WallSign) s.getBlockData();
             attachedBlock = e.getBlock().getRelative(signData.getFacing().getOppositeFace());
         }
         if (Config.PROTECT_CLAIMED_ONLY.getOption() && !ClaimUtil.isClaimedAt(attachedBlock.getLocation())) {

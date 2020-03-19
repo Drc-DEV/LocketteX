@@ -1,5 +1,6 @@
 package pro.dracarys.LocketteX.config.file;
 
+import org.bukkit.plugin.java.JavaPlugin;
 import pro.dracarys.LocketteX.LocketteX;
 import pro.dracarys.LocketteX.config.file.types.ConfigFile;
 import pro.dracarys.LocketteX.config.file.types.MessageFile;
@@ -10,11 +11,11 @@ import java.util.Map;
 public class ConfigManager {
 
     private static ConfigManager configManager;
-    private LocketteX plugin;
+    private JavaPlugin plugin;
 
     private static Map<String, CustomFile> fileMap = new HashMap<>();
 
-    public ConfigManager(LocketteX plugin) {
+    public ConfigManager(JavaPlugin plugin) {
         this.plugin = plugin;
         addFile(new MessageFile(plugin));
         addFile(new ConfigFile(plugin));

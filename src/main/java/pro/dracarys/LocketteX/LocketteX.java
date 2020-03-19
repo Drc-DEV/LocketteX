@@ -1,6 +1,5 @@
 package pro.dracarys.LocketteX;
 
-import com.licel.stringer.annotations.secured;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
@@ -64,7 +63,6 @@ public class LocketteX extends JavaPlugin {
     // Tell IntelliJ to not format this, by enabling formatter markers in comments (Pref-> Editor-> Code Style)
     // Made this way for easy editing/char replacing, using equal size chars for all consoles compatibility.
     //@formatter:off
-    @secured
     private void printPluginInfo() {
         Util.sendConsole(("\n"+
             " ⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬛⬛⬛⬜⬜⬜⬜⬜⬛⬛⬛\n" +

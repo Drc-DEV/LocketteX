@@ -1,6 +1,5 @@
 package pro.dracarys.LocketteX.listener;
 
-import com.licel.stringer.annotations.secured;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.*;
@@ -14,12 +13,12 @@ import pro.dracarys.LocketteX.api.LocketteXAPI;
 import pro.dracarys.LocketteX.config.Config;
 import pro.dracarys.LocketteX.config.Message;
 import pro.dracarys.LocketteX.utils.Util;
-@secured
+
 public class BlockPlace implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onPlace(BlockPlaceEvent e) {
-        if (Config.ENABLED_WORLDS.getStringList().stream().noneMatch(e.getPlayer().getWorld().getName()::equalsIgnoreCase)) {
+        if (!Util.isEnabledWorld(e.getPlayer().getWorld().getName())) {
             return;
         }
         if (Config.SNEAKCLICK_TO_CREATE.getOption() && e.getPlayer().isSneaking() && e.getPlayer().hasPermission(Config.PERMISSION_CREATION.getString()) && e.getBlock().getState() instanceof Sign && ((e.getBlockAgainst().getState() instanceof DoubleChest) || e.getBlockAgainst().getState() instanceof Chest)) {

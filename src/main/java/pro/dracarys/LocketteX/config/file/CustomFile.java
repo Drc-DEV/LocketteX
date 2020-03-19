@@ -1,7 +1,7 @@
 package pro.dracarys.LocketteX.config.file;
 
 import org.bukkit.configuration.file.YamlConfiguration;
-import pro.dracarys.LocketteX.LocketteX;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +12,7 @@ public abstract class CustomFile implements ICustomFile {
     private File file;
     private File configFile;
 
-    public CustomFile(LocketteX instance, String parent) {
+    public CustomFile(JavaPlugin instance, String parent) {
         if (!instance.getDataFolder().exists()) {
             instance.getDataFolder().mkdir();
         }

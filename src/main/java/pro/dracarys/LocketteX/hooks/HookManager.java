@@ -1,6 +1,5 @@
 package pro.dracarys.LocketteX.hooks;
 
-import com.licel.stringer.annotations.secured;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import pro.dracarys.LocketteX.LocketteX;
@@ -11,7 +10,6 @@ import pro.dracarys.LocketteX.utils.Util;
 import java.util.HashSet;
 import java.util.Set;
 
-@secured
 public class HookManager {
 
     private static HookManager hookManager;

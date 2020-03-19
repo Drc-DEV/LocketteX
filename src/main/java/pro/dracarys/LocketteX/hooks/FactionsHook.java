@@ -1,12 +1,10 @@
 package pro.dracarys.LocketteX.hooks;
 
-import com.licel.stringer.annotations.secured;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.Faction;
 import org.bukkit.Location;
 
-@secured
 public class FactionsHook {
 
     public static String getLeaderOfFactionAt(Location location) {

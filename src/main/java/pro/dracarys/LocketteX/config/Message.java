@@ -1,11 +1,9 @@
 package pro.dracarys.LocketteX.config;
 
-import com.licel.stringer.annotations.secured;
 import pro.dracarys.LocketteX.utils.Util;
 
 import java.util.List;
 
-@secured
 public enum Message {
 
     GENERAL_NOPERMISSION("no-permission", "&7[&4✕&7] &cYou don't have the required permission!"),

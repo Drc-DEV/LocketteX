@@ -12,13 +12,11 @@ import pro.dracarys.LocketteX.config.Message;
 import pro.dracarys.LocketteX.utils.ClaimUtil;
 import pro.dracarys.LocketteX.utils.Util;
 
-import java.util.Arrays;
-
 public class BlockBreak implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onBreak(BlockBreakEvent e) {
-        if (Arrays.stream(Config.ENABLED_WORLDS.getStrings()).noneMatch(e.getPlayer().getWorld().getName()::equalsIgnoreCase)) {
+        if (!Util.isEnabledWorld(e.getPlayer().getWorld().getName())) {
             return;
         }
         if (e.getPlayer().isOp() || (Config.LEADER_CAN_BREAK.getOption() && ClaimUtil.getLeaderAt(e.getBlock().getLocation()).equalsIgnoreCase(e.getPlayer().getName())))
