@@ -44,7 +44,7 @@ public class LocketteXAPI {
                     try {
                         org.bukkit.material.Sign sd = (org.bukkit.material.Sign) s.getData();
                         attachedBlock = block.getRelative(sd.getAttachedFace());
-                    } catch (ClassCastException ex) { // Use new API (fixes 1.15 errors)
+                    } catch (NullPointerException | ClassCastException ex) { // Use new API (fixes 1.15 errors)
                         WallSign ws = (WallSign) s.getBlockData();
                         attachedBlock = block.getRelative(ws.getFacing().getOppositeFace());
                     }
