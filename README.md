@@ -7,4 +7,4 @@
 - [x] Towny
 
 **Maven - Build Command:**
-`mvn clean install`
+`mvn clean package`
