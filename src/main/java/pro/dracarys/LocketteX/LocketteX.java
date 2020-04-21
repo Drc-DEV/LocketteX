@@ -45,6 +45,7 @@ public class LocketteX extends JavaPlugin {
         HookManager.getInstance().loadHooks();
         registerListeners(new InventoryOpen(), new BlockBreak(), new BlockPlace(), new SignChange());
         if (Config.USE_INV_MOVE.getOption()) registerListeners(new InventoryMoveItem());
+        if (Config.USE_CANCEL_EXPLOSIONS.getOption()) registerListeners(new Explosions());
     }
 
     @Override

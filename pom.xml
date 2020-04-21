@@ -7,7 +7,7 @@
     <groupId>pro.dracarys</groupId>
     <artifactId>LocketteX</artifactId>
     <name>LocketteX</name>
-    <version>1.5.4</version>
+    <version>1.5.5</version>
     <packaging>jar</packaging>
     <description>Protect your valuables!</description>
     <properties>
@@ -108,7 +108,7 @@
             <artifactId>factions</artifactId>
             <version>1.6.9.5</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/FactionsUUID.jar</systemPath>
+            <systemPath>${project.basedir}/lib/Factions-5504aff.jar</systemPath>
         </dependency>
         <!-- Towny -->
         <dependency>
