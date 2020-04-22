@@ -24,8 +24,8 @@ public class BlockBreak implements Listener {
         if (e.getBlock().getType().name().contains("WALL_SIGN")) {
             Sign s = (Sign) e.getBlock().getState();
             if (s.getLine(0).contains(Util.color(Config.SIGN_FORMATTED_LINES.getStrings()[0]))) {
-                if (!s.getLine(1).equalsIgnoreCase(e.getPlayer().getName())) {
-                    e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.SIGN_BREAK_DENIED.getMessage().replace("%owner%", s.getLine(1)));
+                if (!s.getLine(2).equalsIgnoreCase(e.getPlayer().getName())) {
+                    e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.SIGN_BREAK_DENIED.getMessage().replace("%owner%", s.getLine(2)));
                     e.setCancelled(true);
                     return;
                 } else {
