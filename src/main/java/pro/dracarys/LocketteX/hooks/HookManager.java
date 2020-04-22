@@ -46,8 +46,12 @@ public class HookManager {
                 }
             }
 
-            checkHook("Towny");
+            checkHook("FactionsX");
             checkHook("Factions");
+            checkHook("Towny");
+            if (checkHook("Lands")) {
+                LandsHook.init();
+            }
 
             if (!enabledHooks.isEmpty())
                 Util.sendConsole(Message.PREFIX.getMessage() + "&e" + Bukkit.getName() + " Hooked to: &f" + enabledHooks.toString().replaceAll("\\[\\]", ""));

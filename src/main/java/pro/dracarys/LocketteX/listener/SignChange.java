@@ -30,12 +30,10 @@ public class SignChange implements Listener {
             e.getBlock().breakNaturally();
             return;
         }
-        if (LocketteX.UseEconomy) {
-            if (LocketteX.econ.getBalance(e.getPlayer()) < Config.PRICE_CREATION.getInt()) {
-                e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.NOT_ENOUGH_MONEY.getMessage().replace("%price%", Config.PRICE_CREATION.getInt() + ""));
-                e.getBlock().breakNaturally();
-                return;
-            }
+        if (LocketteX.UseEconomy && LocketteX.econ.getBalance(e.getPlayer()) < Config.PRICE_CREATION.getInt()) {
+            e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.NOT_ENOUGH_MONEY.getMessage().replace("%price%", Config.PRICE_CREATION.getInt() + ""));
+            e.getBlock().breakNaturally();
+            return;
         }
         Block attachedBlock;
         Sign s = (Sign) e.getBlock().getState();

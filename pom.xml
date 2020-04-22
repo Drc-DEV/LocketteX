@@ -7,7 +7,7 @@
     <groupId>pro.dracarys</groupId>
     <artifactId>LocketteX</artifactId>
     <name>LocketteX</name>
-    <version>1.5.5</version>
+    <version>1.5.6</version>
     <packaging>jar</packaging>
     <description>Protect your valuables!</description>
     <properties>
@@ -70,20 +70,20 @@
     </build>
 
     <repositories>
-        <!-- SpigotMC repository -->
-        <repository>
-            <id>spigot-repo</id>
-            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
-        </repository>
-        <!-- CodeMC repository (for Parties & HolographicDisplays) -->
+        <!-- CodeMC repository -->
         <repository>
             <id>codemc-repo</id>
             <url>https://repo.codemc.org/repository/maven-public/</url>
         </repository>
-        <!-- Github auto-generated repositories -->
+        <!-- Jitpack repository -->
         <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
+        </repository>
+        <!-- SavageLabs repository -->
+        <repository>
+            <id>savagelabs</id>
+            <url>https://nexus.savagelabs.net/repository/maven-public/</url>
         </repository>
     </repositories>
 
@@ -98,7 +98,7 @@
         <!-- SpigotMC -->
         <dependency>
             <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
+            <artifactId>spigot</artifactId>
             <version>1.15.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
@@ -117,6 +117,20 @@
             <version>0.95.1.4</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/Towny-0.95.1.4.jar</systemPath>
+        </dependency>
+        <!-- Lands -->
+        <dependency>
+            <groupId>com.github.Angeschossen</groupId>
+            <artifactId>LandsAPI</artifactId>
+            <version>4.5.2.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- FactionsX -->
+        <dependency>
+            <groupId>net.prosavage.factionsx</groupId>
+            <artifactId>FactionsX</artifactId>
+            <version>0.2.1-PATREON</version>
+            <scope>provided</scope>
         </dependency>
         <!-- Vault -->
         <dependency>

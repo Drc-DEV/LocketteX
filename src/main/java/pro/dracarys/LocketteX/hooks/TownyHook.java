@@ -5,7 +5,7 @@ import org.bukkit.Location;
 
 public class TownyHook {
 
-    public static String getMayorOfTownAt(Location location) {
+    public static String getLeaderOfFactionAt(Location location) {
         if (TownyUniverse.isWilderness(location.getBlock())) return "";
         try {
             String townAtLoc = (TownyUniverse.getTownName(location));
