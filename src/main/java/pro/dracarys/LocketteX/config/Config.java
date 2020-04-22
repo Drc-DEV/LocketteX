@@ -17,7 +17,7 @@ public enum Config {
     PRICE_CREATION("GeneralSettings.price-creation", 500),
     SNEAKCLICK_TO_CREATE("GeneralSettings.shift-click-with-sign-to-protect", false),
     USE_INV_MOVE("GeneralSettings.use-inventory-move-event", false),
-    USE_CANCEL_EXPLOSIONS("GeneralSettings.protect-from-explosions", false),
+    USE_CANCEL_EXPLOSIONS("GeneralSettings.protect-from-explosions", true),
 
     PERMISSION_ADMIN("Permissions.permission-admin", "lockettex.admin"),
     PERMISSION_CREATION("Permissions.permission-creation", "lockettex.create"),

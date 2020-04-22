@@ -70,7 +70,7 @@ public class SignChange implements Listener {
         }
         if (LocketteX.UseEconomy) {
             LocketteX.econ.withdrawPlayer(e.getPlayer(), Config.PRICE_CREATION.getInt());
-            e.getPlayer().sendMessage(Message.CHEST_PROTECT_SUCCESS_ECON.getMessage().replace("%price%", Config.PRICE_CREATION.getInt() + ""));
+            e.getPlayer().sendMessage(Message.CHEST_PROTECT_SUCCESS_ECON.getMessage().replace("%price%", LocketteX.econ.format(Config.PRICE_CREATION.getInt()) + ""));
         } else {
             e.getPlayer().sendMessage(Message.CHEST_PROTECT_SUCCESS.getMessage());
         }
