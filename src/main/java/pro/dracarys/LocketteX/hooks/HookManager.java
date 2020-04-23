@@ -61,15 +61,17 @@ public class HookManager {
 
     private boolean checkHook(String pluginName) {
         if (Bukkit.getPluginManager().isPluginEnabled(pluginName)) {
-            if (Bukkit.getPluginManager().getPlugin(pluginName).getDescription().getAuthors().contains("drtshock")
-                    || Bukkit.getPluginManager().getPlugin(pluginName).getDescription().getAuthors().contains("Benzimmer")) {
-                LocketteX.isMCoreFactions = false;
-            } else {
-                Util.sendConsole("&4| X X X X X | &cOld MassiveCraft-Factions detected! &4| X X X X X |");
-                Util.sendConsole("&7- &fConsider switching to a more modern Factions solution, like &eFactionsX&7 -");
-                Util.sendConsole("&7- &fGet FactionsX here &fhttps://patreon.com/ProSavage&7 -");
-                Util.sendConsole("&4| X X X X X | &cOld MassiveCraft-Factions detected! &4| X X X X X |");
-                LocketteX.isMCoreFactions = true;
+            if (pluginName.equalsIgnoreCase("Factions")) {
+                if (Bukkit.getPluginManager().getPlugin(pluginName).getDescription().getAuthors().contains("drtshock")
+                        || Bukkit.getPluginManager().getPlugin(pluginName).getDescription().getAuthors().contains("Benzimmer")) {
+                    LocketteX.isMCoreFactions = false;
+                } else {
+                    Util.sendConsole("&4| X X X X X | &cOld MassiveCraft-Factions detected! &4| X X X X X |");
+                    Util.sendConsole("&7- &fConsider switching to a more modern Factions solution, like &eFactionsX&7 -");
+                    Util.sendConsole("&7- &fGet FactionsX here &fhttps://patreon.com/ProSavage&7 -");
+                    Util.sendConsole("&4| X X X X X | &cOld MassiveCraft-Factions detected! &4| X X X X X |");
+                    LocketteX.isMCoreFactions = true;
+                }
             }
             enabledHooks.add(pluginName);
             return true;
