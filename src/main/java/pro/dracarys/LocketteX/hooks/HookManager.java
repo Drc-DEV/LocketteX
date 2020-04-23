@@ -61,6 +61,13 @@ public class HookManager {
 
     private boolean checkHook(String pluginName) {
         if (Bukkit.getPluginManager().isPluginEnabled(pluginName)) {
+            if (Bukkit.getPluginManager().getPlugin(pluginName).getDescription().getAuthors().contains("drtshock")
+                    || Bukkit.getPluginManager().getPlugin(pluginName).getDescription().getAuthors().contains("Benzimmer")) {
+                LocketteX.isMCoreFactions = false;
+            } else {
+                Util.sendConsole("&cOld MassiveCraft-Factions detected! You should consider switching to a more modern Factions solution, like &eFactionsX");
+                LocketteX.isMCoreFactions = true;
+            }
             enabledHooks.add(pluginName);
             return true;
         } else {

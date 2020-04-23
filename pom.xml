@@ -7,7 +7,7 @@
     <groupId>pro.dracarys</groupId>
     <artifactId>LocketteX</artifactId>
     <name>LocketteX</name>
-    <version>1.5.6</version>
+    <version>1.5.7</version>
     <packaging>jar</packaging>
     <description>Protect your valuables!</description>
     <properties>
@@ -131,6 +131,21 @@
             <artifactId>FactionsX</artifactId>
             <version>0.2.1-PATREON</version>
             <scope>provided</scope>
+        </dependency>
+        <!-- MCore Factions -->
+        <dependency>
+            <groupId>com.massivecraft</groupId>
+            <artifactId>massivecore</artifactId>
+            <scope>system</scope>
+            <version>2.14.1-SNAPSHOT</version>
+            <systemPath>${project.basedir}/lib/MassiveCore.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.massivecraft.</groupId>
+            <artifactId>factions</artifactId>
+            <scope>system</scope>
+            <version>2.14.1-SNAPSHOT</version>
+            <systemPath>${project.basedir}/lib/Factions(MCore).jar</systemPath>
         </dependency>
         <!-- Vault -->
         <dependency>

@@ -18,6 +18,7 @@ public class LocketteX extends JavaPlugin {
 
     public static boolean UseEconomy = false;
     public static Economy econ = null;
+    public static boolean isMCoreFactions = false;
 
     private ConfigManager configManager;
 
@@ -42,10 +43,11 @@ public class LocketteX extends JavaPlugin {
             cmd.setTabCompleter(executor);
         }
         printPluginInfo();
-        HookManager.getInstance().loadHooks();
-        registerListeners(new InventoryOpen(), new BlockBreak(), new BlockPlace(), new SignChange());
-        if (Config.USE_INV_MOVE.getOption()) registerListeners(new InventoryMoveItem());
-        if (Config.USE_CANCEL_EXPLOSIONS.getOption()) registerListeners(new Explosions());
+        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            HookManager.getInstance().loadHooks();
+            registerListeners(new InventoryOpen(), new BlockBreak(), new BlockPlace(), new SignChange(), new Explosions());
+            if (Config.USE_INV_MOVE.getOption()) registerListeners(new InventoryMoveItem());
+        }, 1);
     }
 
     @Override

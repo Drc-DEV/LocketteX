@@ -1,10 +1,7 @@
 package pro.dracarys.LocketteX.utils;
 
 import org.bukkit.Location;
-import pro.dracarys.LocketteX.hooks.FactionsHook;
-import pro.dracarys.LocketteX.hooks.FactionsXHook;
-import pro.dracarys.LocketteX.hooks.LandsHook;
-import pro.dracarys.LocketteX.hooks.TownyHook;
+import pro.dracarys.LocketteX.hooks.*;
 
 public class ClaimUtil {
 
@@ -17,6 +14,8 @@ public class ClaimUtil {
             return FactionsXHook.getLeaderOfFactionAt(location);
         } else if (LandsHook.isSetup()) {
             return LandsHook.getLeaderOfFactionAt(location);
+        } else if (MCoreFactionsHook.isSetup()) {
+            return MCoreFactionsHook.getLeaderOfFactionAt(location);
         } else {
             return "";
         }
@@ -31,6 +30,8 @@ public class ClaimUtil {
             return FactionsXHook.isClaimed(location);
         } else if (LandsHook.isSetup()) {
             return LandsHook.isClaimed(location);
+        } else if (MCoreFactionsHook.isSetup()) {
+            return MCoreFactionsHook.isClaimed(location);
         } else {
             return false;
         }

@@ -14,7 +14,8 @@ public class Explosions implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onExplosion(EntityExplodeEvent event) {
-        if (!Util.isEnabledWorld(event.getEntity().getWorld().getName())) return;
+        if (!Config.USE_CANCEL_EXPLOSIONS.getOption() || !Util.isEnabledWorld(event.getEntity().getWorld().getName()))
+            return;
         List<Block> toExplode = event.blockList();
         for (Block block : toExplode) {
             if (!block.getType().name().contains("WALL_SIGN")) continue;
