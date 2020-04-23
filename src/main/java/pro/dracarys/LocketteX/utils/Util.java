@@ -2,10 +2,12 @@ package pro.dracarys.LocketteX.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.block.Block;
+import org.bukkit.block.*;
 import org.bukkit.block.data.Directional;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import pro.dracarys.LocketteX.LocketteX;
 import pro.dracarys.LocketteX.config.Config;
@@ -96,14 +98,14 @@ public class Util {
 
     public static Block getAttached(Block b) {
         try {
-            if(b.getBlockData() instanceof Directional) {
+            if (b.getBlockData() instanceof Directional) {
                 Directional directional = (Directional) b.getBlockData();
                 return b.getRelative(directional.getFacing().getOppositeFace());
-            }else {
+            } else {
                 //No Directionalable
                 return null;
             }
-        } catch (NullPointerException|ClassCastException e) {
+        } catch (NullPointerException | ClassCastException e) {
             return null;
         }
     }
@@ -115,23 +117,44 @@ public class Util {
     }
 
     // Cache expired players, to avoid excessive offlineplayer lookups
-    private static Map<String,Boolean> expiredMap = new HashMap<>();
+    private static Map<String, Boolean> expiredMap = new HashMap<>();
 
     // UPDATE TO UUID
     public static boolean isExpired(String ownerName) {
         if (!Config.EXPIRE_ENABLED.getOption()) return false;
         if (expiredMap.containsKey(ownerName)) return expiredMap.get(ownerName);
         OfflinePlayer player = Bukkit.getOfflinePlayer(ownerName);
-        if (player == null || !player.hasPlayedBefore()) {
-            expiredMap.put(ownerName,true);
+        if (!player.hasPlayedBefore()) {
+            expiredMap.put(ownerName, true);
             return true;
         }
         if (player.isOnline() || player.getFirstPlayed() == player.getLastPlayed()) {
-            expiredMap.put(ownerName,false);
+            expiredMap.put(ownerName, false);
             return false;
         }
         return System.currentTimeMillis() - player.getLastPlayed() >= Config.EXPIRE_TIME.getInt() * 86400 * 1000;
+    }
 
+    public static Location getHolderLocation(InventoryHolder holder) {
+        try {
+            return holder.getInventory().getLocation();
+        } catch (NoSuchMethodError ex) {
+            if (holder instanceof Chest) {
+                return ((Chest) holder).getBlock().getLocation();
+            } else if (holder instanceof DoubleChest) {
+                DoubleChest dchest = ((DoubleChest) holder);
+                return ((Chest) dchest.getLeftSide()).getBlock().getLocation();
+            } else if (holder instanceof Dispenser) {
+                return ((Dispenser) holder).getBlock().getLocation();
+            } else if (holder instanceof Dropper) {
+                return ((Dropper) holder).getBlock().getLocation();
+            } else if (holder instanceof Furnace) {
+                return ((Furnace) holder).getBlock().getLocation();
+            } else if (holder instanceof BrewingStand) {
+                return ((BrewingStand) holder).getBlock().getLocation();
+            }
+        }
+        return null;
     }
 
 }

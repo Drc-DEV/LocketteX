@@ -1,10 +1,10 @@
 package pro.dracarys.LocketteX.listener;
 
-import org.bukkit.block.Container;
 import org.bukkit.block.Sign;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.inventory.InventoryHolder;
 import pro.dracarys.LocketteX.api.LocketteXAPI;
 import pro.dracarys.LocketteX.config.Config;
 import pro.dracarys.LocketteX.config.Message;
@@ -31,9 +31,8 @@ public class BlockBreak implements Listener {
                     return;
                 }
             }
-        } else if (e.getBlock().getState() instanceof Container) {
-            Container chest = (Container) e.getBlock().getState();
-            String owner = LocketteXAPI.getChestOwner(chest.getInventory().getHolder());
+        } else if (e.getBlock().getState() instanceof InventoryHolder) {
+            String owner = LocketteXAPI.getChestOwner(e.getBlock().getState());
             if (owner != null && !owner.equalsIgnoreCase(e.getPlayer().getName())) {
                 e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.CHEST_BREAK_DENIED.getMessage().replace("%owner%", owner));
                 e.setCancelled(true);

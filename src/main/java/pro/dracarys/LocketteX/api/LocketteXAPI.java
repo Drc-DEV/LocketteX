@@ -13,32 +13,29 @@ import java.util.List;
 
 public class LocketteXAPI {
 
-    public static boolean isProtected(InventoryHolder holder) {
-        return getChestOwner(holder) != null;
+    public static boolean isProtected(BlockState blockState) {
+        return getChestOwner(blockState) != null;
     }
 
-    public static boolean hasChestAccess(Player p, InventoryHolder holder) {
-        String owner = getChestOwner(holder);
+    public static boolean hasChestAccess(Player p, BlockState blockState) {
+        String owner = getChestOwner(blockState);
         return owner != null && owner.equalsIgnoreCase(p.getName());
     }
 
-    public static String getChestOwner(InventoryHolder holder) {
+    public static String getChestOwner(BlockState blockState) {
         List<Block> chestBlocks = new ArrayList<>();
-        if (holder instanceof DoubleChest) {
-            DoubleChest dchest = (DoubleChest) holder;
+        if (blockState instanceof DoubleChest) {
+            DoubleChest dchest = (DoubleChest) blockState;
             Chest chest1 = (Chest) dchest.getRightSide();
             chestBlocks.add(chest1.getBlock());
             Chest chest2 = (Chest) dchest.getLeftSide();
             chestBlocks.add(chest2.getBlock());
-        } else if (holder instanceof Chest) {
-            Chest chest = (Chest) holder;
-            chestBlocks.add(chest.getBlock());
-        } else if (holder instanceof Container) {
-            Container chest = (Container) holder;
+        } else if (blockState instanceof Chest) {
+            Chest chest = (Chest) blockState;
             chestBlocks.add(chest.getBlock());
         } else {
-            // Not a chest/doublechest
-            return null;
+            if (!(blockState instanceof InventoryHolder)) return null;
+            chestBlocks.add(blockState.getBlock());
         }
         for (Block chestBlock : chestBlocks) {
             for (Block block : Util.getBlocks(chestBlock, 1)) {

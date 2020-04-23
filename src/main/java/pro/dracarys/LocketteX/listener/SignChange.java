@@ -1,12 +1,12 @@
 package pro.dracarys.LocketteX.listener;
 
 import org.bukkit.block.Block;
-import org.bukkit.block.Container;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.type.WallSign;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
+import org.bukkit.inventory.InventoryHolder;
 import pro.dracarys.LocketteX.LocketteX;
 import pro.dracarys.LocketteX.api.LocketteXAPI;
 import pro.dracarys.LocketteX.config.Config;
@@ -48,9 +48,8 @@ public class SignChange implements Listener {
             e.getBlock().breakNaturally();
             return;
         }
-        if ((attachedBlock.getState() instanceof Container)) {
-            Container chest = (Container) attachedBlock.getState();
-            String owner = LocketteXAPI.getChestOwner(chest.getInventory().getHolder());
+        if ((attachedBlock.getState() instanceof InventoryHolder)) {
+            String owner = LocketteXAPI.getChestOwner(attachedBlock.getState());
             if (owner != null) {
                 e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.CHEST_ALREADY_PROTECTED.getMessage().replace("%owner%", owner));
                 e.getBlock().breakNaturally();
@@ -64,7 +63,7 @@ public class SignChange implements Listener {
         for (String ln : Config.SIGN_FORMATTED_LINES.getStrings()) {
             e.setLine(num, Util.color(ln.replace("%owner%", e.getPlayer().getName())));
             num++;
-            if (num >= 5) // Sign has 4 lines
+            if (num >= 4) // Sign has 4 lines
                 break;
         }
         if (LocketteX.UseEconomy) {

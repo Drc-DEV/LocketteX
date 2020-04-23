@@ -7,7 +7,7 @@ import java.util.List;
 public enum Message {
 
     GENERAL_NOPERMISSION("no-permission", "&7[&4✕&7] &cYou don't have the required permission!"),
-    CREATION_NOPERMISSION("no-permission-protection", "&7[&4✕&7] &cYou don't have the permission to protect chests!"),
+    CREATION_NOPERMISSION("no-permission-protection", "&7[&4✕&7] &cYou don't have the permission to protect Containers!"),
     NONE("none", "N/A"),
     PREFIX("prefix", "&a&lProtect &f➤ "),
     PREFIX_DEBUG("prefix-debug", "&7[Protect] &e<DEBUG> "),
@@ -20,16 +20,16 @@ public enum Message {
 
     NOT_ENOUGH_MONEY("not-enough-money", "&7[&4✕&7] &cYou must have &e%price%$&c in order to protect a chest."),
 
-    CANT_PROTECT_ON_UNCLAIMED("cant-protect-in-unclaimed-land", "&7[&4✕&7] &cYou can't protect Chests in unclaimed land!"),
+    CANT_PROTECT_ON_UNCLAIMED("cant-protect-in-unclaimed-land", "&7[&4✕&7] &cYou can't protect Containers in unclaimed land!"),
     CANT_PROTECT_THIS_CONTAINER("cant-protect-this-container", "&7[&4✕&7] &cYou can't protect this type of Container!"),
-    CHEST_ALREADY_PROTECTED("chest-already-protected", "&7[&4✕&7] &cThis chest was already protected by &e%owner% &che must break the sign first!"),
-    CHEST_BREAK_DENIED("chest-break-denied", "&7[&4✕&7] &cThis chest is protected! Only &e%owner% &ccan break it!"),
+    CHEST_ALREADY_PROTECTED("chest-already-protected", "&7[&4✕&7] &cThis Container was already protected by &e%owner% &che must break the sign first!"),
+    CHEST_BREAK_DENIED("chest-break-denied", "&7[&4✕&7] &cThis Container is protected! Only &e%owner% &ccan break it!"),
     SIGN_BREAK_DENIED("sign-break-denied", "&7[&4✕&7] &cOnly &e%owner% &ccan break this sign!"),
-    CHEST_OPEN_DENIED("chest-open-denied", "&7[&4✕&7] &cThis chest is protected! Only &e%owner% &ccan open it!"),
-    HOPPER_PLACE_DENIED("hopper-place-denied", "&7[&4✕&7] &cYou can't place Hoppers near a protected chest!"),
+    CHEST_OPEN_DENIED("chest-open-denied", "&7[&4✕&7] &cThis Container is protected! Only &e%owner% &ccan open it!"),
+    HOPPER_PLACE_DENIED("hopper-place-denied", "&7[&4✕&7] &cYou can't place Hoppers near a protected Container!"),
 
-    CHEST_PROTECT_SUCCESS_ECON("chest-protect-success-econ", "&7[&a✔&7] &aChest successfully protected! You payed &e%price%$&a!"),
-    CHEST_PROTECT_SUCCESS("chest-protect-success", "&7[&a✔&7] &aChest successfully protected!"),
+    CHEST_PROTECT_SUCCESS_ECON("chest-protect-success-econ", "&7[&a✔&7] &aContainer successfully protected! You payed &e%price%$&a!"),
+    CHEST_PROTECT_SUCCESS("chest-protect-success", "&7[&a✔&7] &aContainer successfully protected!"),
 
     ERROR_HOOK_FAILED("Hooks.generic-hook-failed", "&7[&4✕&7] &cCould not hook to %plugin%. %plugin% support is disabled"),
     ERROR_ECON_INVALID("Hooks.economy-hook-failed", "&7[&4✕&7] &cEconomy support has been disabled! Error while hooking to Vault, or no Economy Service was found!");

@@ -1,11 +1,12 @@
 package pro.dracarys.LocketteX.listener;
 
-import org.bukkit.block.Container;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.inventory.InventoryHolder;
 import pro.dracarys.LocketteX.api.LocketteXAPI;
 import pro.dracarys.LocketteX.config.Config;
 import pro.dracarys.LocketteX.config.Message;
@@ -19,13 +20,17 @@ public class InventoryOpen implements Listener {
         if (!Util.isEnabledWorld(e.getPlayer().getWorld().getName())) {
             return;
         }
-        if (!(e.getPlayer() instanceof Player) || e.getInventory().getHolder() == null || !(e.getInventory().getHolder() instanceof Container)) {
+        if (!(e.getPlayer() instanceof Player) || e.getInventory().getHolder() == null) {
             return;
         }
         Player p = (Player) e.getPlayer();
         if (p.isOp() || (Config.PROTECT_CLAIMED_ONLY.getOption() && ClaimUtil.isClaimedAt(p.getLocation())) || (Config.LEADER_CAN_OPEN.getOption() && ClaimUtil.getLeaderAt(p.getLocation()).equalsIgnoreCase(p.getName())))
             return;
-        String owner = LocketteXAPI.getChestOwner(e.getInventory().getHolder());
+        InventoryHolder holder = e.getInventory().getHolder();
+        assert holder != null;
+        Location loc = Util.getHolderLocation(holder);
+        assert loc != null;
+        String owner = LocketteXAPI.getChestOwner(loc.getBlock().getState());
         if (owner != null && !p.getName().equalsIgnoreCase(owner)) {
             p.sendMessage(Message.PREFIX.getMessage() + Message.CHEST_OPEN_DENIED.getMessage().replace("%owner%", owner));
             e.setCancelled(true);

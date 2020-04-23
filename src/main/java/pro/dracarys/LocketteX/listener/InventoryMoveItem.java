@@ -1,11 +1,13 @@
 package pro.dracarys.LocketteX.listener;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Hopper;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.inventory.InventoryHolder;
 import pro.dracarys.LocketteX.api.LocketteXAPI;
 import pro.dracarys.LocketteX.config.Config;
 import pro.dracarys.LocketteX.utils.Util;
@@ -14,9 +16,14 @@ public class InventoryMoveItem implements Listener {
 
     @EventHandler
     public void onHopper(InventoryMoveItemEvent e) {
-        if (!Config.USE_INV_MOVE.getOption() || !e.getDestination().getType().equals(InventoryType.HOPPER) || !Util.isEnabledWorld(e.getDestination().getLocation().getWorld().getName()))
+        if (!Config.USE_INV_MOVE.getOption() || !e.getDestination().getType().equals(InventoryType.HOPPER))
             return;
-        if (LocketteXAPI.getChestOwner(e.getSource().getHolder()) != null) {
+        InventoryHolder holder = e.getSource().getHolder();
+        assert holder != null;
+        Location loc = Util.getHolderLocation(holder);
+        assert loc != null;
+        if (!Util.isEnabledWorld(loc.getWorld().getName())) return;
+        if (LocketteXAPI.getChestOwner(loc.getBlock().getState()) != null) {
             e.setCancelled(true);
             if (e.getDestination().getHolder() instanceof Hopper) {
                 Hopper hopper = (Hopper) e.getDestination().getHolder();
