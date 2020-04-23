@@ -60,7 +60,12 @@ public class LocketteXAPI {
                             try {
                                 // Strip color so that you can add colors to the name
                                 String owner = ChatColor.stripColor(s.getLine(2));
-                                return Util.isExpired(owner) ? owner : null;
+                                if (Util.isExpired(owner)) {
+                                    block.breakNaturally(); // Break sign since protection expired
+                                    return null;
+                                } else {
+                                    return owner;
+                                }
                             } catch (Exception ex) {
                                 //ignored
                             }
