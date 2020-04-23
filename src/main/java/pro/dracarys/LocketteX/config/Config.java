@@ -23,6 +23,9 @@ public enum Config {
     }),
     USE_CANCEL_EXPLOSIONS("GeneralSettings.protect-from-explosions", true),
 
+    EXPIRE_ENABLED("Expiration.enabled", false),
+    EXPIRE_TIME("Expiration.disable-protection-after-x-days", 90),
+
     PERMISSION_ADMIN("Permissions.permission-admin", "lockettex.admin"),
     PERMISSION_CREATION("Permissions.permission-creation", "lockettex.create"),
 

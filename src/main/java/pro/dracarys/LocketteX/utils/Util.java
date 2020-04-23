@@ -2,6 +2,7 @@ package pro.dracarys.LocketteX.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Directional;
 import org.bukkit.entity.Player;
@@ -10,10 +11,7 @@ import pro.dracarys.LocketteX.LocketteX;
 import pro.dracarys.LocketteX.config.Config;
 import pro.dracarys.LocketteX.config.Message;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class Util {
 
@@ -114,6 +112,26 @@ public class Util {
         boolean output = Arrays.stream(Config.ENABLED_WORLDS.getStrings()).anyMatch(worldName::equalsIgnoreCase);
         if (Config.ENABLED_WORLDS_ASBLACKLIST.getBoolean()) return !output;
         return output;
+    }
+
+    // Cache expired players, to avoid excessive offlineplayer lookups
+    private static Map<String,Boolean> expiredMap = new HashMap<>();
+
+    // UPDATE TO UUID
+    public static boolean isExpired(String ownerName) {
+        if (!Config.EXPIRE_ENABLED.getOption()) return false;
+        if (expiredMap.containsKey(ownerName)) return expiredMap.get(ownerName);
+        OfflinePlayer player = Bukkit.getOfflinePlayer(ownerName);
+        if (player == null || !player.hasPlayedBefore()) {
+            expiredMap.put(ownerName,true);
+            return true;
+        }
+        if (player.isOnline() || player.getFirstPlayed() == player.getLastPlayed()) {
+            expiredMap.put(ownerName,false);
+            return false;
+        }
+        return System.currentTimeMillis() - player.getLastPlayed() >= Config.EXPIRE_TIME.getInt() * 86400 * 1000;
+
     }
 
 }

@@ -1,10 +1,7 @@
 package pro.dracarys.LocketteX.api;
 
 import org.bukkit.ChatColor;
-import org.bukkit.block.Block;
-import org.bukkit.block.Chest;
-import org.bukkit.block.DoubleChest;
-import org.bukkit.block.Sign;
+import org.bukkit.block.*;
 import org.bukkit.block.data.type.WallSign;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryHolder;
@@ -15,6 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LocketteXAPI {
+
+    public static boolean isProtected(InventoryHolder holder) {
+        return getChestOwner(holder) != null;
+    }
 
     public static boolean hasChestAccess(Player p, InventoryHolder holder) {
         String owner = getChestOwner(holder);
@@ -31,6 +32,9 @@ public class LocketteXAPI {
             chestBlocks.add(chest2.getBlock());
         } else if (holder instanceof Chest) {
             Chest chest = (Chest) holder;
+            chestBlocks.add(chest.getBlock());
+        } else if (holder instanceof Container) {
+            Container chest = (Container) holder;
             chestBlocks.add(chest.getBlock());
         } else {
             // Not a chest/doublechest
@@ -55,7 +59,8 @@ public class LocketteXAPI {
                             }
                             try {
                                 // Strip color so that you can add colors to the name
-                                return (ChatColor.stripColor(s.getLine(2)));
+                                String owner = ChatColor.stripColor(s.getLine(2));
+                                return Util.isExpired(owner) ? owner : null;
                             } catch (Exception ex) {
                                 //ignored
                             }

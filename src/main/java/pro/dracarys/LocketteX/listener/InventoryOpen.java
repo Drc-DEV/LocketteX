@@ -1,7 +1,6 @@
 package pro.dracarys.LocketteX.listener;
 
-import org.bukkit.block.Chest;
-import org.bukkit.block.DoubleChest;
+import org.bukkit.block.Container;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -20,7 +19,7 @@ public class InventoryOpen implements Listener {
         if (!Util.isEnabledWorld(e.getPlayer().getWorld().getName())) {
             return;
         }
-        if (!(e.getPlayer() instanceof Player) || e.getInventory().getHolder() == null || !(e.getInventory().getHolder() instanceof Chest) && !(e.getInventory().getHolder() instanceof DoubleChest)) {
+        if (!(e.getPlayer() instanceof Player) || e.getInventory().getHolder() == null || !(e.getInventory().getHolder() instanceof Container)) {
             return;
         }
         Player p = (Player) e.getPlayer();

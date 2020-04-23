@@ -1,8 +1,7 @@
 package pro.dracarys.LocketteX.listener;
 
 import org.bukkit.block.Block;
-import org.bukkit.block.Chest;
-import org.bukkit.block.DoubleChest;
+import org.bukkit.block.Container;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.type.WallSign;
 import org.bukkit.event.EventHandler;
@@ -49,8 +48,8 @@ public class SignChange implements Listener {
             e.getBlock().breakNaturally();
             return;
         }
-        if ((attachedBlock.getState() instanceof DoubleChest) || attachedBlock.getState() instanceof Chest) {
-            Chest chest = (Chest) attachedBlock.getState();
+        if ((attachedBlock.getState() instanceof Container)) {
+            Container chest = (Container) attachedBlock.getState();
             String owner = LocketteXAPI.getChestOwner(chest.getInventory().getHolder());
             if (owner != null) {
                 e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.CHEST_ALREADY_PROTECTED.getMessage().replace("%owner%", owner));

@@ -1,7 +1,6 @@
 package pro.dracarys.LocketteX.listener;
 
-import org.bukkit.block.Chest;
-import org.bukkit.block.DoubleChest;
+import org.bukkit.block.Container;
 import org.bukkit.block.Sign;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -32,8 +31,8 @@ public class BlockBreak implements Listener {
                     return;
                 }
             }
-        } else if ((e.getBlock().getState() instanceof DoubleChest) || e.getBlock().getState() instanceof Chest) {
-            Chest chest = (Chest) e.getBlock().getState();
+        } else if (e.getBlock().getState() instanceof Container) {
+            Container chest = (Container) e.getBlock().getState();
             String owner = LocketteXAPI.getChestOwner(chest.getInventory().getHolder());
             if (owner != null && !owner.equalsIgnoreCase(e.getPlayer().getName())) {
                 e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.CHEST_BREAK_DENIED.getMessage().replace("%owner%", owner));

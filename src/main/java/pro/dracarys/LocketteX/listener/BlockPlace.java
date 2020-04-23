@@ -21,14 +21,12 @@ public class BlockPlace implements Listener {
         if (!Util.isEnabledWorld(e.getPlayer().getWorld().getName())) {
             return;
         }
-        if (Config.SNEAKCLICK_TO_CREATE.getOption() && e.getPlayer().isSneaking() && e.getPlayer().hasPermission(Config.PERMISSION_CREATION.getString()) && e.getBlock().getState() instanceof Sign && ((e.getBlockAgainst().getState() instanceof DoubleChest) || e.getBlockAgainst().getState() instanceof Chest)) {
-            if (LocketteX.UseEconomy) {
-                if (LocketteX.econ.getBalance(e.getPlayer()) < Config.PRICE_CREATION.getInt()) {
-                    e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.NOT_ENOUGH_MONEY.getMessage().replace("%price%", Config.PRICE_CREATION.getInt() + ""));
-                    return;
-                }
+        if (Config.SNEAKCLICK_TO_CREATE.getOption() && e.getPlayer().isSneaking() && e.getPlayer().hasPermission(Config.PERMISSION_CREATION.getString()) && e.getBlock().getState() instanceof Sign && e.getBlockAgainst().getState() instanceof Container) {
+            if (LocketteX.UseEconomy && LocketteX.econ.getBalance(e.getPlayer()) < Config.PRICE_CREATION.getInt()) {
+                e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.NOT_ENOUGH_MONEY.getMessage().replace("%price%", LocketteX.econ.format(Config.PRICE_CREATION.getInt())));
+                return;
             }
-            Chest chest = (Chest) e.getBlockAgainst().getState();
+            Container chest = (Container) e.getBlockAgainst().getState();
             String owner = LocketteXAPI.getChestOwner(chest.getInventory().getHolder());
             if (owner == null) { // Handle only cases where the chest is not already protected
                 Sign s = (Sign) e.getBlock().getState();
@@ -48,7 +46,7 @@ public class BlockPlace implements Listener {
                 Bukkit.getScheduler().runTaskLater(LocketteX.getInstance(), () -> e.getPlayer().closeInventory(), 1);
                 if (LocketteX.UseEconomy) {
                     LocketteX.econ.withdrawPlayer(e.getPlayer(), Config.PRICE_CREATION.getInt());
-                    e.getPlayer().sendMessage(Message.CHEST_PROTECT_SUCCESS_ECON.getMessage().replace("%price%", Config.PRICE_CREATION.getInt() + ""));
+                    e.getPlayer().sendMessage(Message.CHEST_PROTECT_SUCCESS_ECON.getMessage().replace("%price%", LocketteX.econ.format(Config.PRICE_CREATION.getInt())));
                 } else {
                     e.getPlayer().sendMessage(Message.CHEST_PROTECT_SUCCESS.getMessage());
                 }
