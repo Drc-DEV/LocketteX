@@ -1,11 +1,13 @@
 package pro.dracarys.LocketteX.utils;
 
 import org.bukkit.Location;
+import pro.dracarys.LocketteX.config.Config;
 import pro.dracarys.LocketteX.hooks.*;
 
 public class ClaimUtil {
 
     public static String getLeaderAt(Location location) {
+        if (Config.DISABLE_CLAIM_HOOKS.getOption()) return "";
         if (FactionsHook.isSetup()) {
             return FactionsHook.getLeaderOfFactionAt(location);
         } else if (TownyHook.isSetup()) {
@@ -22,6 +24,7 @@ public class ClaimUtil {
     }
 
     public static boolean isClaimedAt(Location location) {
+        if (Config.DISABLE_CLAIM_HOOKS.getOption()) return false;
         if (FactionsHook.isSetup()) {
             return FactionsHook.isClaimed(location);
         } else if (TownyHook.isSetup()) {

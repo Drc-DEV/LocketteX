@@ -16,12 +16,17 @@ public enum Config {
     USE_ECONOMY("GeneralSettings.use-economy", true),
     PRICE_CREATION("GeneralSettings.price-creation", 500),
     SNEAKCLICK_TO_CREATE("GeneralSettings.shift-click-with-sign-to-protect", false),
-    USE_INV_MOVE("GeneralSettings.use-inventory-move-event", false),
+    USE_INV_MOVE("GeneralSettings.protect-from-hoppers.enabled", false),
+    DESC_HOPPER_PROTECTION("GeneralSettings.protect-from-hoppers.desc", new String[]{
+            "Enables a basic protection from hoppers stealing items from protected containers," + "\n"
+                    + "this can have some impact on performance and only works if inventory move event caused by hoppers is enabled in the spigot configuration."
+    }),
     USE_CANCEL_EXPLOSIONS("GeneralSettings.protect-from-explosions", true),
 
     PERMISSION_ADMIN("Permissions.permission-admin", "lockettex.admin"),
     PERMISSION_CREATION("Permissions.permission-creation", "lockettex.create"),
 
+    DISABLE_CLAIM_HOOKS("Hooks.disable-hooking-to-claim-plugins", false),
     LEADER_CAN_BREAK("Hooks.leader-bypasses-break-protection", false),
     LEADER_CAN_OPEN("Hooks.leader-bypasses-open-protection", false),
     PROTECT_CLAIMED_ONLY("Hooks.disable-protection-on-unclaimed-land", false),
