@@ -65,7 +65,10 @@ public class HookManager {
                     || Bukkit.getPluginManager().getPlugin(pluginName).getDescription().getAuthors().contains("Benzimmer")) {
                 LocketteX.isMCoreFactions = false;
             } else {
-                Util.sendConsole("&cOld MassiveCraft-Factions detected! You should consider switching to a more modern Factions solution, like &eFactionsX");
+                Util.sendConsole("&4| X X X X X | &cOld MassiveCraft-Factions detected! &4| X X X X X |");
+                Util.sendConsole("&7- &fConsider switching to a more modern Factions solution, like &eFactionsX&7 -");
+                Util.sendConsole("&7- &fGet FactionsX here &fhttps://patreon.com/ProSavage&7 -");
+                Util.sendConsole("&4| X X X X X | &cOld MassiveCraft-Factions detected! &4| X X X X X |");
                 LocketteX.isMCoreFactions = true;
             }
             enabledHooks.add(pluginName);
