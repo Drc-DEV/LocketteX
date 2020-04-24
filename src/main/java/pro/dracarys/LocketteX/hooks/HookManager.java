@@ -8,17 +8,17 @@ import java.util.Set;
 
 public class HookManager {
 
-    private Map<String, PluginHook<?>> hookedPlugins;
+    private Map<String, PluginHook<?>> hookedPlugins = new HashMap<>();
     private JavaPlugin plugin;
 
     public HookManager(JavaPlugin plugin) {
-        hookedPlugins = new HashMap<>();
-        hookPlugin(new VaultHook());
         this.plugin = plugin;
+        hookPlugin(new VaultHook());
     }
 
     private void hookPlugin(PluginHook<?> pluginHook) {
-        if (!hookedPlugins.containsKey(pluginHook.getName()) && plugin.getServer().getPluginManager().isPluginEnabled(pluginHook.getName())) {
+        if (!hookedPlugins.containsKey(pluginHook.getName())
+                && plugin.getServer().getPluginManager().isPluginEnabled(pluginHook.getName())) {
             hookedPlugins.put(pluginHook.getName(), (PluginHook<?>) pluginHook.setup(plugin));
         }
     }
