@@ -7,10 +7,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.inventory.InventoryHolder;
-import pro.dracarys.LocketteX.LocketteX;
 import pro.dracarys.LocketteX.api.LocketteXAPI;
 import pro.dracarys.LocketteX.config.Config;
 import pro.dracarys.LocketteX.config.Message;
+import pro.dracarys.LocketteX.hooks.VaultHook;
 import pro.dracarys.LocketteX.utils.ClaimUtil;
 import pro.dracarys.LocketteX.utils.Util;
 
@@ -29,7 +29,7 @@ public class SignChange implements Listener {
             e.getBlock().breakNaturally();
             return;
         }
-        if (LocketteX.UseEconomy && LocketteX.econ.getBalance(e.getPlayer()) < Config.PRICE_CREATION.getInt()) {
+        if (VaultHook.isEnabled() && VaultHook.getEconomy().getBalance(e.getPlayer()) < Config.PRICE_CREATION.getInt()) {
             e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.NOT_ENOUGH_MONEY.getMessage().replace("%price%", Config.PRICE_CREATION.getInt() + ""));
             e.getBlock().breakNaturally();
             return;
@@ -66,9 +66,9 @@ public class SignChange implements Listener {
             if (num >= 4) // Sign has 4 lines
                 break;
         }
-        if (LocketteX.UseEconomy) {
-            LocketteX.econ.withdrawPlayer(e.getPlayer(), Config.PRICE_CREATION.getInt());
-            e.getPlayer().sendMessage(Message.CHEST_PROTECT_SUCCESS_ECON.getMessage().replace("%price%", LocketteX.econ.format(Config.PRICE_CREATION.getInt()) + ""));
+        if (VaultHook.isEnabled()) {
+            VaultHook.getEconomy().withdrawPlayer(e.getPlayer(), Config.PRICE_CREATION.getInt());
+            e.getPlayer().sendMessage(Message.CHEST_PROTECT_SUCCESS_ECON.getMessage().replace("%price%", VaultHook.getEconomy().format(Config.PRICE_CREATION.getInt()) + ""));
         } else {
             e.getPlayer().sendMessage(Message.CHEST_PROTECT_SUCCESS.getMessage());
         }

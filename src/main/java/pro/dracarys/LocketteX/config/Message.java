@@ -31,6 +31,9 @@ public enum Message {
     CHEST_PROTECT_SUCCESS_ECON("chest-protect-success-econ", "&7[&a✔&7] &aContainer successfully protected! You payed &e%price%$&a!"),
     CHEST_PROTECT_SUCCESS("chest-protect-success", "&7[&a✔&7] &aContainer successfully protected!"),
 
+    CLAIM_HOOK_FOUND("Hooks.claim-plugin-hooked", "&7[&a✔&7] &aUsing %plugin% as Claim Provider."),
+    CLAIM_HOOK_NOTFOUND("Hooks.claim-plugin-not-found", "&7[&4✘&7] &cNo valid Claim Provider found!"),
+
     ERROR_HOOK_FAILED("Hooks.generic-hook-failed", "&7[&4✕&7] &cCould not hook to %plugin%. %plugin% support is disabled"),
     ERROR_ECON_INVALID("Hooks.economy-hook-failed", "&7[&4✕&7] &cEconomy support has been disabled! Error while hooking to Vault, or no Economy Service was found!");
 

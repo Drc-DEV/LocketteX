@@ -1,11 +1,12 @@
-package pro.dracarys.LocketteX.hooks;
+package pro.dracarys.LocketteX.hooks.claim;
 
 import com.palmergames.bukkit.towny.object.TownyUniverse;
 import org.bukkit.Location;
 
-public class TownyHook {
+public class TownyHook extends ClaimPlugin {
 
-    public static String getLeaderOfFactionAt(Location location) {
+    @Override
+    public String getLeaderOfClaimAt(Location location) {
         if (TownyUniverse.isWilderness(location.getBlock())) return "";
         try {
             String townAtLoc = (TownyUniverse.getTownName(location));
@@ -16,19 +17,20 @@ public class TownyHook {
         return "";
     }
 
-    public static boolean isClaimed(Location location) {
-        if (TownyUniverse.isWilderness(location.getBlock())) return false;
+    @Override
+    public String getClaimTagAt(Location location) {
+        if (TownyUniverse.isWilderness(location.getBlock())) return "";
         try {
             String townAtLoc = (TownyUniverse.getTownName(location));
-            if (townAtLoc != null) return true;
+            return townAtLoc != null ? townAtLoc : "";
         } catch (Exception npe) {
-            return false;
+            return "";
         }
-        return false;
     }
 
-    public static boolean isSetup() {
-        return HookManager.getInstance().getEnabledHooks().contains("Towny");
+    @Override
+    public boolean isClaimed(Location location) {
+        return !getClaimTagAt(location).equalsIgnoreCase("");
     }
 
 }

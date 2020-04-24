@@ -16,6 +16,7 @@ import pro.dracarys.LocketteX.LocketteX;
 import pro.dracarys.LocketteX.api.LocketteXAPI;
 import pro.dracarys.LocketteX.config.Config;
 import pro.dracarys.LocketteX.config.Message;
+import pro.dracarys.LocketteX.hooks.VaultHook;
 import pro.dracarys.LocketteX.utils.Util;
 
 public class BlockPlace implements Listener {
@@ -32,8 +33,8 @@ public class BlockPlace implements Listener {
                 && e.getPlayer().hasPermission(Config.PERMISSION_CREATION.getString())
                 && e.getBlock().getState() instanceof Sign
                 && e.getBlockAgainst().getState() instanceof InventoryHolder) {
-            if (LocketteX.UseEconomy && LocketteX.econ.getBalance(e.getPlayer()) < Config.PRICE_CREATION.getInt()) {
-                e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.NOT_ENOUGH_MONEY.getMessage().replace("%price%", LocketteX.econ.format(Config.PRICE_CREATION.getInt())));
+            if (VaultHook.isEnabled() && VaultHook.getEconomy().getBalance(e.getPlayer()) < Config.PRICE_CREATION.getInt()) {
+                e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.NOT_ENOUGH_MONEY.getMessage().replace("%price%", VaultHook.getEconomy().format(Config.PRICE_CREATION.getInt())));
                 return;
             }
             String owner = LocketteXAPI.getChestOwner(e.getBlockAgainst().getState());
@@ -42,6 +43,7 @@ public class BlockPlace implements Listener {
                 try {
                     e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 2, 5));
                 } catch (Exception ignored) {
+                    // ignored
                 }
                 e.getPlayer().openInventory(Bukkit.createInventory(null, 9, "LocketteX"));
                 Bukkit.getScheduler().runTaskLater(LocketteX.getInstance(), () -> e.getPlayer().closeInventory(), 1);
@@ -66,9 +68,9 @@ public class BlockPlace implements Listener {
                     }
 
                 }, 2);
-                if (LocketteX.UseEconomy) {
-                    LocketteX.econ.withdrawPlayer(e.getPlayer(), Config.PRICE_CREATION.getInt());
-                    e.getPlayer().sendMessage(Message.CHEST_PROTECT_SUCCESS_ECON.getMessage().replace("%price%", LocketteX.econ.format(Config.PRICE_CREATION.getInt())));
+                if (VaultHook.isEnabled()) {
+                    VaultHook.getEconomy().withdrawPlayer(e.getPlayer(), Config.PRICE_CREATION.getInt());
+                    e.getPlayer().sendMessage(Message.CHEST_PROTECT_SUCCESS_ECON.getMessage().replace("%price%", VaultHook.getEconomy().format(Config.PRICE_CREATION.getInt())));
                 } else {
                     e.getPlayer().sendMessage(Message.CHEST_PROTECT_SUCCESS.getMessage());
                 }

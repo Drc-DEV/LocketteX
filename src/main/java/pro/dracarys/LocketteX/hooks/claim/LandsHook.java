@@ -1,43 +1,41 @@
-package pro.dracarys.LocketteX.hooks;
+package pro.dracarys.LocketteX.hooks.claim;
 
 import me.angeschossen.lands.api.integration.LandsIntegration;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import pro.dracarys.LocketteX.LocketteX;
 
-public class LandsHook {
+public class LandsHook extends ClaimPlugin {
 
-    public static void init() {
+    private void init() {
         landsAddon = new LandsIntegration(LocketteX.getInstance(), false);
     }
 
-    private static LandsIntegration landsAddon;
+    private LandsIntegration landsAddon;
 
-    public static String getLeaderOfFactionAt(Location location) {
+    @Override
+    public String getLeaderOfClaimAt(Location location) {
         try {
+            if (landsAddon == null) init();
             return Bukkit.getOfflinePlayer(landsAddon.getLand(location).getOwnerUID()).getName();
         } catch (NullPointerException npe) {
             return "";
         }
     }
 
-    public static String getFactionTagAt(Location location) {
+    @Override
+    public String getClaimTagAt(Location location) {
         try {
+            if (landsAddon == null) init();
             return landsAddon.getLand(location).getName();
         } catch (NullPointerException npe) {
             return "";
         }
     }
 
-    public static boolean isClaimed(Location location) {
-        try {
-            return landsAddon.getLand(location).exists();
-        } catch (NullPointerException npe) {
-            return false;
-        }
+    @Override
+    public boolean isClaimed(Location location) {
+        return !getClaimTagAt(location).equalsIgnoreCase("");
     }
 
-    public static boolean isSetup() {
-        return HookManager.getInstance().getEnabledHooks().contains("Lands");
-    }
 }

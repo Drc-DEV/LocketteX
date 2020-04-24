@@ -129,7 +129,7 @@
         <dependency>
             <groupId>net.prosavage.factionsx</groupId>
             <artifactId>FactionsX</artifactId>
-            <version>0.2.1-PATREON</version>
+            <version>0.2.2-PATREON</version>
             <scope>provided</scope>
         </dependency>
         <!-- MCore Factions -->

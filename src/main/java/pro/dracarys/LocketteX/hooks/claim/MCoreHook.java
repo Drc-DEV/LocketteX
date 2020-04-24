@@ -1,14 +1,14 @@
-package pro.dracarys.LocketteX.hooks;
+package pro.dracarys.LocketteX.hooks.claim;
 
 import com.massivecraft.factions.entity.BoardColl;
 import com.massivecraft.factions.entity.Faction;
 import com.massivecraft.massivecore.ps.PS;
 import org.bukkit.Location;
-import pro.dracarys.LocketteX.LocketteX;
 
-public class MCoreFactionsHook {
+public class MCoreHook extends ClaimPlugin {
 
-    public static String getLeaderOfFactionAt(Location location) {
+    @Override
+    public String getLeaderOfClaimAt(Location location) {
         try {
             Faction faction = BoardColl.get().getFactionAt(PS.valueOf(location));
             if (!faction.isNormal())
@@ -19,7 +19,8 @@ public class MCoreFactionsHook {
         }
     }
 
-    public static String getFactionTagAt(Location location) {
+    @Override
+    public String getClaimTagAt(Location location) {
         try {
             Faction faction = BoardColl.get().getFactionAt(PS.valueOf(location));
             if (!faction.isNormal())
@@ -30,12 +31,9 @@ public class MCoreFactionsHook {
         }
     }
 
-    public static boolean isClaimed(Location location) {
-        return !getFactionTagAt(location).equalsIgnoreCase("");
-    }
-
-    public static boolean isSetup() {
-        return HookManager.getInstance().getEnabledHooks().contains("Factions") && LocketteX.isMCoreFactions;
+    @Override
+    public boolean isClaimed(Location location) {
+        return !getClaimTagAt(location).equalsIgnoreCase("");
     }
 
 }

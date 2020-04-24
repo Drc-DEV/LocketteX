@@ -17,7 +17,7 @@ public abstract class CustomFile implements ICustomFile {
             instance.getDataFolder().mkdir();
         }
         if (parent != null) {
-            file = new File(instance.getDataFolder(), "/" + parent);
+            file = new File(instance.getDataFolder(), File.separator + parent);
             if (!file.exists()) {
                 file.mkdir();
             }

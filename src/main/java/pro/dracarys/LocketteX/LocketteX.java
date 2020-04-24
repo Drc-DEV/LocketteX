@@ -1,6 +1,5 @@
 package pro.dracarys.LocketteX;
 
-import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.event.Listener;
@@ -9,6 +8,7 @@ import pro.dracarys.LocketteX.commands.MainCommand;
 import pro.dracarys.LocketteX.config.Config;
 import pro.dracarys.LocketteX.config.file.ConfigManager;
 import pro.dracarys.LocketteX.hooks.HookManager;
+import pro.dracarys.LocketteX.hooks.claim.ClaimPlugin;
 import pro.dracarys.LocketteX.listener.*;
 import pro.dracarys.LocketteX.utils.Util;
 
@@ -16,24 +16,27 @@ public class LocketteX extends JavaPlugin {
 
     public static LocketteX plugin;
 
-    public static boolean UseEconomy = false;
-    public static Economy econ = null;
-    public static boolean isMCoreFactions = false;
-
     private ConfigManager configManager;
 
     public static LocketteX getInstance() {
         return plugin;
     }
 
-    public boolean isUsingEconomy() {
-        return UseEconomy;
+    private ClaimPlugin claimPlugin;
+
+    public ClaimPlugin getClaimPlugin() {
+        return claimPlugin;
+    }
+
+    private HookManager hookManager;
+
+    public HookManager getHookManager() {
+        return hookManager;
     }
 
     @Override
     public void onEnable() {
         plugin = this;
-        configManager = ConfigManager.getInstance();
         loadConfig();
         checkServerVersion();
         PluginCommand cmd = this.getCommand("lockettex");
@@ -44,7 +47,8 @@ public class LocketteX extends JavaPlugin {
         }
         printPluginInfo();
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
-            HookManager.getInstance().loadHooks();
+            hookManager = new HookManager(this);
+            claimPlugin = new ClaimPlugin().setup(this);
             registerListeners(new InventoryOpen(), new BlockBreak(), new BlockPlace(), new SignChange(), new Explosions());
             if (Config.USE_INV_MOVE.getOption()) registerListeners(new InventoryMoveItem());
         }, 1);
@@ -53,7 +57,6 @@ public class LocketteX extends JavaPlugin {
     @Override
     public void onDisable() {
         getServer().getScheduler().cancelTasks(this);
-        HookManager.getInstance().getEnabledHooks().clear();
         plugin = null;
     }
 
@@ -86,6 +89,7 @@ public class LocketteX extends JavaPlugin {
     //@formatter:on
 
     public void loadConfig() {
+        if (configManager == null) configManager = ConfigManager.getInstance();
         configManager.getFileMap().get("config").init();
         configManager.getFileMap().get("messages").init();
     }
