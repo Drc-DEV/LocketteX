@@ -18,7 +18,7 @@ public enum Message {
     CMD_RELOAD_SUCCESS("cmd-reload-success", "&7[&a✔&7] &aConfig Reloaded!"),
     CMD_USAGE("cmd-usage", "&7[&4✕&7] &cSomething's wrong! Do /protect for a command list."),
 
-    NOT_ENOUGH_MONEY("not-enough-money", "&7[&4✕&7] &cYou must have &e%price%$&c in order to protect a chest."),
+    NOT_ENOUGH_MONEY("not-enough-money", "&7[&4✕&7] &cYou must have &e%price%&c in order to protect a chest."),
 
     CANT_PROTECT_ON_UNCLAIMED("cant-protect-in-unclaimed-land", "&7[&4✕&7] &cYou can't protect Containers in unclaimed land!"),
     CANT_PROTECT_THIS_CONTAINER("cant-protect-this-container", "&7[&4✕&7] &cYou can't protect this type of Container!"),
@@ -28,7 +28,7 @@ public enum Message {
     CHEST_OPEN_DENIED("chest-open-denied", "&7[&4✕&7] &cThis Container is protected! Only &e%owner% &ccan open it!"),
     HOPPER_PLACE_DENIED("hopper-place-denied", "&7[&4✕&7] &cYou can't place Hoppers near a protected Container!"),
 
-    CHEST_PROTECT_SUCCESS_ECON("chest-protect-success-econ", "&7[&a✔&7] &aContainer successfully protected! You payed &e%price%$&a!"),
+    CHEST_PROTECT_SUCCESS_ECON("chest-protect-success-econ", "&7[&a✔&7] &aContainer successfully protected! You payed &e%price%&a!"),
     CHEST_PROTECT_SUCCESS("chest-protect-success", "&7[&a✔&7] &aContainer successfully protected!"),
 
     CLAIM_HOOK_FOUND("Hooks.claim-plugin-hooked", "&7[&a✔&7] &aUsing %plugin% as Claim Provider."),
