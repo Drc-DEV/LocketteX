@@ -1,5 +1,6 @@
 package pro.dracarys.LocketteX;
 
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.event.Listener;
@@ -11,6 +12,8 @@ import pro.dracarys.LocketteX.hooks.HookManager;
 import pro.dracarys.LocketteX.hooks.claim.ClaimPlugin;
 import pro.dracarys.LocketteX.listener.*;
 import pro.dracarys.LocketteX.utils.Util;
+
+import java.util.logging.Level;
 
 public class LocketteX extends JavaPlugin {
 
@@ -36,6 +39,12 @@ public class LocketteX extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        try {
+            int pluginId = 7307;
+            new Metrics(this, pluginId);
+        } catch (Exception ex) {
+            getServer().getLogger().log(Level.SEVERE, "Error while trying to register Metrics (bStats)");
+        }
         plugin = this;
         loadConfig();
         checkServerVersion();
