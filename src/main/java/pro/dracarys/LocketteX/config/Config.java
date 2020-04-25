@@ -41,11 +41,11 @@ public enum Config {
             ""
     });
 
-
     String config, message;
     Boolean option;
     String[] messages;
     Integer number;
+    Double dnumber;
 
     Config(String config, String message) {
         this.config = config;
@@ -67,11 +67,12 @@ public enum Config {
         this.number = number;
     }
 
-    public boolean getOption() {
-        return option;
+    Config(String config, Double dnumber) {
+        this.config = config;
+        this.dnumber = dnumber;
     }
 
-    public boolean getBoolean() {
+    public boolean getOption() {
         return option;
     }
 
@@ -83,6 +84,10 @@ public enum Config {
         return message;
     }
 
+    public Double getDouble() {
+        return dnumber;
+    }
+
     public Integer getInt() {
         return number;
     }
@@ -91,8 +96,16 @@ public enum Config {
         return this.messages;
     }
 
+    public List<String> getStringList() {
+        return Arrays.asList(this.messages);
+    }
+
     public void setInt(int number) {
         this.number = number;
+    }
+
+    public void setDouble(double dnumber) {
+        this.dnumber = dnumber;
     }
 
     public void setStrings(List<String> list) {
@@ -105,9 +118,5 @@ public enum Config {
 
     public void setOption(Boolean option) {
         this.option = option;
-    }
-
-    public List<String> getStringList() {
-        return Arrays.asList(this.messages);
     }
 }

@@ -24,7 +24,7 @@ public class Util {
     }
 
     public static void debug(String str) {
-        if (Config.DEBUG.getBoolean())
+        if (Config.DEBUG.getOption())
             sendConsole(Message.PREFIX_DEBUG.getMessage() + str);
     }
 
@@ -112,7 +112,7 @@ public class Util {
 
     public static boolean isEnabledWorld(String worldName) {
         boolean output = Arrays.stream(Config.ENABLED_WORLDS.getStrings()).anyMatch(worldName::equalsIgnoreCase);
-        if (Config.ENABLED_WORLDS_ASBLACKLIST.getBoolean()) return !output;
+        if (Config.ENABLED_WORLDS_ASBLACKLIST.getOption()) return !output;
         return output;
     }
 

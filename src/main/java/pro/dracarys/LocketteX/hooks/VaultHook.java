@@ -22,7 +22,7 @@ public class VaultHook implements PluginHook<VaultHook> {
     @Override
     public VaultHook setup(JavaPlugin plugin) {
         if (plugin.getServer().getPluginManager().getPlugin("Vault") == null) {
-            if (Config.USE_ECONOMY.getBoolean()) {
+            if (Config.USE_ECONOMY.getOption()) {
                 Util.error(Message.ERROR_ECON_INVALID.getMessage());
             } else {
                 Util.debug(Message.ERROR_ECON_INVALID.getMessage());
@@ -32,7 +32,7 @@ public class VaultHook implements PluginHook<VaultHook> {
         RegisteredServiceProvider<Economy> rsp = plugin.getServer().getServicesManager().getRegistration(Economy.class);
         // No economy provider found, like Essentials, CMI, TNE...
         if (rsp == null) {
-            if (Config.USE_ECONOMY.getBoolean()) {
+            if (Config.USE_ECONOMY.getOption()) {
                 Util.error(Message.ERROR_ECON_INVALID.getMessage());
             } else {
                 Util.debug(Message.ERROR_ECON_INVALID.getMessage());

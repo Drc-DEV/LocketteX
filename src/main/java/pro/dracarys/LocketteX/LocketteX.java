@@ -19,8 +19,6 @@ public class LocketteX extends JavaPlugin {
 
     public static LocketteX plugin;
 
-    private ConfigManager configManager;
-
     public static LocketteX getInstance() {
         return plugin;
     }
@@ -46,6 +44,7 @@ public class LocketteX extends JavaPlugin {
             getServer().getLogger().log(Level.SEVERE, "Error while trying to register Metrics (bStats)");
         }
         plugin = this;
+        initConfig();
         loadConfig();
         checkServerVersion();
         PluginCommand cmd = this.getCommand("lockettex");
@@ -97,8 +96,17 @@ public class LocketteX extends JavaPlugin {
     }
     //@formatter:on
 
+    private ConfigManager configManager;
+
+    public ConfigManager getConfigManager() {
+        return configManager;
+    }
+
+    private void initConfig() {
+        this.configManager = new ConfigManager(this);
+    }
+
     public void loadConfig() {
-        if (configManager == null) configManager = ConfigManager.getInstance();
         configManager.getFileMap().get("config").init();
         configManager.getFileMap().get("messages").init();
     }
