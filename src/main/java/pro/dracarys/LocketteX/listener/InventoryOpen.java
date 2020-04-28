@@ -1,5 +1,6 @@
 package pro.dracarys.LocketteX.listener;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,6 +13,8 @@ import pro.dracarys.LocketteX.config.Config;
 import pro.dracarys.LocketteX.config.Message;
 import pro.dracarys.LocketteX.utils.ClaimUtil;
 import pro.dracarys.LocketteX.utils.Util;
+
+import java.util.logging.Level;
 
 public class InventoryOpen implements Listener {
 
@@ -30,10 +33,15 @@ public class InventoryOpen implements Listener {
         assert holder != null;
         Location loc = Util.getHolderLocation(holder);
         assert loc != null;
-        String owner = LocketteXAPI.getChestOwner(loc.getBlock().getState());
-        if (owner != null && !p.getName().equalsIgnoreCase(owner)) {
-            p.sendMessage(Message.PREFIX.getMessage() + Message.CHEST_OPEN_DENIED.getMessage().replace("%owner%", owner));
-            e.setCancelled(true);
+        try {
+            String owner = LocketteXAPI.getChestOwner(loc.getBlock().getState());
+            if (owner != null && !p.getName().equalsIgnoreCase(owner)) {
+                p.sendMessage(Message.PREFIX.getMessage() + Message.CHEST_OPEN_DENIED.getMessage().replace("%owner%", owner));
+                e.setCancelled(true);
+            }
+        } catch (NullPointerException npe) {
+            if (Config.DEBUG.getOption())
+                Bukkit.getServer().getLogger().log(Level.SEVERE, "NPE on chestOwner check: ", npe);
         }
     }
 }
