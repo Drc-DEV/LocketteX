@@ -46,6 +46,11 @@ public class ClaimPlugin implements PluginHook<ClaimPlugin> {
             Util.sendConsole(Message.PREFIX.getMessage() + Message.CLAIM_HOOK_FOUND.getMessage().replace("%plugin%", hookedPlugin));
             return new TownyHook();
         }
+        if (Bukkit.getPluginManager().isPluginEnabled("Feudal")) {
+            hookedPlugin = "Feudal";
+            Util.sendConsole(Message.PREFIX.getMessage() + Message.CLAIM_HOOK_FOUND.getMessage().replace("%plugin%", hookedPlugin));
+            return new FeudalHook();
+        }
         if (Bukkit.getPluginManager().isPluginEnabled("Lands")) {
             hookedPlugin = "Lands";
             Util.sendConsole(Message.PREFIX.getMessage() + Message.CLAIM_HOOK_FOUND.getMessage().replace("%plugin%", hookedPlugin));

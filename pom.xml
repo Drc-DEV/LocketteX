@@ -7,7 +7,7 @@
     <groupId>pro.dracarys</groupId>
     <artifactId>LocketteX</artifactId>
     <name>LocketteX</name>
-    <version>1.6.0</version>
+    <version>1.6.1</version>
     <packaging>jar</packaging>
     <url>https://dracarys.pro</url>
     <description>Protect your valuables!</description>
@@ -127,6 +127,14 @@
             <version>0.95.1.4</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/Towny-0.95.1.4.jar</systemPath>
+        </dependency>
+        <!-- Feudal -->
+        <dependency>
+            <groupId>com.us.forseth11.feudal</groupId>
+            <artifactId>Feudal</artifactId>
+            <version>LATEST</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/Feudal-legacy.jar</systemPath>
         </dependency>
         <!-- Lands -->
         <dependency>

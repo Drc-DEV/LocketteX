@@ -5,7 +5,7 @@ prefix: "${project.name}"
 version: "${project.version}"
 description: "${project.description}"
 api-version: '1.13'
-softdepend: [Vault,Factions,FactionsX,Lands,MassiveCore,Towny,HolographicDisplays]
+softdepend: [Vault,Factions,FactionsX,Feudal,Lands,MassiveCore,Towny,HolographicDisplays]
 commands:
   lockettex:
     description: Main Command for LocketteX
