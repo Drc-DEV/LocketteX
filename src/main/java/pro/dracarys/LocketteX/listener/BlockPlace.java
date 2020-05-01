@@ -14,6 +14,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import pro.dracarys.LocketteX.LocketteX;
 import pro.dracarys.LocketteX.api.LocketteXAPI;
+import pro.dracarys.LocketteX.api.PlayerProtectContainerEvent;
 import pro.dracarys.LocketteX.config.Config;
 import pro.dracarys.LocketteX.config.Message;
 import pro.dracarys.LocketteX.hooks.VaultHook;
@@ -40,6 +41,9 @@ public class BlockPlace implements Listener {
             String owner = LocketteXAPI.getChestOwner(e.getBlockAgainst().getState());
             Location loc = e.getBlock().getLocation();
             if (owner == null) { // Handle only cases where the chest is not already protected
+                PlayerProtectContainerEvent protectEvent = new PlayerProtectContainerEvent(e.getPlayer(), e.getBlock());
+                Bukkit.getPluginManager().callEvent(protectEvent);
+                if (protectEvent.isCancelled()) return;
                 try {
                     e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 2, 5));
                 } catch (Exception ignored) {

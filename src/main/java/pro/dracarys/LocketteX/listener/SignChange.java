@@ -1,5 +1,6 @@
 package pro.dracarys.LocketteX.listener;
 
+import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.type.WallSign;
@@ -8,6 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.inventory.InventoryHolder;
 import pro.dracarys.LocketteX.api.LocketteXAPI;
+import pro.dracarys.LocketteX.api.PlayerProtectContainerEvent;
 import pro.dracarys.LocketteX.config.Config;
 import pro.dracarys.LocketteX.config.Message;
 import pro.dracarys.LocketteX.hooks.VaultHook;
@@ -59,6 +61,9 @@ public class SignChange implements Listener {
             e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.CANT_PROTECT_THIS_CONTAINER.getMessage());
             return;
         }
+        PlayerProtectContainerEvent protectEvent = new PlayerProtectContainerEvent(e.getPlayer(), attachedBlock);
+        Bukkit.getPluginManager().callEvent(protectEvent);
+        if (protectEvent.isCancelled()) return;
         int num = 0;
         for (String ln : Config.SIGN_FORMATTED_LINES.getStrings()) {
             e.setLine(num, Util.color(ln.replace("%owner%", e.getPlayer().getName())));

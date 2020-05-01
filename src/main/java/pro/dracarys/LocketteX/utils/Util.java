@@ -153,6 +153,8 @@ public class Util {
             } else if (holder instanceof BrewingStand) {
                 return ((BrewingStand) holder).getBlock().getLocation();
             }
+        } catch (UnsupportedOperationException ex) {
+            return null;
         }
         return null;
     }
