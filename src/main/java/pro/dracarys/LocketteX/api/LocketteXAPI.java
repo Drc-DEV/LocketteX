@@ -61,6 +61,7 @@ public class LocketteXAPI {
                                     block.breakNaturally(); // Break sign since protection expired
                                     return null;
                                 } else {
+                                    Util.debug("Owner of Sign at " + attachedBlock.getLocation() + " is '" + owner + "'");
                                     return owner;
                                 }
                             } catch (Exception ex) {
