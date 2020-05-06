@@ -12,7 +12,7 @@
     <url>https://dracarys.pro</url>
 
     <description>Protect your valuables!</description>
-    
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -149,7 +149,7 @@
         <dependency>
             <groupId>net.prosavage.factionsx</groupId>
             <artifactId>FactionsX</artifactId>
-            <version>0.2.2-PATREON</version>
+            <version>0.3-PATREON</version>
             <scope>provided</scope>
         </dependency>
         <!-- MCore Factions -->
