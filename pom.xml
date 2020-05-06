@@ -10,7 +10,9 @@
     <version>1.6.3</version>
     <packaging>jar</packaging>
     <url>https://dracarys.pro</url>
+
     <description>Protect your valuables!</description>
+    
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
