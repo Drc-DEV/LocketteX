@@ -41,7 +41,7 @@ public class SignChange implements Listener {
         try {
             org.bukkit.material.Sign sd = (org.bukkit.material.Sign) s.getData();
             attachedBlock = e.getBlock().getRelative(sd.getAttachedFace());
-        } catch (ClassCastException ex) {
+        } catch (ClassCastException | NullPointerException ex) {
             WallSign signData = (WallSign) s.getBlockData();
             attachedBlock = e.getBlock().getRelative(signData.getFacing().getOppositeFace());
         }

@@ -4,6 +4,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.block.*;
 import org.bukkit.block.data.type.WallSign;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.DoubleChestInventory;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import pro.dracarys.LocketteX.config.Config;
 import pro.dracarys.LocketteX.utils.Util;
@@ -24,15 +26,16 @@ public class LocketteXAPI {
 
     public static String getChestOwner(BlockState blockState) {
         List<Block> chestBlocks = new ArrayList<>();
-        if (blockState instanceof DoubleChest) {
-            DoubleChest dchest = (DoubleChest) blockState;
-            Chest chest1 = (Chest) dchest.getRightSide();
-            chestBlocks.add(chest1.getBlock());
-            Chest chest2 = (Chest) dchest.getLeftSide();
-            chestBlocks.add(chest2.getBlock());
-        } else if (blockState instanceof Chest) {
+        if (blockState instanceof Chest) {
             Chest chest = (Chest) blockState;
-            chestBlocks.add(chest.getBlock());
+            Inventory chestInventory = chest.getInventory();
+            if (chestInventory instanceof DoubleChestInventory) {
+                DoubleChest doubleChest = (DoubleChest) chestInventory.getHolder();
+                chestBlocks.add(((Chest) doubleChest.getLeftSide()).getBlock());
+                chestBlocks.add(((Chest) doubleChest.getRightSide()).getBlock());
+            } else {
+                chestBlocks.add(chest.getBlock());
+            }
         } else {
             if (!(blockState instanceof InventoryHolder)) return null;
             chestBlocks.add(blockState.getBlock());
