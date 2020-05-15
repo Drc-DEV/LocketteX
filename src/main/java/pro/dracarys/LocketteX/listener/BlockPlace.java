@@ -1,7 +1,6 @@
 package pro.dracarys.LocketteX.listener;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -39,7 +38,6 @@ public class BlockPlace implements Listener {
                 return;
             }
             String owner = LocketteXAPI.getChestOwner(e.getBlockAgainst().getState());
-            Location loc = e.getBlock().getLocation();
             if (owner == null) { // Handle only cases where the chest is not already protected
                 PlayerProtectContainerEvent protectEvent = new PlayerProtectContainerEvent(e.getPlayer(), e.getBlock());
                 Bukkit.getPluginManager().callEvent(protectEvent);
@@ -52,7 +50,7 @@ public class BlockPlace implements Listener {
                 e.getPlayer().openInventory(Bukkit.createInventory(null, 9, "LocketteX"));
                 Bukkit.getScheduler().runTaskLater(LocketteX.getInstance(), () -> e.getPlayer().closeInventory(), 1);
                 Bukkit.getScheduler().runTaskLater(LocketteX.getInstance(), () -> {
-                    Sign s = (Sign) loc.getBlock().getState();
+                    Sign s = (Sign) e.getBlock().getState();
                     int num = 0;
                     for (String ln : Config.SIGN_FORMATTED_LINES.getStrings()) {
                         s.setLine(num, Util.color(ln.replace("%owner%", e.getPlayer().getName())));
