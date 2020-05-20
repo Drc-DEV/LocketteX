@@ -7,7 +7,7 @@
     <groupId>pro.dracarys</groupId>
     <artifactId>LocketteX</artifactId>
     <name>LocketteX</name>
-    <version>1.6.4-DEV</version>
+    <version>1.6.5</version>
     <packaging>jar</packaging>
     <url>https://dracarys.pro</url>
 
@@ -149,7 +149,7 @@
         <dependency>
             <groupId>net.prosavage.factionsx</groupId>
             <artifactId>FactionsX</artifactId>
-            <version>0.4-PATREON</version>
+            <version>0.4.2-PATREON</version>
             <scope>provided</scope>
         </dependency>
         <!-- MCore Factions -->

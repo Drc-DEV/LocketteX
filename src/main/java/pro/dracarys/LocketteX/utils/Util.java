@@ -155,6 +155,8 @@ public class Util {
             }
         } catch (UnsupportedOperationException ex) {
             return null;
+        } catch (NullPointerException npe) {
+            return null;
         }
         return null;
     }
