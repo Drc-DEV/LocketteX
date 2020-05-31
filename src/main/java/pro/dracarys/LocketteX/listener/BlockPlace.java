@@ -30,7 +30,7 @@ public class BlockPlace implements Listener {
         }
         if (Config.SNEAKCLICK_TO_CREATE.getOption()
                 && e.getPlayer().isSneaking()
-                && e.getPlayer().hasPermission(Config.PERMISSION_CREATION.getString())
+                && (Config.PERMISSION_FOR_ALL.getOption() || e.getPlayer().hasPermission(Config.PERMISSION_CREATION.getString()))
                 && e.getBlock().getState() instanceof Sign
                 && e.getBlockAgainst().getState() instanceof InventoryHolder) {
             if (VaultHook.isEnabled() && VaultHook.getEconomy().getBalance(e.getPlayer()) < Config.PRICE_CREATION.getInt()) {

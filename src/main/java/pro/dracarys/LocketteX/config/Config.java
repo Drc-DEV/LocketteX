@@ -26,6 +26,7 @@ public enum Config {
     EXPIRE_ENABLED("Expiration.enabled", false),
     EXPIRE_TIME("Expiration.disable-protection-after-x-days", 90),
 
+    PERMISSION_FOR_ALL("Permissions.ignore-creation-permission", false),
     PERMISSION_ADMIN("Permissions.permission-admin", "lockettex.admin"),
     PERMISSION_CREATION("Permissions.permission-creation", "lockettex.create"),
 
