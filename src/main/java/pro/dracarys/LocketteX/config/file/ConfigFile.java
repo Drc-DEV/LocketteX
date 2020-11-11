@@ -1,16 +1,12 @@
-package pro.dracarys.LocketteX.config.file.types;
+package pro.dracarys.LocketteX.config.file;
 
-import org.bukkit.plugin.java.JavaPlugin;
 import pro.dracarys.LocketteX.config.Config;
-import pro.dracarys.LocketteX.config.file.CustomFile;
+import pro.dracarys.configlib.config.CustomFile;
 
 public class ConfigFile extends CustomFile {
 
-    private JavaPlugin instance;
-
-    public ConfigFile(JavaPlugin instance) {
-        super(instance, "");
-        this.instance = instance;
+    public ConfigFile() {
+        super("");
         for (Config message : Config.values()) {
             if (message.getStrings() != null) {
                 for (String string : message.getStrings()) {

@@ -7,7 +7,7 @@
     <groupId>pro.dracarys</groupId>
     <artifactId>LocketteX</artifactId>
     <name>LocketteX</name>
-    <version>1.6.7</version>
+    <version>1.6.8</version>
     <packaging>jar</packaging>
     <url>https://dracarys.pro</url>
 
@@ -59,6 +59,10 @@
                                     <pattern>org.bstats</pattern>
                                     <shadedPattern>pro.dracarys.LocketteX.shade.bstats</shadedPattern>
                                 </relocation>
+                                <relocation>
+                                    <pattern>pro.dracarys.configlib</pattern>
+                                    <shadedPattern>pro.dracarys.LocketteX.shade.configlib</shadedPattern>
+                                </relocation>
                             </relocations>
                         </configuration>
                     </execution>
@@ -103,19 +107,19 @@
             <version>1.7</version>
             <scope>compile</scope>
         </dependency>
+        <!-- ConfigLib -->
+        <dependency>
+            <groupId>com.github.Drc-DEV</groupId>
+            <artifactId>configlib</artifactId>
+            <version>1.1</version>
+            <scope>compile</scope>
+        </dependency>
 
         <!-- HolographicDisplays -->
         <dependency>
             <groupId>com.gmail.filoghost.holographicdisplays</groupId>
             <artifactId>holographicdisplays-api</artifactId>
             <version>2.4.2-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <!-- SpigotMC -->
-        <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot</artifactId>
-            <version>1.16.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <!-- Factions (FactionsUUID) -->
@@ -153,7 +157,7 @@
         <dependency>
             <groupId>net.prosavage.factionsx</groupId>
             <artifactId>FactionsX</artifactId>
-            <version>1.0.6-RC</version>
+            <version>1.0.8-RC</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
@@ -193,6 +197,14 @@
                     <artifactId>bukkit</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <!-- SpigotMC -->
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot</artifactId>
+            <version>1.16.4-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

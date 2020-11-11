@@ -1,13 +1,13 @@
-main: pro.dracarys.LocketteX.LocketteX
-name: LocketteX
-authors: [Valentina_pro]
+main: ${project.groupId}.${project.artifactId}.${project.name}
+name: ${project.name}
+authors: [ Valentina_pro ]
 prefix: "${project.name}"
 version: "${project.version}"
 description: "${project.description}"
 api-version: '1.13'
-softdepend: [Vault,ChestShop,Factions,FactionsX,Feudal,Lands,MassiveCore,SkyblockX,Towny,HolographicDisplays]
+softdepend: [ Vault,ChestShop,Factions,FactionsX,Feudal,Lands,MassiveCore,SkyblockX,Towny,HolographicDisplays ]
 commands:
   lockettex:
-    description: Main Command for LocketteX
+    description: Main Command
     usage: "Usage: /<command>"
-    aliases: [protect]
+    aliases: [ protect ]

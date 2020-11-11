@@ -7,11 +7,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import pro.dracarys.LocketteX.commands.MainCommand;
 import pro.dracarys.LocketteX.config.Config;
-import pro.dracarys.LocketteX.config.file.ConfigManager;
+import pro.dracarys.LocketteX.config.file.ConfigFile;
+import pro.dracarys.LocketteX.config.file.MessageFile;
 import pro.dracarys.LocketteX.hooks.HookManager;
 import pro.dracarys.LocketteX.hooks.claim.ClaimPlugin;
 import pro.dracarys.LocketteX.listener.*;
 import pro.dracarys.LocketteX.utils.Util;
+import pro.dracarys.configlib.ConfigLib;
 
 import java.util.logging.Level;
 
@@ -78,37 +80,32 @@ public class LocketteX extends JavaPlugin {
     // Made this way for easy editing/char replacing, using equal size chars for all consoles compatibility.
     //@formatter:off
     private void printPluginInfo() {
-        Util.sendConsole(("\n"+
-            " ⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬛⬛⬛⬜⬜⬜⬜⬜⬛⬛⬛\n" +
-            " ⬜⬛⬜⬜⬜⬜⬜⬛⬛⬛⬜⬛⬛⬛⬛⬜⬛⬜⬜⬛⬜⬛⬛⬛⬛⬛⬜⬛⬛⬛⬛⬛⬜⬛⬛⬛⬛⬛⬜⬛⬛⬛⬛⬛⬜⬜⬜⬛⬛⬜⬜⬜⬛⬛⬜⬜\n" +
-            " ⬜⬛⬜⬜⬜⬜⬛⬛⬜⬛⬜⬛⬜⬛⬛⬜⬛⬜⬛⬛⬜⬛⬜⬜⬜⬛⬜⬜⬜⬛⬜⬛⬜⬜⬜⬛⬜⬛⬜⬛⬜⬜⬜⬛⬜⬜⬜⬜⬛⬛⬜⬛⬛⬜⬜⬜\n" +
-            " ⬜⬛⬜⬜⬜⬜⬛⬜⬜⬛⬜⬛⬜⬜⬛⬜⬛⬛⬜⬛⬜⬛⬛⬛⬜⬜⬜⬜⬜⬛⬜⬜⬜⬜⬜⬛⬜⬜⬜⬛⬛⬛⬜⬜⬜⬜⬜⬜⬜⬛⬛⬛⬜⬜⬜⬜\n" +
-            " ⬜⬛⬜⬜⬜⬜⬛⬜⬜⬛⬜⬛⬜⬜⬜⬜⬛⬛⬜⬜⬜⬛⬜⬜⬜⬜⬜⬜⬜⬛⬜⬜⬜⬜⬜⬛⬜⬜⬜⬛⬜⬜⬜⬜⬜⬜⬜⬜⬜⬛⬛⬛⬜⬜⬜⬜\n" +
-            " ⬜⬛⬜⬜⬛⬜⬛⬜⬛⬛⬜⬛⬜⬜⬛⬜⬛⬜⬛⬛⬜⬛⬜⬜⬛⬛⬜⬜⬜⬛⬜⬜⬜⬜⬜⬛⬜⬜⬜⬛⬜⬜⬛⬛⬜⬜⬜⬜⬛⬛⬜⬛⬛⬜⬜⬜\n" +
-            " ⬜⬛⬛⬛⬛⬜⬛⬛⬛⬜⬜⬛⬛⬛⬛⬜⬛⬜⬜⬛⬜⬛⬛⬛⬛⬜⬜⬜⬜⬛⬜⬜⬜⬜⬜⬛⬜⬜⬜⬛⬛⬛⬛⬜⬜⬜⬜⬛⬛⬜⬜⬜⬛⬛⬜⬜\n" +
-            " ⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬛⬛⬛⬜⬜⬜⬜⬜⬛⬛⬛\n"
-        ).replace("⬜","&0█").replace("⬛","&f█") + "\n" +
+        Util.sendConsole(("\n" +
+                " ⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬛⬛⬛⬜⬜⬜⬜⬜⬛⬛⬛\n" +
+                " ⬜⬛⬜⬜⬜⬜⬜⬛⬛⬛⬜⬛⬛⬛⬛⬜⬛⬜⬜⬛⬜⬛⬛⬛⬛⬛⬜⬛⬛⬛⬛⬛⬜⬛⬛⬛⬛⬛⬜⬛⬛⬛⬛⬛⬜⬜⬜⬛⬛⬜⬜⬜⬛⬛⬜⬜\n" +
+                " ⬜⬛⬜⬜⬜⬜⬛⬛⬜⬛⬜⬛⬜⬛⬛⬜⬛⬜⬛⬛⬜⬛⬜⬜⬜⬛⬜⬜⬜⬛⬜⬛⬜⬜⬜⬛⬜⬛⬜⬛⬜⬜⬜⬛⬜⬜⬜⬜⬛⬛⬜⬛⬛⬜⬜⬜\n" +
+                " ⬜⬛⬜⬜⬜⬜⬛⬜⬜⬛⬜⬛⬜⬜⬛⬜⬛⬛⬜⬛⬜⬛⬛⬛⬜⬜⬜⬜⬜⬛⬜⬜⬜⬜⬜⬛⬜⬜⬜⬛⬛⬛⬜⬜⬜⬜⬜⬜⬜⬛⬛⬛⬜⬜⬜⬜\n" +
+                " ⬜⬛⬜⬜⬜⬜⬛⬜⬜⬛⬜⬛⬜⬜⬜⬜⬛⬛⬜⬜⬜⬛⬜⬜⬜⬜⬜⬜⬜⬛⬜⬜⬜⬜⬜⬛⬜⬜⬜⬛⬜⬜⬜⬜⬜⬜⬜⬜⬜⬛⬛⬛⬜⬜⬜⬜\n" +
+                " ⬜⬛⬜⬜⬛⬜⬛⬜⬛⬛⬜⬛⬜⬜⬛⬜⬛⬜⬛⬛⬜⬛⬜⬜⬛⬛⬜⬜⬜⬛⬜⬜⬜⬜⬜⬛⬜⬜⬜⬛⬜⬜⬛⬛⬜⬜⬜⬜⬛⬛⬜⬛⬛⬜⬜⬜\n" +
+                " ⬜⬛⬛⬛⬛⬜⬛⬛⬛⬜⬜⬛⬛⬛⬛⬜⬛⬜⬜⬛⬜⬛⬛⬛⬛⬜⬜⬜⬜⬛⬜⬜⬜⬜⬜⬛⬜⬜⬜⬛⬛⬛⬛⬜⬜⬜⬜⬛⬛⬜⬜⬜⬛⬛⬜⬜\n" +
+                " ⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬛⬛⬛⬜⬜⬜⬜⬜⬛⬛⬛\n"
+        ).replace("⬜", "&0█").replace("⬛", "&f█") + "\n" +
                 " &f-->  &c" + getDescription().getName() + " &7v" + getDescription().getVersion() + "&a Enabled" + "\n" +
                 " &f-->  &f&o" + getDescription().getDescription() + "\n" +
                 " &f-->  &eMade with &4♥ &eby &f" + getDescription().getAuthors().get(0) + "\n");
         if (getDescription().getVersion().contains("-DEV"))
-            Util.sendConsole("&f&l[!] &cThis is a BETA, report any unexpected behaviour to the Author!"+ "\n");
+            Util.sendConsole("&f&l[!] &cThis is a BETA, report any unexpected behaviour to the Author!" + "\n");
     }
     //@formatter:on
 
-    private ConfigManager configManager;
-
-    public ConfigManager getConfigManager() {
-        return configManager;
-    }
-
     private void initConfig() {
-        this.configManager = new ConfigManager(this);
+        ConfigLib.setPlugin(this);
+        new ConfigFile();
+        new MessageFile();
     }
 
     public void loadConfig() {
-        configManager.getFileMap().get("config").init();
-        configManager.getFileMap().get("messages").init();
+        ConfigLib.initAll();
     }
 
     private static int ver;
