@@ -24,7 +24,7 @@ public class MessageFile extends CustomFile {
     }
 
     public MessageFile init() {
-        this.reloadConfig();
+        reloadConfig();
         for (Message message : Message.values()) {
             if (message.getMessages() == null) {
                 message.setMessage(getConfig().getString(Util.color(message.getConfig())));

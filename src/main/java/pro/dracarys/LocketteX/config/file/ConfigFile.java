@@ -3,15 +3,14 @@ package pro.dracarys.LocketteX.config.file;
 import pro.dracarys.LocketteX.config.Config;
 import pro.dracarys.configlib.config.CustomFile;
 
+
 public class ConfigFile extends CustomFile {
 
     public ConfigFile() {
         super("");
         for (Config message : Config.values()) {
             if (message.getStrings() != null) {
-                for (String string : message.getStrings()) {
-                    getConfig().addDefault(message.getConfig(), message.getStrings());
-                }
+                getConfig().addDefault(message.getConfig(), message.getStrings());
             } else if (message.getString() != null) {
                 getConfig().addDefault(message.getConfig(), message.getString());
             } else if (message.getInt() != null) {
@@ -27,9 +26,15 @@ public class ConfigFile extends CustomFile {
     }
 
     public ConfigFile init() {
-        this.reloadConfig();
+        reloadConfig();
         for (Config message : Config.values()) {
             if (message.getStrings() != null) {
+                if (message.getConfig().equalsIgnoreCase("Info")
+                        && !message.getStringList().equals(getConfig().getStringList(message.getConfig()))) {
+                    getConfig().set(message.getConfig(), message.getStrings());
+                    saveConfig();
+                    continue;
+                }
                 message.setStrings(getConfig().getStringList(message.getConfig()));
             } else if (message.getInt() != null) {
                 message.setInt(getConfig().getInt(message.getConfig()));
