@@ -100,8 +100,8 @@ public class LocketteX extends JavaPlugin {
 
     private void initConfig() {
         ConfigLib.setPlugin(this);
-        new ConfigFile();
-        new MessageFile();
+        ConfigLib.addFile(new ConfigFile());
+        ConfigLib.addFile(new MessageFile());
     }
 
     public void loadConfig() {
