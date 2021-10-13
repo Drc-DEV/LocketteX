@@ -20,28 +20,26 @@ public class InventoryOpen implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onInvOpen(InventoryOpenEvent e) {
-        if (!Util.isEnabledWorld(e.getPlayer().getWorld().getName())) {
+        if (!Util.isEnabledWorld(e.getPlayer().getWorld().getName()) || !(e.getPlayer() instanceof Player) || e.getInventory().getHolder() == null)
             return;
-        }
-        if (!(e.getPlayer() instanceof Player) || e.getInventory().getHolder() == null) {
-            return;
-        }
         Player p = (Player) e.getPlayer();
-        if (p.isOp() || (Config.PROTECT_CLAIMED_ONLY.getOption() && ClaimUtil.isClaimedAt(p.getLocation())) || (Config.LEADER_CAN_OPEN.getOption() && ClaimUtil.getLeaderAt(p.getLocation()).equalsIgnoreCase(p.getName())))
+        if (p.isOp()
+                || (Config.PROTECT_CLAIMED_ONLY.getOption() && ClaimUtil.isClaimedAt(p.getLocation()))
+                || (Config.LEADER_CAN_OPEN.getOption() && ClaimUtil.getLeaderAt(p.getLocation()).equalsIgnoreCase(p.getName())))
             return;
         InventoryHolder holder = e.getInventory().getHolder();
-        assert holder != null;
         Location loc = Util.getHolderLocation(holder);
-        assert loc != null;
-        try {
-            String owner = LocketteXAPI.getChestOwner(loc.getBlock().getState());
-            if (owner != null && !p.getName().equalsIgnoreCase(owner)) {
-                p.sendMessage(Message.PREFIX.getMessage() + Message.CHEST_OPEN_DENIED.getMessage().replace("%owner%", owner));
-                e.setCancelled(true);
+        if (loc != null) {
+            try {
+                String owner = LocketteXAPI.getChestOwner(loc.getBlock().getState());
+                if (owner != null && !p.getName().equalsIgnoreCase(owner)) {
+                    p.sendMessage(Message.PREFIX.getMessage() + Message.CHEST_OPEN_DENIED.getMessage().replace("%owner%", owner));
+                    e.setCancelled(true);
+                }
+            } catch (NullPointerException npe) {
+                if (Config.DEBUG.getOption())
+                    Bukkit.getServer().getLogger().log(Level.SEVERE, "NPE on chestOwner check: ", npe);
             }
-        } catch (NullPointerException npe) {
-            if (Config.DEBUG.getOption())
-                Bukkit.getServer().getLogger().log(Level.SEVERE, "NPE on chestOwner check: ", npe);
         }
     }
 }

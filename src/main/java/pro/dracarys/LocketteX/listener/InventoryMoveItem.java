@@ -19,10 +19,9 @@ public class InventoryMoveItem implements Listener {
         if (!Config.USE_INV_MOVE.getOption() || !e.getDestination().getType().equals(InventoryType.HOPPER))
             return;
         InventoryHolder holder = e.getSource().getHolder();
-        assert holder != null;
+        if (holder == null) return;
         Location loc = Util.getHolderLocation(holder);
-        assert loc != null;
-        if (!Util.isEnabledWorld(loc.getWorld().getName())) return;
+        if (loc == null || !Util.isEnabledWorld(loc.getWorld().getName())) return;
         if (LocketteXAPI.getChestOwner(loc.getBlock().getState()) != null) {
             e.setCancelled(true);
             if (e.getDestination().getHolder() instanceof Hopper) {

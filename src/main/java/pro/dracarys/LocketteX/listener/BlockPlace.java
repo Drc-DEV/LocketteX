@@ -25,9 +25,8 @@ public class BlockPlace implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onPlace(BlockPlaceEvent e) {
-        if (!Util.isEnabledWorld(e.getPlayer().getWorld().getName())) {
+        if (!Util.isEnabledWorld(e.getPlayer().getWorld().getName()))
             return;
-        }
         if (Config.SNEAKCLICK_TO_CREATE.getOption()
                 && e.getPlayer().isSneaking()
                 && (Config.PERMISSION_FOR_ALL.getOption() || e.getPlayer().hasPermission(Config.PERMISSION_CREATION.getString()))
@@ -79,8 +78,6 @@ public class BlockPlace implements Listener {
 
             }
         }
-
-
         // Handle hoppers bypass
         if (!e.getBlock().getType().equals(Material.HOPPER)) return;
         if (e.getPlayer().isOp())
