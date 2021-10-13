@@ -3,7 +3,8 @@ package pro.dracarys.LocketteX.listener;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
-import org.bukkit.block.data.type.WallSign;
+import org.bukkit.block.data.Directional;
+import org.bukkit.block.data.Rotatable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
@@ -42,8 +43,15 @@ public class SignChange implements Listener {
             org.bukkit.material.Sign sd = (org.bukkit.material.Sign) s.getData();
             attachedBlock = e.getBlock().getRelative(sd.getAttachedFace());
         } catch (ClassCastException | NullPointerException ex) {
-            WallSign signData = (WallSign) s.getBlockData();
-            attachedBlock = e.getBlock().getRelative(signData.getFacing().getOppositeFace());
+            if (s.getBlockData() instanceof Directional) {
+                Directional signData = (Directional) s.getBlockData();
+                attachedBlock = e.getBlock().getRelative(signData.getFacing().getOppositeFace());
+            } else if (s.getBlockData() instanceof Rotatable) {
+                Rotatable signData = (Rotatable) s.getBlockData();
+                attachedBlock = e.getBlock().getRelative(signData.getRotation().getOppositeFace());
+            } else {
+                return;
+            }
         }
         if (Config.PROTECT_CLAIMED_ONLY.getOption() && !ClaimUtil.isClaimedAt(attachedBlock.getLocation())) {
             e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.CANT_PROTECT_ON_UNCLAIMED.getMessage());
