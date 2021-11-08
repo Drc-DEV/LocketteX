@@ -1,6 +1,5 @@
 package pro.dracarys.LocketteX.listener;
 
-import org.bukkit.ChatColor;
 import org.bukkit.block.Sign;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,26 +15,22 @@ public class BlockBreak implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onBreak(BlockBreakEvent e) {
-        if (!Util.isEnabledWorld(e.getPlayer().getWorld().getName())) {
-            return;
-        }
+        if (!Util.isEnabledWorld(e.getPlayer().getWorld().getName())) return;
         if (e.getPlayer().isOp() || (Config.LEADER_CAN_BREAK.getOption() && ClaimUtil.getLeaderAt(e.getBlock().getLocation()).equalsIgnoreCase(e.getPlayer().getName())))
             return;
         if (e.getBlock().getType().name().contains("WALL_SIGN")) {
             Sign s = (Sign) e.getBlock().getState();
-            if (s.getLine(0).contains(Util.color(Config.SIGN_FORMATTED_LINES.getStrings()[0]))) {
-                if (!ChatColor.stripColor(s.getLine(2)).equalsIgnoreCase(e.getPlayer().getName())) {
-                    e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.SIGN_BREAK_DENIED.getMessage().replace("%owner%", ChatColor.stripColor(s.getLine(2))));
-                    e.setCancelled(true);
-                    return;
-                } else {
-                    return;
-                }
+            String owner = LocketteXAPI.getSignOwner(s, e.getBlock(), e.getBlock());
+            if (owner != null && !owner.equalsIgnoreCase(e.getPlayer().getName())) {
+                e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.SIGN_BREAK_DENIED.getMessage()
+                        .replace("%owner%", owner));
+                e.setCancelled(true);
             }
         } else if (e.getBlock().getState() instanceof InventoryHolder) {
             String owner = LocketteXAPI.getChestOwner(e.getBlock().getState());
             if (owner != null && !owner.equalsIgnoreCase(e.getPlayer().getName())) {
-                e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.CHEST_BREAK_DENIED.getMessage().replace("%owner%", owner));
+                e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.CHEST_BREAK_DENIED.getMessage()
+                        .replace("%owner%", owner));
                 e.setCancelled(true);
                 return;
             }

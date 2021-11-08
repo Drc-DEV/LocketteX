@@ -56,37 +56,42 @@ public class LocketteXAPI {
                         attachedBlock = block.getRelative(ws.getFacing().getOppositeFace());
                     }
                     if (chestBlock.getLocation().equals(attachedBlock.getLocation())) {
-                        if (s.getLine(0).equalsIgnoreCase(Util.color(Config.SIGN_FORMATTED_LINES.getStrings()[0]))) {
-                            if (s.getLine(2).length() < 3) { //Playernames can't be less than 3 digits
-                                return null;
-                            }
-                            try {
-                                // Strip color so that you can add colors to the name
-                                String owner = ChatColor.stripColor(s.getLine(2));
-                                if (owner.contains("#")) { // UUID Compatibility
-                                    OfflinePlayer off = Bukkit.getOfflinePlayer(UUID.fromString(owner.split("#")[1]));
-                                    if (off.hasPlayedBefore()) {
-                                        owner = off.getName();
-                                    } else { // FALLBACK
-                                        owner = owner.split("#")[0];
-                                    }
-                                }
-                                if (Util.isExpired(owner)) {
-                                    block.breakNaturally(); // Break sign since protection expired
-                                    return null;
-                                } else {
-                                    Util.debug("Owner of Sign at " + attachedBlock.getLocation() + " is '" + owner + "'");
-                                    return owner;
-                                }
-                            } catch (Exception ex) {
-                                //ignored
-                            }
-                        }
+                        return getSignOwner(s, block, attachedBlock);
                     }
                 }
             }
         }
         // No Sign found
+        return null;
+    }
+
+    public static String getSignOwner(Sign s, Block signBlock, Block attachedBlock) {
+        if (s.getLine(0).equalsIgnoreCase(Util.color(Config.SIGN_FORMATTED_LINES.getStrings()[0]))) {
+            if (s.getLine(Config.SIGN_OWNER_LINE.getInt()).length() < 3) { //Playernames can't be less than 3 digits
+                return null;
+            }
+            try {
+                // Strip color so that you can add colors to the name
+                String owner = ChatColor.stripColor(s.getLine(Config.SIGN_OWNER_LINE.getInt()));
+                if (owner.contains("#")) { // UUID Compatibility
+                    OfflinePlayer off = Bukkit.getOfflinePlayer(UUID.fromString(owner.split("#")[1]));
+                    if (off.hasPlayedBefore()) {
+                        owner = off.getName();
+                    } else { // FALLBACK
+                        owner = owner.split("#")[0];
+                    }
+                }
+                if (Util.isExpired(owner)) {
+                    signBlock.breakNaturally(); // Break sign since protection expired
+                    return null;
+                } else {
+                    Util.debug("Owner of Sign at " + signBlock.getLocation() + " which protects container at " + attachedBlock.getLocation() + " is '" + owner + "'");
+                    return owner;
+                }
+            } catch (Exception ex) {
+                //ignored
+            }
+        }
         return null;
     }
 }

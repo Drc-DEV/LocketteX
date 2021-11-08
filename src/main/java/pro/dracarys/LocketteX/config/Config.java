@@ -35,6 +35,7 @@ public enum Config {
     LEADER_CAN_OPEN("Hooks.leader-bypasses-open-protection", false),
     PROTECT_CLAIMED_ONLY("Hooks.disable-protection-on-unclaimed-land", false),
     SIGN_ID_LINE("SignSettings.sign-id-line", "[Protect]"),
+    SIGN_OWNER_LINE("SignSettings.sign-owner-line-number", 3),
     SIGN_FORMATTED_LINES("SignSettings.sign-formatted-lines", new String[]{
             "&1[Protect]",
             "",
