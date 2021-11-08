@@ -1,6 +1,8 @@
 package pro.dracarys.LocketteX.api;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.block.*;
 import org.bukkit.block.data.type.WallSign;
 import org.bukkit.entity.Player;
@@ -12,6 +14,7 @@ import pro.dracarys.LocketteX.utils.Util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class LocketteXAPI {
 
@@ -60,6 +63,14 @@ public class LocketteXAPI {
                             try {
                                 // Strip color so that you can add colors to the name
                                 String owner = ChatColor.stripColor(s.getLine(2));
+                                if (owner.contains("#")) { // UUID Compatibility
+                                    OfflinePlayer off = Bukkit.getOfflinePlayer(UUID.fromString(owner.split("#")[1]));
+                                    if (off.hasPlayedBefore()) {
+                                        owner = off.getName();
+                                    } else { // FALLBACK
+                                        owner = owner.split("#")[0];
+                                    }
+                                }
                                 if (Util.isExpired(owner)) {
                                     block.breakNaturally(); // Break sign since protection expired
                                     return null;

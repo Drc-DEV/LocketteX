@@ -38,7 +38,7 @@ public enum Config {
     SIGN_FORMATTED_LINES("SignSettings.sign-formatted-lines", new String[]{
             "&1[Protect]",
             "",
-            "%owner%",
+            "%owner%#%uuid%",
             ""
     });
 

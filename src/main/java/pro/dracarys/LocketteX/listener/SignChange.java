@@ -74,7 +74,9 @@ public class SignChange implements Listener {
         if (protectEvent.isCancelled()) return;
         int num = 0;
         for (String ln : Config.SIGN_FORMATTED_LINES.getStrings()) {
-            e.setLine(num, Util.color(ln.replace("%owner%", e.getPlayer().getName())));
+            e.setLine(num, Util.color(ln
+                    .replace("%owner%", e.getPlayer().getName())
+                    .replace("%uuid%", e.getPlayer().getUniqueId().toString())));
             num++;
             if (num >= 4) // Sign has 4 lines
                 break;
