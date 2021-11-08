@@ -67,12 +67,12 @@ public class LocketteXAPI {
 
     public static String getSignOwner(Sign s, Block signBlock, Block attachedBlock) {
         if (s.getLine(0).equalsIgnoreCase(Util.color(Config.SIGN_FORMATTED_LINES.getStrings()[0]))) {
-            if (s.getLine(Config.SIGN_OWNER_LINE.getInt()).length() < 3) { //Playernames can't be less than 3 digits
+            if (s.getLine(Config.SIGN_OWNER_LINE.getInt() - 1).length() < 3) { //Playernames can't be less than 3 digits
                 return null;
             }
             try {
                 // Strip color so that you can add colors to the name
-                String owner = ChatColor.stripColor(s.getLine(Config.SIGN_OWNER_LINE.getInt()));
+                String owner = ChatColor.stripColor(s.getLine(Config.SIGN_OWNER_LINE.getInt() - 1));
                 if (owner.contains("#")) { // UUID Compatibility
                     OfflinePlayer off = Bukkit.getOfflinePlayer(UUID.fromString(owner.split("#")[1]));
                     if (off.hasPlayedBefore()) {
@@ -85,7 +85,11 @@ public class LocketteXAPI {
                     signBlock.breakNaturally(); // Break sign since protection expired
                     return null;
                 } else {
-                    Util.debug("Owner of Sign at " + signBlock.getLocation() + " which protects container at " + attachedBlock.getLocation() + " is '" + owner + "'");
+                    if (attachedBlock == null || attachedBlock == signBlock) {
+                        Util.debug("Owner of Sign at " + signBlock.getLocation() + " is '" + owner + "'");
+                    } else {
+                        Util.debug("Owner of Sign at " + signBlock.getLocation() + " which protects container at " + attachedBlock.getLocation() + " is '" + owner + "'");
+                    }
                     return owner;
                 }
             } catch (Exception ex) {
