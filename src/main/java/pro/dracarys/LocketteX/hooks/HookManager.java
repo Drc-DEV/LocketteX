@@ -14,6 +14,7 @@ public class HookManager {
     public HookManager(JavaPlugin plugin) {
         this.plugin = plugin;
         hookPlugin(new VaultHook());
+        hookPlugin(new SlimefunHook());
     }
 
     private void hookPlugin(PluginHook<?> pluginHook) {
