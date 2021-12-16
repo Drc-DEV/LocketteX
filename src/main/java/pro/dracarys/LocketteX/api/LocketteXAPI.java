@@ -22,7 +22,7 @@ public class LocketteXAPI {
 
     public static boolean canBreak(Player p, Block b) {
         if (!Util.isEnabledWorld(p.getWorld().getName())) return true;
-        if (p.isOp() || (Config.LEADER_CAN_BREAK.getOption() && ClaimUtil.getLeaderAt(b.getLocation()).equalsIgnoreCase(p.getName())))
+        if (p.isOp() || p.hasPermission(Config.PERMISSION_ADMIN.getString()) || (Config.LEADER_CAN_BREAK.getOption() && ClaimUtil.getLeaderAt(b.getLocation()).equalsIgnoreCase(p.getName())))
             return true;
         if (b.getType().name().contains("WALL_SIGN")) {
             Sign s = (Sign) b.getState();
@@ -81,7 +81,8 @@ public class LocketteXAPI {
                         attachedBlock = block.getRelative(ws.getFacing().getOppositeFace());
                     }
                     if (chestBlock.getLocation().equals(attachedBlock.getLocation())) {
-                        return getSignOwner(s, block, attachedBlock);
+                        String found = getSignOwner(s, block, attachedBlock);
+                        if (found != null) return found;
                     }
                 }
             }
