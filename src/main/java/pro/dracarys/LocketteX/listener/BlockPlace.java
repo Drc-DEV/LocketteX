@@ -16,6 +16,7 @@ import pro.dracarys.LocketteX.api.LocketteXAPI;
 import pro.dracarys.LocketteX.api.PlayerProtectContainerEvent;
 import pro.dracarys.LocketteX.config.Config;
 import pro.dracarys.LocketteX.config.Message;
+import pro.dracarys.LocketteX.hooks.GriefPreventionHook;
 import pro.dracarys.LocketteX.hooks.VaultHook;
 import pro.dracarys.LocketteX.utils.Util;
 
@@ -38,6 +39,14 @@ public class BlockPlace implements Listener {
             }
             String owner = LocketteXAPI.getChestOwner(e.getBlockAgainst().getState());
             if (owner == null) { // Handle only cases where the chest is not already protected
+                if (LocketteX.getInstance().getHookManager().getHookedPlugins().contains("GriefPrevention")) {
+                    GriefPreventionHook gpHook = (GriefPreventionHook) LocketteX.getInstance().getHookManager().getHookedPluginsMap().get("GriefPrevention");
+                    if (!gpHook.canBuildAt(e.getPlayer(), e.getBlockAgainst().getLocation())) {
+                        e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.GP_HOOK_CANT_PROTECT.getMessage());
+                        return;
+                    }
+                }
+
                 PlayerProtectContainerEvent protectEvent = new PlayerProtectContainerEvent(e.getPlayer(), e.getBlock());
                 Bukkit.getPluginManager().callEvent(protectEvent);
                 if (protectEvent.isCancelled()) return;

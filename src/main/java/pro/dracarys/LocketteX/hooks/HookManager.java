@@ -1,6 +1,7 @@
 package pro.dracarys.LocketteX.hooks;
 
 import org.bukkit.plugin.java.JavaPlugin;
+import pro.dracarys.LocketteX.config.Config;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +16,8 @@ public class HookManager {
         this.plugin = plugin;
         hookPlugin(new VaultHook());
         hookPlugin(new SlimefunHook());
+        if (Config.USE_GRIEFPREVENTION.getOption())
+            hookPlugin(new GriefPreventionHook());
     }
 
     private void hookPlugin(PluginHook<?> pluginHook) {

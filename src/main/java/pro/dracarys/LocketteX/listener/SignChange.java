@@ -9,10 +9,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.inventory.InventoryHolder;
+import pro.dracarys.LocketteX.LocketteX;
 import pro.dracarys.LocketteX.api.LocketteXAPI;
 import pro.dracarys.LocketteX.api.PlayerProtectContainerEvent;
 import pro.dracarys.LocketteX.config.Config;
 import pro.dracarys.LocketteX.config.Message;
+import pro.dracarys.LocketteX.hooks.GriefPreventionHook;
 import pro.dracarys.LocketteX.hooks.VaultHook;
 import pro.dracarys.LocketteX.utils.ClaimUtil;
 import pro.dracarys.LocketteX.utils.Util;
@@ -69,6 +71,15 @@ public class SignChange implements Listener {
             e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.CANT_PROTECT_THIS_CONTAINER.getMessage());
             return;
         }
+        if (LocketteX.getInstance().getHookManager().getHookedPlugins().contains("GriefPrevention")) {
+            GriefPreventionHook gpHook = (GriefPreventionHook) LocketteX.getInstance().getHookManager().getHookedPluginsMap().get("GriefPrevention");
+            if (!gpHook.canBuildAt(e.getPlayer(), attachedBlock.getLocation())) {
+                e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.GP_HOOK_CANT_PROTECT.getMessage());
+                e.getBlock().breakNaturally();
+                return;
+            }
+        }
+
         PlayerProtectContainerEvent protectEvent = new PlayerProtectContainerEvent(e.getPlayer(), attachedBlock);
         Bukkit.getPluginManager().callEvent(protectEvent);
         if (protectEvent.isCancelled()) return;
