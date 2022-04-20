@@ -23,7 +23,7 @@ public class InventoryOpen implements Listener {
         if (!Util.isEnabledWorld(e.getPlayer().getWorld().getName()) || !(e.getPlayer() instanceof Player) || e.getInventory().getHolder() == null)
             return;
         Player p = (Player) e.getPlayer();
-        if (p.isOp()
+        if (p.isOp() || p.hasPermission(Config.PERMISSION_ADMIN.getString())
                 || (Config.PROTECT_CLAIMED_ONLY.getOption() && ClaimUtil.isClaimedAt(p.getLocation()))
                 || (Config.LEADER_CAN_OPEN.getOption() && ClaimUtil.getLeaderAt(p.getLocation()).equalsIgnoreCase(p.getName())))
             return;
