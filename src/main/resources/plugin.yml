@@ -11,3 +11,9 @@ commands:
     description: Main Command
     usage: "Usage: /<command>"
     aliases: [ protect ]
+permissions:
+  lockettex:
+    admin:
+      description: "Allows player to open any chests"
+    create:
+      description: "Allows player to create locked chests"
