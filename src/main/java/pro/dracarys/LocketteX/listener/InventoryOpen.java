@@ -8,6 +8,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.InventoryHolder;
+import pro.dracarys.LocketteX.LocketteX;
 import pro.dracarys.LocketteX.api.LocketteXAPI;
 import pro.dracarys.LocketteX.config.Config;
 import pro.dracarys.LocketteX.config.Message;
@@ -33,7 +34,7 @@ public class InventoryOpen implements Listener {
             try {
                 String owner = LocketteXAPI.getChestOwner(loc.getBlock().getState());
                 if (owner != null && !p.getName().equalsIgnoreCase(owner)) {
-                    p.sendMessage(Message.PREFIX.getMessage() + Message.CHEST_OPEN_DENIED.getMessage().replace("%owner%", owner));
+                    LocketteX.getInstance().getLocaleManager().sendMessage(p, Message.PREFIX.getMessage() + Message.CONTAINER_OPEN_DENIED.getMessage().replace("%owner%", owner), loc.getBlock().getType(), (short) 0, null);
                     e.setCancelled(true);
                 }
             } catch (NullPointerException npe) {

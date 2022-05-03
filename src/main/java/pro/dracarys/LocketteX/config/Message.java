@@ -7,7 +7,7 @@ import java.util.List;
 public enum Message {
 
     GENERAL_NOPERMISSION("no-permission", "&7[&4✕&7] &cYou don't have the required permission!"),
-    CREATION_NOPERMISSION("no-permission-protection", "&7[&4✕&7] &cYou don't have the permission to protect Containers!"),
+    CREATION_NOPERMISSION("no-permission-protection", "&7[&4✕&7] &cYou don't have the permission to protect Blocks!"),
     NONE("none", "N/A"),
     PREFIX("prefix", "&a&lProtect &f➤ "),
     PREFIX_DEBUG("prefix-debug", "&7[Protect] &e<DEBUG> "),
@@ -18,21 +18,21 @@ public enum Message {
     CMD_RELOAD_SUCCESS("cmd-reload-success", "&7[&a✔&7] &aConfig Reloaded!"),
     CMD_USAGE("cmd-usage", "&7[&4✕&7] &cSomething's wrong! Do /protect for a command list."),
 
-    NOT_ENOUGH_MONEY("not-enough-money", "&7[&4✕&7] &cYou must have &e%price%&c in order to protect a chest."),
+    NOT_ENOUGH_MONEY("not-enough-money", "&7[&4✕&7] &cYou must have &e%price%&c in order to protect a block."),
 
-    CANT_PROTECT_ON_UNCLAIMED("cant-protect-in-unclaimed-land", "&7[&4✕&7] &cYou can't protect Containers in unclaimed land!"),
-    CANT_PROTECT_THIS_CONTAINER("cant-protect-this-container", "&7[&4✕&7] &cYou can't protect this type of Container!"),
-    CANT_PROTECT_CANTBUILD("cant-protect-no-build-permissions", "&7[&4✕&7] &cYou can't protect stuff where you do not have build permissions!"),
-    CHEST_ALREADY_PROTECTED("chest-already-protected", "&7[&4✕&7] &cThis Container was already protected by &e%owner% &che must break the sign first!"),
-    CHEST_BREAK_DENIED("chest-break-denied", "&7[&4✕&7] &cThis Container is protected! Only &e%owner% &ccan break it!"),
+    CANT_PROTECT_ON_UNCLAIMED("cant-protect-in-unclaimed-land", "&7[&4✕&7] &cYou can't protect blocks in unclaimed land!"),
+    CANT_PROTECT_THIS("cant-protect-this", "&7[&4✕&7] &cYou can't protect <item>!"),
+    CANT_PROTECT_CANTBUILD("cant-protect-no-build-permissions", "&7[&4✕&7] &cYou can't protect where you do not have build permissions!"),
+    ALREADY_PROTECTED("block-already-protected", "&7[&4✕&7] &cThis Block was already protected by &e%owner% &che must break the sign first!"),
+    BREAK_DENIED("protected-break-denied", "&7[&4✕&7] &cThis <item> is protected! Only &e%owner% &ccan break it!"),
     SIGN_BREAK_DENIED("sign-break-denied", "&7[&4✕&7] &cOnly &e%owner% &ccan break this sign!"),
-    CHEST_OPEN_DENIED("chest-open-denied", "&7[&4✕&7] &cThis Container is protected! Only &e%owner% &ccan open it!"),
-    HOPPER_PLACE_DENIED("hopper-place-denied", "&7[&4✕&7] &cYou can't place Hoppers near a protected Container!"),
+    CONTAINER_OPEN_DENIED("container-open-denied", "&7[&4✕&7] &cThis <item> is protected! Only &e%owner% &ccan open it!"),
+    HOPPER_PLACE_DENIED("hopper-place-denied", "&7[&4✕&7] &cYou can't place Hoppers near a protected Block!"),
 
-    CHEST_PROTECT_SUCCESS_ECON("chest-protect-success-econ", "&7[&a✔&7] &aContainer successfully protected! You payed &e%price%&a!"),
-    CHEST_PROTECT_SUCCESS("chest-protect-success", "&7[&a✔&7] &aContainer successfully protected!"),
+    PROTECT_SUCCESS_ECON("block-protect-success-econ", "&7[&a✔&7] &aBlock successfully protected! You payed &e%price%&a!"),
+    PROTECT_SUCCESS("block-protect-success", "&7[&a✔&7] &aBlock successfully protected!"),
 
-    GP_HOOK_CANT_PROTECT("Hooks.griefprevention.cant-protect", "&7[&4✕&7] &cYou can't protect this Container, as you do not have permissions to build here!"),
+    GP_HOOK_CANT_PROTECT("Hooks.griefprevention.cant-protect", "&7[&4✕&7] &cYou can't protect here, as you do not have permissions to build here!"),
 
     CLAIM_HOOK_FOUND("Hooks.claim-plugin-hooked", "&7[&a✔&7] &aUsing %plugin% as Claim Provider."),
     CLAIM_HOOK_NOTFOUND("Hooks.claim-plugin-not-found", "&7[&4✘&7] &cNo valid Claim Provider found!"),

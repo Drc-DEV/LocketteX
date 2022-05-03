@@ -104,7 +104,6 @@ public class Util {
                 Directional directional = (Directional) b.getBlockData();
                 return b.getRelative(directional.getFacing().getOppositeFace());
             } else {
-                //No Directionalable
                 return null;
             }
         } catch (NullPointerException | ClassCastException e) {

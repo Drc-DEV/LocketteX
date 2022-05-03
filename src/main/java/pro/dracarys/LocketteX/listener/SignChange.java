@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.Directional;
+import org.bukkit.block.data.Openable;
 import org.bukkit.block.data.Rotatable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -64,15 +65,15 @@ public class SignChange implements Listener {
             e.getBlock().breakNaturally();
             return;
         }
-        if ((attachedBlock.getState() instanceof InventoryHolder)) {
-            String owner = LocketteXAPI.getChestOwner(attachedBlock.getState());
+        if (attachedBlock.getState() instanceof InventoryHolder || attachedBlock.getState().getBlockData() instanceof Openable) {
+            String owner = LocketteXAPI.getOwner(attachedBlock.getState());
             if (owner != null) {
-                e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.CHEST_ALREADY_PROTECTED.getMessage().replace("%owner%", owner));
+                e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.ALREADY_PROTECTED.getMessage().replace("%owner%", owner));
                 e.getBlock().breakNaturally();
                 return;
             }
         } else {
-            e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.CANT_PROTECT_THIS_CONTAINER.getMessage());
+            LocketteX.getInstance().getLocaleManager().sendMessage(e.getPlayer(), Message.PREFIX.getMessage() + Message.CANT_PROTECT_THIS.getMessage(), attachedBlock.getType(), (short) 0, null);
             return;
         }
         if (LocketteX.getInstance().getHookManager().getHookedPlugins().contains("GriefPrevention")) {
@@ -98,9 +99,9 @@ public class SignChange implements Listener {
         }
         if (VaultHook.isEnabled()) {
             VaultHook.getEconomy().withdrawPlayer(e.getPlayer(), Config.PRICE_CREATION.getInt());
-            e.getPlayer().sendMessage(Message.CHEST_PROTECT_SUCCESS_ECON.getMessage().replace("%price%", VaultHook.getEconomy().format(Config.PRICE_CREATION.getInt()) + ""));
+            e.getPlayer().sendMessage(Message.PROTECT_SUCCESS_ECON.getMessage().replace("%price%", VaultHook.getEconomy().format(Config.PRICE_CREATION.getInt()) + ""));
         } else {
-            e.getPlayer().sendMessage(Message.CHEST_PROTECT_SUCCESS.getMessage());
+            e.getPlayer().sendMessage(Message.PROTECT_SUCCESS.getMessage());
         }
     }
 }

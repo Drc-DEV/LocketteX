@@ -64,6 +64,10 @@
                                     <pattern>pro.dracarys.configlib</pattern>
                                     <shadedPattern>pro.dracarys.LocketteX.shade.configlib</shadedPattern>
                                 </relocation>
+                                <relocation>
+                                    <pattern>me.pikamug.localelib</pattern>
+                                    <shadedPattern>pro.dracarys.LocketteX.shade.localelib</shadedPattern>
+                                </relocation>
                             </relocations>
                         </configuration>
                     </execution>
@@ -113,6 +117,13 @@
             <groupId>com.github.Drc-DEV</groupId>
             <artifactId>configlib</artifactId>
             <version>1.9.4</version>
+            <scope>compile</scope>
+        </dependency>
+        <!-- LocaleLib -->
+        <dependency>
+            <groupId>com.github.PikaMug</groupId>
+            <artifactId>LocaleLib</artifactId>
+            <version>2.6</version>
             <scope>compile</scope>
         </dependency>
 

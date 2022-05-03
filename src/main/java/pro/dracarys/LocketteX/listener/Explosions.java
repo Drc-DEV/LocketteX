@@ -2,6 +2,7 @@ package pro.dracarys.LocketteX.listener;
 
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
+import org.bukkit.block.data.Openable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityExplodeEvent;
@@ -21,7 +22,7 @@ public class Explosions implements Listener {
             return;
         List<Block> toRemove = new ArrayList<>();
         for (Block block : event.blockList()) {
-            if (block.getState() instanceof InventoryHolder && LocketteXAPI.isProtected(block.getState())) {
+            if ((block.getState() instanceof InventoryHolder || block.getState().getBlockData() instanceof Openable) && LocketteXAPI.isProtected(block.getState())) {
                 toRemove.add(block);
             }
             if (!block.getType().name().contains("WALL_SIGN")) continue;

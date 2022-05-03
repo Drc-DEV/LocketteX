@@ -4,11 +4,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.*;
+import org.bukkit.block.data.Bisected;
+import org.bukkit.block.data.Openable;
 import org.bukkit.block.data.type.WallSign;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.DoubleChestInventory;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
+import pro.dracarys.LocketteX.LocketteX;
 import pro.dracarys.LocketteX.config.Config;
 import pro.dracarys.LocketteX.config.Message;
 import pro.dracarys.LocketteX.utils.ClaimUtil;
@@ -26,17 +29,17 @@ public class LocketteXAPI {
             return true;
         if (b.getType().name().contains("WALL_SIGN")) {
             Sign s = (Sign) b.getState();
-            String owner = LocketteXAPI.getSignOwner(s, b, b);
+            String owner = getSignOwner(s, b, b);
             if (owner != null && !owner.equalsIgnoreCase(p.getName())) {
                 p.sendMessage(Message.PREFIX.getMessage() + Message.SIGN_BREAK_DENIED.getMessage()
                         .replace("%owner%", owner));
                 return false;
             }
-        } else if (b.getState() instanceof InventoryHolder) {
-            String owner = LocketteXAPI.getChestOwner(b.getState());
+        } else {
+            String owner = getOwner(b.getState());
             if (owner != null && !owner.equalsIgnoreCase(p.getName())) {
-                p.sendMessage(Message.PREFIX.getMessage() + Message.CHEST_BREAK_DENIED.getMessage()
-                        .replace("%owner%", owner));
+                LocketteX.getInstance().getLocaleManager().sendMessage(p, Message.PREFIX.getMessage() + Message.BREAK_DENIED.getMessage()
+                        .replace("%owner%", owner), b.getType(), (short) 0, null);
                 return false;
             }
         }
@@ -44,32 +47,56 @@ public class LocketteXAPI {
     }
 
     public static boolean isProtected(BlockState blockState) {
-        return getChestOwner(blockState) != null;
+        return getOwner(blockState) != null;
     }
 
+    @Deprecated // use hasAccess
     public static boolean hasChestAccess(Player p, BlockState blockState) {
-        String owner = getChestOwner(blockState);
+        return hasAccess(p, blockState);
+    }
+
+
+    public static boolean hasAccess(Player p, BlockState blockState) {
+        String owner = getOwner(blockState);
         return owner != null && owner.equalsIgnoreCase(p.getName());
     }
 
+    @Deprecated // use getOwner
     public static String getChestOwner(BlockState blockState) {
-        List<Block> chestBlocks = new ArrayList<>();
-        if (blockState instanceof Chest) {
-            Chest chest = (Chest) blockState;
-            Inventory chestInventory = chest.getInventory();
-            if (chestInventory instanceof DoubleChestInventory) {
-                DoubleChest doubleChest = (DoubleChest) chestInventory.getHolder();
-                chestBlocks.add(((Chest) doubleChest.getLeftSide()).getBlock());
-                chestBlocks.add(((Chest) doubleChest.getRightSide()).getBlock());
+        return getOwner(blockState);
+    }
+
+    public static String getOwner(BlockState blockState) {
+        List<Block> protectedBlocks = new ArrayList<>();
+        if (blockState instanceof InventoryHolder) {
+            if (blockState instanceof Chest) {
+                Chest chest = (Chest) blockState;
+                Inventory chestInventory = chest.getInventory();
+                if (chestInventory instanceof DoubleChestInventory) {
+                    DoubleChest doubleChest = (DoubleChest) chestInventory.getHolder();
+                    protectedBlocks.add(((Chest) doubleChest.getLeftSide()).getBlock());
+                    protectedBlocks.add(((Chest) doubleChest.getRightSide()).getBlock());
+                } else {
+                    protectedBlocks.add(chest.getBlock());
+                }
             } else {
-                chestBlocks.add(chest.getBlock());
+                protectedBlocks.add(blockState.getBlock());
             }
+        } else if (blockState.getBlockData() instanceof Openable) { // Door, Gate, Trapdoor
+            if (blockState.getBlockData() instanceof Bisected) { // Doors
+                Bisected bi = (Bisected) blockState.getBlockData();
+                if (bi.getHalf().equals(Bisected.Half.BOTTOM)) {
+                    protectedBlocks.add(blockState.getBlock().getRelative(BlockFace.UP));
+                } else {
+                    protectedBlocks.add(blockState.getBlock().getRelative(BlockFace.DOWN));
+                }
+            }
+            protectedBlocks.add(blockState.getBlock());
         } else {
-            if (!(blockState instanceof InventoryHolder)) return null;
-            chestBlocks.add(blockState.getBlock());
+            return null;
         }
-        for (Block chestBlock : chestBlocks) {
-            for (Block block : Util.getBlocks(chestBlock, 1)) {
+        for (Block b : protectedBlocks) {
+            for (Block block : Util.getBlocks(b, 1)) {
                 if (block.getType().name().contains("WALL_SIGN")) {
                     Sign s = (Sign) block.getState();
                     Block attachedBlock;
@@ -80,7 +107,7 @@ public class LocketteXAPI {
                         WallSign ws = (WallSign) s.getBlockData();
                         attachedBlock = block.getRelative(ws.getFacing().getOppositeFace());
                     }
-                    if (chestBlock.getLocation().equals(attachedBlock.getLocation())) {
+                    if (b.getLocation().equals(attachedBlock.getLocation())) {
                         String found = getSignOwner(s, block, attachedBlock);
                         if (found != null) return found;
                     }

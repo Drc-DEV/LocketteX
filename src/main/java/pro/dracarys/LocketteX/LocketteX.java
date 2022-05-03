@@ -1,5 +1,6 @@
 package pro.dracarys.LocketteX;
 
+import me.pikamug.localelib.LocaleManager;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
@@ -12,7 +13,6 @@ import pro.dracarys.LocketteX.config.file.MessageFile;
 import pro.dracarys.LocketteX.hooks.HookManager;
 import pro.dracarys.LocketteX.hooks.claim.ClaimPlugin;
 import pro.dracarys.LocketteX.listener.*;
-import pro.dracarys.LocketteX.utils.Util;
 import pro.dracarys.configlib.ConfigLib;
 
 import java.util.logging.Level;
@@ -37,6 +37,12 @@ public class LocketteX extends JavaPlugin {
         return hookManager;
     }
 
+    private LocaleManager localeManager;
+
+    public LocaleManager getLocaleManager() {
+        return localeManager;
+    }
+
     @Override
     public void onEnable() {
         try {
@@ -46,6 +52,7 @@ public class LocketteX extends JavaPlugin {
             getServer().getLogger().log(Level.SEVERE, "Error while trying to register Metrics (bStats)");
         }
         plugin = this;
+        localeManager = new LocaleManager();
         initConfig();
         loadConfig();
         checkServerVersion();
@@ -55,7 +62,7 @@ public class LocketteX extends JavaPlugin {
             cmd.setExecutor(executor);
             cmd.setTabCompleter(executor);
         }
-        printPluginInfo();
+        ConfigLib.printPluginInfo();
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
             hookManager = new HookManager(this);
             claimPlugin = new ClaimPlugin().setup(this);
@@ -75,28 +82,6 @@ public class LocketteX extends JavaPlugin {
             getServer().getPluginManager().registerEvents(listener, plugin);
         }
     }
-
-    // Tell IntelliJ to not format this, by enabling formatter markers in comments (Pref-> Editor-> Code Style)
-    // Made this way for easy editing/char replacing, using equal size chars for all consoles compatibility.
-    //@formatter:off
-    private void printPluginInfo() {
-        Util.sendConsole(("\n" +
-                " ⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬛⬛⬛⬜⬜⬜⬜⬜⬛⬛⬛\n" +
-                " ⬜⬛⬜⬜⬜⬜⬜⬛⬛⬛⬜⬛⬛⬛⬛⬜⬛⬜⬜⬛⬜⬛⬛⬛⬛⬛⬜⬛⬛⬛⬛⬛⬜⬛⬛⬛⬛⬛⬜⬛⬛⬛⬛⬛⬜⬜⬜⬛⬛⬜⬜⬜⬛⬛⬜⬜\n" +
-                " ⬜⬛⬜⬜⬜⬜⬛⬛⬜⬛⬜⬛⬜⬛⬛⬜⬛⬜⬛⬛⬜⬛⬜⬜⬜⬛⬜⬜⬜⬛⬜⬛⬜⬜⬜⬛⬜⬛⬜⬛⬜⬜⬜⬛⬜⬜⬜⬜⬛⬛⬜⬛⬛⬜⬜⬜\n" +
-                " ⬜⬛⬜⬜⬜⬜⬛⬜⬜⬛⬜⬛⬜⬜⬛⬜⬛⬛⬜⬛⬜⬛⬛⬛⬜⬜⬜⬜⬜⬛⬜⬜⬜⬜⬜⬛⬜⬜⬜⬛⬛⬛⬜⬜⬜⬜⬜⬜⬜⬛⬛⬛⬜⬜⬜⬜\n" +
-                " ⬜⬛⬜⬜⬜⬜⬛⬜⬜⬛⬜⬛⬜⬜⬜⬜⬛⬛⬜⬜⬜⬛⬜⬜⬜⬜⬜⬜⬜⬛⬜⬜⬜⬜⬜⬛⬜⬜⬜⬛⬜⬜⬜⬜⬜⬜⬜⬜⬜⬛⬛⬛⬜⬜⬜⬜\n" +
-                " ⬜⬛⬜⬜⬛⬜⬛⬜⬛⬛⬜⬛⬜⬜⬛⬜⬛⬜⬛⬛⬜⬛⬜⬜⬛⬛⬜⬜⬜⬛⬜⬜⬜⬜⬜⬛⬜⬜⬜⬛⬜⬜⬛⬛⬜⬜⬜⬜⬛⬛⬜⬛⬛⬜⬜⬜\n" +
-                " ⬜⬛⬛⬛⬛⬜⬛⬛⬛⬜⬜⬛⬛⬛⬛⬜⬛⬜⬜⬛⬜⬛⬛⬛⬛⬜⬜⬜⬜⬛⬜⬜⬜⬜⬜⬛⬜⬜⬜⬛⬛⬛⬛⬜⬜⬜⬜⬛⬛⬜⬜⬜⬛⬛⬜⬜\n" +
-                " ⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬛⬛⬛⬜⬜⬜⬜⬜⬛⬛⬛\n"
-        ).replace("⬜", "&0█").replace("⬛", "&f█") + "\n" +
-                " &f-->  &c" + getDescription().getName() + " &7v" + getDescription().getVersion() + "&a Enabled" + "\n" +
-                " &f-->  &f&o" + getDescription().getDescription() + "\n" +
-                " &f-->  &eMade with &4♥ &eby &f" + getDescription().getAuthors().get(0) + "\n");
-        if (getDescription().getVersion().contains("-DEV"))
-            Util.sendConsole("&f&l[!] &cThis is a BETA, report any unexpected behaviour to the Author!" + "\n");
-    }
-    //@formatter:on
 
     private void initConfig() {
         ConfigLib.setPlugin(this);
