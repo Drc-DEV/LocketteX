@@ -22,6 +22,7 @@ public enum Message {
 
     CANT_PROTECT_ON_UNCLAIMED("cant-protect-in-unclaimed-land", "&7[&4✕&7] &cYou can't protect Containers in unclaimed land!"),
     CANT_PROTECT_THIS_CONTAINER("cant-protect-this-container", "&7[&4✕&7] &cYou can't protect this type of Container!"),
+    CANT_PROTECT_CANTBUILD("cant-protect-no-build-permissions", "&7[&4✕&7] &cYou can't protect stuff where you do not have build permissions!"),
     CHEST_ALREADY_PROTECTED("chest-already-protected", "&7[&4✕&7] &cThis Container was already protected by &e%owner% &che must break the sign first!"),
     CHEST_BREAK_DENIED("chest-break-denied", "&7[&4✕&7] &cThis Container is protected! Only &e%owner% &ccan break it!"),
     SIGN_BREAK_DENIED("sign-break-denied", "&7[&4✕&7] &cOnly &e%owner% &ccan break this sign!"),

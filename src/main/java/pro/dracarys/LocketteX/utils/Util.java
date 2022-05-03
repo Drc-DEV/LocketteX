@@ -7,6 +7,8 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.block.*;
 import org.bukkit.block.data.Directional;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import pro.dracarys.LocketteX.LocketteX;
@@ -153,12 +155,22 @@ public class Util {
             } else if (holder instanceof BrewingStand) {
                 return ((BrewingStand) holder).getBlock().getLocation();
             }
-        } catch (UnsupportedOperationException ex) {
-            return null;
-        } catch (NullPointerException npe) {
+        } catch (UnsupportedOperationException | NullPointerException ex) {
             return null;
         }
         return null;
+    }
+
+    public static boolean canBuildAt(Player player, Location location) {
+        try {
+            BlockPlaceEvent event = new BlockPlaceEvent(location.getBlock(), location.getBlock().getState(), location.getBlock().getRelative(BlockFace.DOWN), player.getInventory().getItemInMainHand(), player, true, EquipmentSlot.HAND);
+            Bukkit.getPluginManager().callEvent(event);
+            return !event.isCancelled();
+        } catch (Exception ex) {
+            Util.debug("Could not check for canBuild permissions at location, please post on LocketteX discussion page the following error and state your server version.");
+            ex.printStackTrace();
+            return true;
+        }
     }
 
 }

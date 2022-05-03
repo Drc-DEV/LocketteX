@@ -22,6 +22,7 @@ public enum Config {
                     + "this can have some impact on performance and only works if inventory move event caused by hoppers is enabled in the spigot configuration."
     }),
     USE_CANCEL_EXPLOSIONS("GeneralSettings.protect-from-explosions", true),
+    USE_CANBUILD_CHECK("GeneralSettings.check-if-canbuild-before-protect", false),
 
     EXPIRE_ENABLED("Expiration.enabled", false),
     EXPIRE_TIME("Expiration.disable-protection-after-x-days", 90),

@@ -55,6 +55,10 @@ public class SignChange implements Listener {
                 return;
             }
         }
+        if (Config.USE_CANBUILD_CHECK.getOption() && !Util.canBuildAt(e.getPlayer(), attachedBlock.getLocation())) {
+            e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.CANT_PROTECT_CANTBUILD.getMessage());
+            return;
+        }
         if (Config.PROTECT_CLAIMED_ONLY.getOption() && !ClaimUtil.isClaimedAt(attachedBlock.getLocation())) {
             e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.CANT_PROTECT_ON_UNCLAIMED.getMessage());
             e.getBlock().breakNaturally();
