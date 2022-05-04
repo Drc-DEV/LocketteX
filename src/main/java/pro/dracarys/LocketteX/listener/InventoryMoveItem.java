@@ -22,7 +22,7 @@ public class InventoryMoveItem implements Listener {
         if (holder == null) return;
         Location loc = Util.getHolderLocation(holder);
         if (loc == null || !Util.isEnabledWorld(loc.getWorld().getName())) return;
-        if (LocketteXAPI.getOwner(loc.getBlock().getState()) != null) {
+        if (LocketteXAPI.isProtected(loc.getBlock().getState())) {
             e.setCancelled(true);
             if (e.getDestination().getHolder() instanceof Hopper) {
                 Hopper hopper = (Hopper) e.getDestination().getHolder();

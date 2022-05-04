@@ -12,9 +12,10 @@ import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.inventory.InventoryHolder;
 import pro.dracarys.LocketteX.LocketteX;
 import pro.dracarys.LocketteX.api.LocketteXAPI;
-import pro.dracarys.LocketteX.api.PlayerProtectContainerEvent;
+import pro.dracarys.LocketteX.api.PlayerProtectBlockEvent;
 import pro.dracarys.LocketteX.config.Config;
 import pro.dracarys.LocketteX.config.Message;
+import pro.dracarys.LocketteX.data.SignUser;
 import pro.dracarys.LocketteX.hooks.GriefPreventionHook;
 import pro.dracarys.LocketteX.hooks.VaultHook;
 import pro.dracarys.LocketteX.utils.ClaimUtil;
@@ -66,9 +67,9 @@ public class SignChange implements Listener {
             return;
         }
         if (attachedBlock.getState() instanceof InventoryHolder || attachedBlock.getState().getBlockData() instanceof Openable) {
-            String owner = LocketteXAPI.getOwner(attachedBlock.getState());
+            SignUser owner = LocketteXAPI.getOwner(attachedBlock.getState());
             if (owner != null) {
-                e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.ALREADY_PROTECTED.getMessage().replace("%owner%", owner));
+                e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.ALREADY_PROTECTED.getMessage().replace("%owner%", owner.getName()));
                 e.getBlock().breakNaturally();
                 return;
             }
@@ -85,7 +86,7 @@ public class SignChange implements Listener {
             }
         }
 
-        PlayerProtectContainerEvent protectEvent = new PlayerProtectContainerEvent(e.getPlayer(), attachedBlock);
+        PlayerProtectBlockEvent protectEvent = new PlayerProtectBlockEvent(e.getPlayer(), attachedBlock);
         Bukkit.getPluginManager().callEvent(protectEvent);
         if (protectEvent.isCancelled()) return;
         int num = 0;

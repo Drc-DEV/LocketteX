@@ -1,5 +1,8 @@
 package pro.dracarys.LocketteX;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import me.pikamug.localelib.LocaleManager;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -8,13 +11,22 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import pro.dracarys.LocketteX.commands.MainCommand;
 import pro.dracarys.LocketteX.config.Config;
+import pro.dracarys.LocketteX.config.Message;
 import pro.dracarys.LocketteX.config.file.ConfigFile;
 import pro.dracarys.LocketteX.config.file.MessageFile;
+import pro.dracarys.LocketteX.data.SignUser;
 import pro.dracarys.LocketteX.hooks.HookManager;
 import pro.dracarys.LocketteX.hooks.claim.ClaimPlugin;
 import pro.dracarys.LocketteX.listener.*;
+import pro.dracarys.LocketteX.utils.Util;
 import pro.dracarys.configlib.ConfigLib;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 
 public class LocketteX extends JavaPlugin {
@@ -54,7 +66,7 @@ public class LocketteX extends JavaPlugin {
         plugin = this;
         localeManager = new LocaleManager();
         initConfig();
-        loadConfig();
+        loadData();
         checkServerVersion();
         PluginCommand cmd = this.getCommand("lockettex");
         MainCommand executor = new MainCommand();
@@ -66,7 +78,7 @@ public class LocketteX extends JavaPlugin {
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
             hookManager = new HookManager(this);
             claimPlugin = new ClaimPlugin().setup(this);
-            registerListeners(new InventoryOpen(), new BlockBreak(), new BlockPlace(), new SignChange(), new Explosions());
+            registerListeners(new InventoryOpen(), new BlockBreakInteract(), new BlockPlace(), new SignChange(), new Explosions());
             if (Config.USE_INV_MOVE.getOption()) registerListeners(new InventoryMoveItem());
         }, 1);
     }
@@ -74,6 +86,7 @@ public class LocketteX extends JavaPlugin {
     @Override
     public void onDisable() {
         getServer().getScheduler().cancelTasks(this);
+        saveData();
         plugin = null;
     }
 
@@ -102,4 +115,40 @@ public class LocketteX extends JavaPlugin {
     public static int getServerVersion() {
         return ver;
     }
+
+    private static Map<String, List<SignUser>> whitelistMap = new HashMap<>();
+
+    public static Map<String, List<SignUser>> getWhitelistMap() {
+        return whitelistMap;
+    }
+
+    public void saveData() {
+        if (whitelistMap.isEmpty()) return;
+        Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
+        new File(LocketteX.getInstance().getDataFolder() + File.separator + "data").mkdirs();
+        try (FileWriter writer = new FileWriter(LocketteX.getInstance().getDataFolder() + File.separator + "data" + File.separator + "owners.json")) {
+            gson.toJson(whitelistMap, writer);
+        } catch (IOException e) {
+            Util.error(Message.ERROR_IO_SAVE.getMessage());
+            if (Config.DEBUG.getOption())
+                e.printStackTrace();
+        }
+    }
+
+    public void loadData() {
+        if (Files.isReadable(Paths.get(LocketteX.getInstance().getDataFolder() + File.separator + "data" + File.separator + "owners.json"))) {
+            try (Reader reader = new FileReader(LocketteX.getInstance().getDataFolder() + File.separator + "data" + File.separator + "owners.json")) {
+                Gson gson = new Gson();
+                Map<String, List<SignUser>> data = gson.fromJson(reader, new TypeToken<Map<String, List<SignUser>>>() {
+                }.getType());
+                if (data == null) return;
+                whitelistMap = data;
+            } catch (IOException e) {
+                Util.error(Message.ERROR_IO_LOAD.getMessage());
+                if (Config.DEBUG.getOption())
+                    e.printStackTrace();
+            }
+        }
+    }
+
 }

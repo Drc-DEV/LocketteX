@@ -14,9 +14,10 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import pro.dracarys.LocketteX.LocketteX;
 import pro.dracarys.LocketteX.api.LocketteXAPI;
-import pro.dracarys.LocketteX.api.PlayerProtectContainerEvent;
+import pro.dracarys.LocketteX.api.PlayerProtectBlockEvent;
 import pro.dracarys.LocketteX.config.Config;
 import pro.dracarys.LocketteX.config.Message;
+import pro.dracarys.LocketteX.data.SignUser;
 import pro.dracarys.LocketteX.hooks.GriefPreventionHook;
 import pro.dracarys.LocketteX.hooks.VaultHook;
 import pro.dracarys.LocketteX.utils.Util;
@@ -38,8 +39,7 @@ public class BlockPlace implements Listener {
                 e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.NOT_ENOUGH_MONEY.getMessage().replace("%price%", VaultHook.getEconomy().format(Config.PRICE_CREATION.getInt())));
                 return;
             }
-            String owner = LocketteXAPI.getOwner(e.getBlockAgainst().getState());
-            if (owner == null) { // Handle only cases where the chest is not already protected
+            if (!LocketteXAPI.isProtected(e.getBlockAgainst().getState())) { // Handle only cases where the chest is not already protected
                 if (Config.USE_CANBUILD_CHECK.getOption() && !Util.canBuildAt(e.getPlayer(), e.getBlockAgainst().getLocation())) {
                     e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.CANT_PROTECT_CANTBUILD.getMessage());
                     return;
@@ -51,8 +51,7 @@ public class BlockPlace implements Listener {
                         return;
                     }
                 }
-
-                PlayerProtectContainerEvent protectEvent = new PlayerProtectContainerEvent(e.getPlayer(), e.getBlock());
+                PlayerProtectBlockEvent protectEvent = new PlayerProtectBlockEvent(e.getPlayer(), e.getBlock());
                 Bukkit.getPluginManager().callEvent(protectEvent);
                 if (protectEvent.isCancelled()) return;
                 try {
@@ -81,7 +80,6 @@ public class BlockPlace implements Listener {
                     } else {
                         s.update();
                     }
-
                 }, 2);
                 if (VaultHook.isEnabled()) {
                     VaultHook.getEconomy().withdrawPlayer(e.getPlayer(), Config.PRICE_CREATION.getInt());
@@ -89,7 +87,6 @@ public class BlockPlace implements Listener {
                 } else {
                     e.getPlayer().sendMessage(Message.PROTECT_SUCCESS.getMessage());
                 }
-
             }
         }
         // Handle hoppers bypass - ONLY CONTAINERS
@@ -98,8 +95,8 @@ public class BlockPlace implements Listener {
             return;
         Block block = e.getBlock().getRelative(BlockFace.UP);
         if ((block.getState() instanceof InventoryHolder)) {
-            String owner = LocketteXAPI.getOwner(block.getState());
-            if (owner != null && !e.getPlayer().getName().equalsIgnoreCase(owner)) {
+            SignUser owner = LocketteXAPI.getOwner(block.getState());
+            if (owner != null && !e.getPlayer().getUniqueId().equals(owner.getUniqueId())) {
                 e.setCancelled(true);
                 e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.HOPPER_PLACE_DENIED.getMessage());
             }

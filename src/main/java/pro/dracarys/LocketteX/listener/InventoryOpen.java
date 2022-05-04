@@ -12,6 +12,7 @@ import pro.dracarys.LocketteX.LocketteX;
 import pro.dracarys.LocketteX.api.LocketteXAPI;
 import pro.dracarys.LocketteX.config.Config;
 import pro.dracarys.LocketteX.config.Message;
+import pro.dracarys.LocketteX.data.SignUser;
 import pro.dracarys.LocketteX.utils.ClaimUtil;
 import pro.dracarys.LocketteX.utils.Util;
 
@@ -32,10 +33,13 @@ public class InventoryOpen implements Listener {
         Location loc = Util.getHolderLocation(holder);
         if (loc != null) {
             try {
-                String owner = LocketteXAPI.getChestOwner(loc.getBlock().getState());
-                if (owner != null && !p.getName().equalsIgnoreCase(owner)) {
-                    LocketteX.getInstance().getLocaleManager().sendMessage(p, Message.PREFIX.getMessage() + Message.CONTAINER_OPEN_DENIED.getMessage().replace("%owner%", owner), loc.getBlock().getType(), (short) 0, null);
-                    e.setCancelled(true);
+                if (!LocketteXAPI.hasAccess(p, loc.getBlock().getState())) {
+                    SignUser owner = LocketteXAPI.getOwner(loc.getBlock().getState());
+                    if (owner != null) {
+                        LocketteX.getInstance().getLocaleManager().sendMessage(p, Message.PREFIX.getMessage() + Message.CONTAINER_OPEN_DENIED.getMessage()
+                                .replace("%owner%", owner.getName()), loc.getBlock().getType(), (short) 0, null);
+                        e.setCancelled(true);
+                    }
                 }
             } catch (NullPointerException npe) {
                 if (Config.DEBUG.getOption())

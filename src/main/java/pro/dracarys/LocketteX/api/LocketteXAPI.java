@@ -14,12 +14,14 @@ import org.bukkit.inventory.InventoryHolder;
 import pro.dracarys.LocketteX.LocketteX;
 import pro.dracarys.LocketteX.config.Config;
 import pro.dracarys.LocketteX.config.Message;
+import pro.dracarys.LocketteX.data.SignUser;
 import pro.dracarys.LocketteX.utils.ClaimUtil;
 import pro.dracarys.LocketteX.utils.Util;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class LocketteXAPI {
 
@@ -27,27 +29,39 @@ public class LocketteXAPI {
         if (!Util.isEnabledWorld(p.getWorld().getName())) return true;
         if (p.isOp() || p.hasPermission(Config.PERMISSION_ADMIN.getString()) || (Config.LEADER_CAN_BREAK.getOption() && ClaimUtil.getLeaderAt(b.getLocation()).equalsIgnoreCase(p.getName())))
             return true;
+        SignUser owner;
+        List<SignUser> wh;
+        boolean isSign = false;
         if (b.getType().name().contains("WALL_SIGN")) {
+            isSign = true;
             Sign s = (Sign) b.getState();
-            String owner = getSignOwner(s, b, b);
-            if (owner != null && !owner.equalsIgnoreCase(p.getName())) {
-                p.sendMessage(Message.PREFIX.getMessage() + Message.SIGN_BREAK_DENIED.getMessage()
-                        .replace("%owner%", owner));
-                return false;
-            }
+            owner = getSignOwner(s, b, b);
+            wh = getWhitelistedAt(b);
         } else {
-            String owner = getOwner(b.getState());
-            if (owner != null && !owner.equalsIgnoreCase(p.getName())) {
+            wh = getWhitelisted(b.getState());
+            if (wh.isEmpty()) return true;
+            owner = wh.get(0);
+        }
+        if (owner == null || owner.getUniqueId().equals(p.getUniqueId())) return true;
+        if (Config.ONLY_OWNER_CAN_BREAK_SIGN.getOption() || wh.stream().noneMatch(signUser -> signUser.getUniqueId().equals(p.getUniqueId()))) {
+            if (isSign)
+                p.sendMessage(Message.PREFIX.getMessage() + Message.SIGN_BREAK_DENIED.getMessage()
+                        .replace("%owner%", owner.getName()));
+            else
                 LocketteX.getInstance().getLocaleManager().sendMessage(p, Message.PREFIX.getMessage() + Message.BREAK_DENIED.getMessage()
-                        .replace("%owner%", owner), b.getType(), (short) 0, null);
-                return false;
-            }
+                        .replace("%owner%", owner.getName()), b.getType(), (short) 0, null);
+            return false;
         }
         return true;
     }
 
     public static boolean isProtected(BlockState blockState) {
-        return getOwner(blockState) != null;
+        return !getWhitelisted(blockState).isEmpty();
+    }
+
+    // Returns players who have given access by the owner
+    public static List<SignUser> getWhitelistedAt(Block sign) {
+        return LocketteX.getWhitelistMap().getOrDefault(Util.locationSerialize(sign), new ArrayList<>());
     }
 
     @Deprecated // use hasAccess
@@ -57,16 +71,44 @@ public class LocketteXAPI {
 
 
     public static boolean hasAccess(Player p, BlockState blockState) {
-        String owner = getOwner(blockState);
-        return owner != null && owner.equalsIgnoreCase(p.getName());
+        List<SignUser> wh = getWhitelisted(blockState);
+        return wh.isEmpty() || wh.stream().anyMatch(signUser -> signUser.getUniqueId().equals(p.getUniqueId()) && (!Config.ONLY_ACCESS_WHEN_ONLINE.getOption() || Bukkit.getOfflinePlayer(wh.get(0).getUniqueId()).isOnline()));
+    }
+
+    public static boolean giveAccess(OfflinePlayer p, Block sign) {
+        String loc = Util.locationSerialize(sign);
+        List<SignUser> actualWhitelist = LocketteX.getWhitelistMap().getOrDefault(loc, new ArrayList<>());
+        if (actualWhitelist.stream().anyMatch(signUser -> signUser.getUniqueId().equals(p.getUniqueId()))) return false;
+        actualWhitelist.add(new SignUser(p.getName(), p.getUniqueId()));
+        LocketteX.getWhitelistMap().put(loc, actualWhitelist);
+        return true;
+    }
+
+    public static boolean removeAccess(OfflinePlayer p, Block sign) {
+        String loc = Util.locationSerialize(sign);
+        List<SignUser> actualWhitelist = LocketteX.getWhitelistMap().getOrDefault(loc, new ArrayList<>());
+        if (actualWhitelist.isEmpty()) return false;
+        actualWhitelist.removeIf(signUser -> signUser.getUniqueId().equals(p.getUniqueId()));
+        if (actualWhitelist.isEmpty())
+            LocketteX.getWhitelistMap().remove(loc);
+        else
+            LocketteX.getWhitelistMap().put(loc, actualWhitelist);
+        return true;
     }
 
     @Deprecated // use getOwner
     public static String getChestOwner(BlockState blockState) {
-        return getOwner(blockState);
+        return getOwner(blockState).getName();
     }
 
-    public static String getOwner(BlockState blockState) {
+    // Returns the main owner
+    public static SignUser getOwner(BlockState blockState) {
+        List<SignUser> wh = getWhitelisted(blockState);
+        return wh.isEmpty() ? null : wh.get(0);
+    }
+
+    // Returns the main owner + whitelisted players (owner is the first of the list)
+    public static List<SignUser> getWhitelisted(BlockState blockState) {
         List<Block> protectedBlocks = new ArrayList<>();
         if (blockState instanceof InventoryHolder) {
             if (blockState instanceof Chest) {
@@ -93,61 +135,71 @@ public class LocketteXAPI {
             }
             protectedBlocks.add(blockState.getBlock());
         } else {
-            return null;
+            return new ArrayList<>();
         }
         for (Block b : protectedBlocks) {
             for (Block block : Util.getBlocks(b, 1)) {
-                if (block.getType().name().contains("WALL_SIGN")) {
-                    Sign s = (Sign) block.getState();
-                    Block attachedBlock;
-                    try {
-                        org.bukkit.material.Sign sd = (org.bukkit.material.Sign) s.getData();
-                        attachedBlock = block.getRelative(sd.getAttachedFace());
-                    } catch (NullPointerException | ClassCastException ex) { // Use new API (fixes 1.15 errors)
-                        WallSign ws = (WallSign) s.getBlockData();
-                        attachedBlock = block.getRelative(ws.getFacing().getOppositeFace());
-                    }
-                    if (b.getLocation().equals(attachedBlock.getLocation())) {
-                        String found = getSignOwner(s, block, attachedBlock);
-                        if (found != null) return found;
+                if (!block.getType().name().contains("WALL_SIGN")) continue;
+                Sign s = (Sign) block.getState();
+                Block attachedBlock;
+                try {
+                    org.bukkit.material.Sign sd = (org.bukkit.material.Sign) s.getData();
+                    attachedBlock = block.getRelative(sd.getAttachedFace());
+                } catch (NullPointerException | ClassCastException ex) { // Use new API (fixes 1.15 errors)
+                    WallSign ws = (WallSign) s.getBlockData();
+                    attachedBlock = block.getRelative(ws.getFacing().getOppositeFace());
+                }
+                if (b.getLocation().equals(attachedBlock.getLocation())) {
+                    SignUser found = getSignOwner(s, block, attachedBlock);
+                    if (found != null) {
+                        List<SignUser> wh = new ArrayList<>();
+                        wh.add(found);
+                        wh.addAll(LocketteX.getWhitelistMap().getOrDefault(Util.locationSerialize(block), new ArrayList<>()));
+                        Util.debug(wh.stream().map(signUser -> signUser.getName() + " " + signUser.getUniqueId() + " ").collect(Collectors.joining()));
+                        return wh;
                     }
                 }
             }
         }
         // No Sign found
-        return null;
+        return new ArrayList<>();
     }
 
-    public static String getSignOwner(Sign s, Block signBlock, Block attachedBlock) {
-        if (s.getLine(0).equalsIgnoreCase(Util.color(Config.SIGN_FORMATTED_LINES.getStrings()[0]))) {
-            if (s.getLine(Config.SIGN_OWNER_LINE.getInt() - 1).length() < 3) { //Playernames can't be less than 3 digits
+    public static SignUser getSignOwner(Block signBlock) {
+        return getSignOwner((Sign) signBlock.getState(), signBlock, null);
+    }
+
+    public static SignUser getSignOwner(Sign s, Block signBlock, Block attachedBlock) {
+        if (!s.getLine(0).equalsIgnoreCase(Util.color(Config.SIGN_FORMATTED_LINES.getStrings()[0]))) return null;
+        if (s.getLine(Config.SIGN_OWNER_LINE.getInt() - 1).length() < 3) { //Playernames can't be less than 3 digits
+            return null;
+        }
+        try {
+            // Strip color so that you can add colors to the name
+            String line = ChatColor.stripColor(s.getLine(Config.SIGN_OWNER_LINE.getInt() - 1));
+            OfflinePlayer owner;
+            if (line.contains("#")) { // UUID Compatibility
+                owner = Bukkit.getOfflinePlayer(UUID.fromString(line.split("#")[1]));
+            } else {
+                owner = Bukkit.getOfflinePlayer(line);
+            }
+            if (!owner.hasPlayedBefore()) {
+                signBlock.breakNaturally();
                 return null;
             }
-            try {
-                // Strip color so that you can add colors to the name
-                String owner = ChatColor.stripColor(s.getLine(Config.SIGN_OWNER_LINE.getInt() - 1));
-                if (owner.contains("#")) { // UUID Compatibility
-                    OfflinePlayer off = Bukkit.getOfflinePlayer(UUID.fromString(owner.split("#")[1]));
-                    if (off.hasPlayedBefore()) {
-                        owner = off.getName();
-                    } else { // FALLBACK
-                        owner = owner.split("#")[0];
-                    }
-                }
-                if (Util.isExpired(owner)) {
-                    signBlock.breakNaturally(); // Break sign since protection expired
-                    return null;
+            if (Util.isExpired(owner.getUniqueId())) {
+                signBlock.breakNaturally(); // Break sign since protection expired
+                return null;
+            } else {
+                if (attachedBlock == null || attachedBlock == signBlock) {
+                    Util.debug("Owner of Sign at " + signBlock.getLocation() + " is '" + owner.getName() + "'");
                 } else {
-                    if (attachedBlock == null || attachedBlock == signBlock) {
-                        Util.debug("Owner of Sign at " + signBlock.getLocation() + " is '" + owner + "'");
-                    } else {
-                        Util.debug("Owner of Sign at " + signBlock.getLocation() + " which protects container at " + attachedBlock.getLocation() + " is '" + owner + "'");
-                    }
-                    return owner;
+                    Util.debug("Owner of Sign at " + signBlock.getLocation() + " which protects container at " + attachedBlock.getLocation() + " is '" + owner.getName() + "'");
                 }
-            } catch (Exception ex) {
-                //ignored
+                return new SignUser(owner.getName(), owner.getUniqueId());
             }
+        } catch (Exception ex) {
+            //ignored
         }
         return null;
     }

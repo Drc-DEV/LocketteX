@@ -16,6 +16,8 @@ public enum Config {
     USE_ECONOMY("GeneralSettings.use-economy", true),
     PRICE_CREATION("GeneralSettings.price-creation", 500),
     SNEAKCLICK_TO_CREATE("GeneralSettings.shift-click-with-sign-to-protect", false),
+    ONLY_OWNER_CAN_BREAK_SIGN("GeneralSettings.only-owner-can-break-sign", true),
+    ONLY_ACCESS_WHEN_ONLINE("GeneralSettings.whitelisted-players-access-only-while-owner-online", false),
     USE_INV_MOVE("GeneralSettings.protect-from-hoppers.enabled", false),
     DESC_HOPPER_PROTECTION("GeneralSettings.protect-from-hoppers.desc", new String[]{
             "Enables a basic protection from hoppers stealing items from protected containers," + "\n"

@@ -118,19 +118,18 @@ public class Util {
     }
 
     // Cache expired players, to avoid excessive offlineplayer lookups
-    private static Map<String, Boolean> expiredMap = new HashMap<>();
+    private static Map<UUID, Boolean> expiredMap = new HashMap<>();
 
-    // UPDATE TO UUID
-    public static boolean isExpired(String ownerName) {
+    public static boolean isExpired(UUID uuid) {
         if (!Config.EXPIRE_ENABLED.getOption()) return false;
-        if (expiredMap.containsKey(ownerName)) return expiredMap.get(ownerName);
-        OfflinePlayer player = Bukkit.getOfflinePlayer(ownerName);
+        if (expiredMap.containsKey(uuid)) return expiredMap.get(uuid);
+        OfflinePlayer player = Bukkit.getOfflinePlayer(uuid);
         if (!player.hasPlayedBefore()) {
-            expiredMap.put(ownerName, true);
+            expiredMap.put(uuid, true);
             return true;
         }
         if (player.isOnline() || player.getFirstPlayed() == player.getLastPlayed()) {
-            expiredMap.put(ownerName, false);
+            expiredMap.put(uuid, false);
             return false;
         }
         return System.currentTimeMillis() - player.getLastPlayed() >= Config.EXPIRE_TIME.getInt() * 86400 * 1000;
@@ -170,6 +169,15 @@ public class Util {
             ex.printStackTrace();
             return true;
         }
+    }
+
+    public static String locationSerialize(Block b) {
+        return b.getWorld().getName() + ";" + b.getX() + ";" + b.getY() + ";" + b.getZ();
+    }
+
+    public static Location locationDeserialize(String loc) {
+        String[] l = loc.split(";");
+        return new Location(Bukkit.getWorld(l[0]), Double.parseDouble(l[1]), Double.parseDouble(l[2]), Double.parseDouble(l[3]));
     }
 
 }
