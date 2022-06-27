@@ -1,6 +1,5 @@
 package pro.dracarys.LocketteX.hooks.claim;
 
-import org.apache.commons.lang.NotImplementedException;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -67,15 +66,15 @@ public class ClaimPlugin implements PluginHook<ClaimPlugin> {
     }
 
     public String getLeaderOfClaimAt(Location location) {
-        throw new NotImplementedException(Message.CLAIM_HOOK_NOTFOUND.getMessage());
+        throw new NullPointerException(Message.CLAIM_HOOK_NOTFOUND.getMessage());
     }
 
     public boolean isClaimed(Location location) {
-        throw new NotImplementedException(Message.CLAIM_HOOK_NOTFOUND.getMessage());
+        throw new NullPointerException(Message.CLAIM_HOOK_NOTFOUND.getMessage());
     }
 
     public String getClaimTagAt(Location location) {
-        throw new NotImplementedException(Message.CLAIM_HOOK_NOTFOUND.getMessage());
+        throw new NullPointerException(Message.CLAIM_HOOK_NOTFOUND.getMessage());
     }
 
 }
