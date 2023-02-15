@@ -33,6 +33,10 @@ public class ClaimPlugin implements PluginHook<ClaimPlugin> {
                 return new FactionsUUIDHook();
             } else {
                 hookedPlugin = "Factions";
+                Util.sendConsole("&4| X X X X X | &cOld MassiveCore-Factions detected! &4| X X X X X |" + "\n" +
+                        "&7- &fConsider a more modern Factions solution, like &eFactionsX&7 -" + "\n" +
+                        "&7- &fGet FactionsX here &ehttps://patreon.com/ProSavage&7 -" + "\n" +
+                        "&4| X X X X X | &cOld MassiveCore-Factions detected! &4| X X X X X |");
                 Util.sendConsole(Message.PREFIX.getMessage() + Message.CLAIM_HOOK_FOUND.getMessage().replace("%plugin%", "MassiveCore Factions (Unsupported)"));
                 return new MCoreHook();
             }
