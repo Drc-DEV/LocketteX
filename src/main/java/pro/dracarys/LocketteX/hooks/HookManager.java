@@ -18,6 +18,8 @@ public class HookManager {
         hookPlugin(new SlimefunHook());
         if (Config.USE_GRIEFPREVENTION.getOption())
             hookPlugin(new GriefPreventionHook());
+
+        if (Config.USE_PROTECTIONSTONES.getOption()) hookPlugin(new ProtectionStonesHook());
     }
 
     private void hookPlugin(PluginHook<?> pluginHook) {
