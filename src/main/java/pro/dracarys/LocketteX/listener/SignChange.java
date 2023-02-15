@@ -16,9 +16,9 @@ import pro.dracarys.LocketteX.api.PlayerProtectBlockEvent;
 import pro.dracarys.LocketteX.config.Config;
 import pro.dracarys.LocketteX.config.Message;
 import pro.dracarys.LocketteX.data.SignUser;
-import pro.dracarys.LocketteX.hooks.GriefPreventionHook;
-import pro.dracarys.LocketteX.hooks.ProtectionStonesHook;
+import pro.dracarys.LocketteX.hooks.claim.GriefPreventionHook;
 import pro.dracarys.LocketteX.hooks.VaultHook;
+import pro.dracarys.LocketteX.hooks.claim.WorldGuardHook;
 import pro.dracarys.LocketteX.utils.ClaimUtil;
 import pro.dracarys.LocketteX.utils.Util;
 
@@ -86,8 +86,8 @@ public class SignChange implements Listener {
                 return;
             }
         }
-        if (LocketteX.getInstance().getHookManager().getHookedPlugins().contains("ProtectionStones")) {
-            ProtectionStonesHook psHook = (ProtectionStonesHook) LocketteX.getInstance().getHookManager().getHookedPluginsMap().get("ProtectionStones");
+        if (LocketteX.getInstance().getHookManager().getHookedPlugins().contains("WorldGuard")) {
+            WorldGuardHook psHook = (WorldGuardHook) LocketteX.getInstance().getHookManager().getHookedPluginsMap().get("WorldGuard");
             if (!psHook.isInOwnedProtection(e.getPlayer(), attachedBlock.getLocation())) {
                 e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.GP_HOOK_CANT_PROTECT.getMessage());
                 return;

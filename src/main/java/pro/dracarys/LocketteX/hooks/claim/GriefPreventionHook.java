@@ -1,11 +1,10 @@
-package pro.dracarys.LocketteX.hooks;
+package pro.dracarys.LocketteX.hooks.claim;
 
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import pro.dracarys.LocketteX.hooks.claim.ClaimPlugin;
 
 public class GriefPreventionHook extends ClaimPlugin {
 

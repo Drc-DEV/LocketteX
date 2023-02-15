@@ -2,6 +2,8 @@ package pro.dracarys.LocketteX.hooks;
 
 import org.bukkit.plugin.java.JavaPlugin;
 import pro.dracarys.LocketteX.config.Config;
+import pro.dracarys.LocketteX.hooks.claim.GriefPreventionHook;
+import pro.dracarys.LocketteX.hooks.claim.WorldGuardHook;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,8 +20,8 @@ public class HookManager {
         hookPlugin(new SlimefunHook());
         if (Config.USE_GRIEFPREVENTION.getOption())
             hookPlugin(new GriefPreventionHook());
-
-        if (Config.USE_PROTECTIONSTONES.getOption()) hookPlugin(new ProtectionStonesHook());
+        if (Config.USE_WORLDGUARD.getOption() || Config.USE_PROTECTIONSTONES.getOption())
+            hookPlugin(new WorldGuardHook());
     }
 
     private void hookPlugin(PluginHook<?> pluginHook) {

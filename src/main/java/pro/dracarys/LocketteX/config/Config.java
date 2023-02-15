@@ -35,6 +35,10 @@ public enum Config {
 
     USE_GRIEFPREVENTION("Hooks.griefprevention.deny-if-no-build-perm", true),
     USE_PROTECTIONSTONES("Hooks.protectionstones.protect-only-in-region", true),
+
+    USE_WORLDGUARD("Hooks.worldguard.enabled", false),
+    WG_MUSTBEMEMBER("Hooks.worldguard.protect-region-from-non-members", false),
+    WG_MUSTBEOWNER("Hooks.worldguard.protect-region-from-non-owners", false),
     DISABLE_CLAIM_HOOKS("Hooks.disable-hooking-to-claim-plugins", false),
     LEADER_CAN_BREAK("Hooks.leader-bypasses-break-protection", false),
     LEADER_CAN_OPEN("Hooks.leader-bypasses-open-protection", false),

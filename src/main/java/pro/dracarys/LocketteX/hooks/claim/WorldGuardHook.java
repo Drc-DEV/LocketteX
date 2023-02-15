@@ -1,4 +1,4 @@
-package pro.dracarys.LocketteX.hooks;
+package pro.dracarys.LocketteX.hooks.claim;
 
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldguard.WorldGuard;
@@ -7,12 +7,12 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import pro.dracarys.LocketteX.hooks.claim.ClaimPlugin;
+import pro.dracarys.LocketteX.config.Config;
 
-public class ProtectionStonesHook extends ClaimPlugin {
+public class WorldGuardHook extends ClaimPlugin {
 
     @Override
-    public ProtectionStonesHook setup(JavaPlugin plugin) {
+    public WorldGuardHook setup(JavaPlugin plugin) {
         return this;
     }
 
@@ -21,8 +21,10 @@ public class ProtectionStonesHook extends ClaimPlugin {
                 .getRegionContainer().createQuery().getApplicableRegions(BukkitAdapter.adapt(location));
 
         for (ProtectedRegion region : regions) {
-            if (region.getMembers().contains(player.getUniqueId())
-                || region.getOwners().contains(player.getUniqueId())) return true;
+            if (Config.USE_PROTECTIONSTONES.getOption() ||
+                    ((Config.WG_MUSTBEMEMBER.getOption() && region.getMembers().contains(player.getUniqueId()))
+                            || (Config.WG_MUSTBEOWNER.getOption() && region.getOwners().contains(player.getUniqueId()))))
+                return true;
         }
 
         return false;
@@ -30,7 +32,7 @@ public class ProtectionStonesHook extends ClaimPlugin {
 
     @Override
     public String getName() {
-        return "ProtectionStones";
+        return "WorldGuard";
     }
 
 }
