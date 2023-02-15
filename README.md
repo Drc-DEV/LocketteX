@@ -7,6 +7,7 @@
   - [x] MCore Factions
 - [x] Towny
 - [x] Lands
+- [x] ProtectionStones (1.17.x - 1.19.x)
 
 **Maven - Build Command:**
 `mvn clean package`
