@@ -5,6 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
 import pro.dracarys.LocketteX.config.Message;
 import pro.dracarys.LocketteX.hooks.PluginHook;
+import pro.dracarys.LocketteX.hooks.ProtectionStonesHook;
 import pro.dracarys.LocketteX.utils.Util;
 
 import java.util.List;
@@ -54,6 +55,11 @@ public class ClaimPlugin implements PluginHook<ClaimPlugin> {
             hookedPlugin = "Lands";
             Util.sendConsole(Message.PREFIX.getMessage() + Message.CLAIM_HOOK_FOUND.getMessage().replace("%plugin%", hookedPlugin));
             return new LandsHook();
+        }
+        if (Bukkit.getPluginManager().isPluginEnabled("ProtectionStones")) {
+            hookedPlugin = "ProtectionStones";
+            Util.sendConsole(Message.PREFIX.getMessage() + Message.CLAIM_HOOK_FOUND.getMessage().replace("%plugin%", hookedPlugin));
+            return new ProtectionStonesHook();
         }
         Util.sendConsole(Message.PREFIX.getMessage() + Message.CLAIM_HOOK_NOTFOUND.getMessage());
         hookedPlugin = "none";

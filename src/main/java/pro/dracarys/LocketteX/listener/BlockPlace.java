@@ -19,6 +19,7 @@ import pro.dracarys.LocketteX.config.Config;
 import pro.dracarys.LocketteX.config.Message;
 import pro.dracarys.LocketteX.data.SignUser;
 import pro.dracarys.LocketteX.hooks.GriefPreventionHook;
+import pro.dracarys.LocketteX.hooks.ProtectionStonesHook;
 import pro.dracarys.LocketteX.hooks.VaultHook;
 import pro.dracarys.LocketteX.utils.Util;
 
@@ -47,6 +48,13 @@ public class BlockPlace implements Listener {
                 if (LocketteX.getInstance().getHookManager().getHookedPlugins().contains("GriefPrevention")) {
                     GriefPreventionHook gpHook = (GriefPreventionHook) LocketteX.getInstance().getHookManager().getHookedPluginsMap().get("GriefPrevention");
                     if (!gpHook.canBuildAt(e.getPlayer(), e.getBlockAgainst().getLocation())) {
+                        e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.GP_HOOK_CANT_PROTECT.getMessage());
+                        return;
+                    }
+                }
+                if (LocketteX.getInstance().getHookManager().getHookedPlugins().contains("ProtectionStones")) {
+                    ProtectionStonesHook psHook = (ProtectionStonesHook) LocketteX.getInstance().getHookManager().getHookedPluginsMap().get("ProtectionStones");
+                    if (!psHook.isInOwnedProtection(e.getPlayer(), e.getBlockAgainst().getLocation())) {
                         e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.GP_HOOK_CANT_PROTECT.getMessage());
                         return;
                     }

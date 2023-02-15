@@ -34,6 +34,7 @@ public enum Config {
     PERMISSION_CREATION("Permissions.permission-creation", "lockettex.create"),
 
     USE_GRIEFPREVENTION("Hooks.griefprevention.deny-if-no-build-perm", true),
+    USE_PROTECTIONSTONES("Hooks.protectionstones.protect-only-in-region", true),
     DISABLE_CLAIM_HOOKS("Hooks.disable-hooking-to-claim-plugins", false),
     LEADER_CAN_BREAK("Hooks.leader-bypasses-break-protection", false),
     LEADER_CAN_OPEN("Hooks.leader-bypasses-open-protection", false),
