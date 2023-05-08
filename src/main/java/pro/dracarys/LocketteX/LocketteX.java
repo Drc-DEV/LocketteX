@@ -108,7 +108,7 @@ public class LocketteX extends JavaPlugin {
 
     private static int ver;
 
-    private void checkServerVersion() {
+    private static void checkServerVersion() {
         ver = Integer.parseInt(Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3].replace("1_", "").substring(1).replaceAll("_R\\d", ""));
     }
 
@@ -122,7 +122,7 @@ public class LocketteX extends JavaPlugin {
         return whitelistMap;
     }
 
-    public void saveData() {
+    public static void saveData() {
         if (whitelistMap.isEmpty()) return;
         Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
         new File(LocketteX.getInstance().getDataFolder() + File.separator + "data").mkdirs();
@@ -135,7 +135,7 @@ public class LocketteX extends JavaPlugin {
         }
     }
 
-    public void loadData() {
+    public static void loadData() {
         if (Files.isReadable(Paths.get(LocketteX.getInstance().getDataFolder() + File.separator + "data" + File.separator + "owners.json"))) {
             try (Reader reader = new FileReader(LocketteX.getInstance().getDataFolder() + File.separator + "data" + File.separator + "owners.json")) {
                 Gson gson = new Gson();

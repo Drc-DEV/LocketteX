@@ -17,6 +17,8 @@ public class WorldGuardHook extends ClaimPlugin {
     }
 
     public boolean isInOwnedProtection(Player player, Location location) {
+        if (!Config.USE_WORLDGUARD.getOption() && !Config.USE_PROTECTIONSTONES.getOption())
+            return true;
         ApplicableRegionSet regions = WorldGuard.getInstance().getPlatform()
                 .getRegionContainer().createQuery().getApplicableRegions(BukkitAdapter.adapt(location));
 

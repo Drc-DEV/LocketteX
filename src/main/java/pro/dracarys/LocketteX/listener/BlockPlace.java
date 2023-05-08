@@ -18,8 +18,8 @@ import pro.dracarys.LocketteX.api.PlayerProtectBlockEvent;
 import pro.dracarys.LocketteX.config.Config;
 import pro.dracarys.LocketteX.config.Message;
 import pro.dracarys.LocketteX.data.SignUser;
-import pro.dracarys.LocketteX.hooks.claim.GriefPreventionHook;
 import pro.dracarys.LocketteX.hooks.VaultHook;
+import pro.dracarys.LocketteX.hooks.claim.GriefPreventionHook;
 import pro.dracarys.LocketteX.hooks.claim.WorldGuardHook;
 import pro.dracarys.LocketteX.utils.Util;
 
