@@ -1,6 +1,7 @@
 package pro.dracarys.LocketteX.listener;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.Directional;
@@ -29,6 +30,17 @@ public class SignChange implements Listener {
         if (!Util.isEnabledWorld(e.getPlayer().getWorld().getName())) {
             return;
         }
+
+        if (e.getBlock().getState() instanceof Sign) {
+            Sign sign = (Sign) e.getBlock().getState();
+            String oldLine = ChatColor.stripColor(sign.getLine(0));
+
+            if (oldLine.equalsIgnoreCase(Config.SIGN_ID_LINE.getString()) && !LocketteXAPI.canBreak(e.getPlayer(), e.getBlock())) {
+                e.setCancelled(true);
+                return;
+            }
+        }
+
         String line0 = e.getLine(0);
         if (line0 == null || !line0.equalsIgnoreCase(Config.SIGN_ID_LINE.getString())) return;
         // From this point forward we're sure the player is trying to create a [Protect] sign
