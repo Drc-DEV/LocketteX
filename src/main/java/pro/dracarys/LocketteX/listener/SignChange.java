@@ -43,7 +43,6 @@ public class SignChange implements Listener {
 
         String line0 = e.getLine(0);
         if (line0 == null || !line0.equalsIgnoreCase(Config.SIGN_ID_LINE.getString())) return;
-
         // From this point forward we're sure the player is trying to create a [Protect] sign
         if (!Config.PERMISSION_FOR_ALL.getOption() && !e.getPlayer().hasPermission(Config.PERMISSION_CREATION.getString())) {
             e.getPlayer().sendMessage(Message.PREFIX.getMessage() + Message.CREATION_NOPERMISSION.getMessage());
