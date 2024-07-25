@@ -109,7 +109,7 @@ public class LocketteX extends JavaPlugin {
     private static int ver;
 
     private static void checkServerVersion() {
-        ver = Integer.parseInt(Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3].replace("1_", "").substring(1).replaceAll("_R\\d", ""));
+        ver = Integer.parseInt(Bukkit.getServer().getBukkitVersion().substring(2,4));
     }
 
     public static int getServerVersion() {

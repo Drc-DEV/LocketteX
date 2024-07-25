@@ -7,7 +7,7 @@
     <groupId>pro.dracarys</groupId>
     <artifactId>LocketteX</artifactId>
     <name>LocketteX</name>
-    <version>1.8.0</version>
+    <version>1.8.1</version>
     <packaging>jar</packaging>
     <url>https://dracarys.pro</url>
 
@@ -120,13 +120,17 @@
             <scope>compile</scope>
         </dependency>
         <!-- LocaleLib -->
+<!--        <dependency>-->
+<!--            <groupId>com.github.PikaMug</groupId>-->
+<!--            <artifactId>LocaleLib</artifactId>-->
+<!--            <version>3.1</version>-->
+<!--            <scope>compile</scope>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.github.PikaMug</groupId>
             <artifactId>LocaleLib</artifactId>
-            <version>3.1</version>
-            <scope>compile</scope>
+            <version>-SNAPSHOT</version>
         </dependency>
-
         <!-- HolographicDisplays -->
         <dependency>
             <groupId>com.gmail.filoghost.holographicdisplays</groupId>
